@@ -1,0 +1,155 @@
+/* 偵平的 */
+@import url(//db.onlinewebfonts.com/c/d4d6e1a6527a21185217393c427a52cb?family=Segoe+UI+Semibold);
+@import url(//db.onlinewebfonts.com/c/0d78b12d6be09203d1fbeb76871a369a?family=Century+Gothic);
+body {
+    height: 100vh;
+    margin: 0;
+}
+main {
+    height: 100%;
+}
+.section_2 {
+    height: 100%;
+    min-width: 1260px;
+}
+#question_center {
+    position: absolute;
+    left: calc(50% - 341px);
+    top: calc(50% - 258px);
+}
+.question_mark {
+    width: 326px;
+    height: 326px;
+    position: relative;
+    left: calc(50% - 163px);
+    margin-bottom: 58px;
+}
+/* question circle */
+.question_mark div{
+    border-radius: 50%;
+    position: absolute;
+}
+/* circle bottom */
+.bottom_question_mark{
+    width: 256px;
+    height: 256px;
+    left: 35px;
+    top: 35px;
+    background: #4C26EB;
+    opacity: 0.22;
+    z-index: -100;
+    transition: width 0.5s,height 0.5s, left 0.5s, top 0.5s;
+}
+.top_question_mark{
+    width: 256px;
+    height: 256px;
+    left: 35px;
+    top: 35px;
+    background: #6026EB;
+}
+/* question mark */
+.question_mark p{
+    margin: 0;
+    margin-top: 25px;
+    text-align: center;
+
+    font-family: "Segoe UI Semibold";
+    font-size: 155px;
+    color: #FFFFFF;
+    line-height: 206px;
+}
+/* question hover */
+.top_question_mark:hover+.bottom_question_mark {
+    width: 326px;
+    height: 326px;
+    left: 0px;
+    top: 0px;
+}
+/* Subtitle */
+.subtitle {
+    width: 682px;
+    height: 57px;
+    position: relative;
+    left: calc(50% - 341px);
+    margin-bottom: 37px;
+}
+.subtitle div {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+/* Co-meme icons */
+.subtitle div:nth-child(1), .subtitle div:nth-child(2) { 
+    font-family: "Century Gothic";
+    font-size: 45px;
+    line-height: 56px;
+}
+/* Co-meme subtitle */
+.subtitle div:nth-child(3) {
+    font-family: "Segoe UI Semibold";
+    width: 430;
+    font-size: 41px;
+    left: 252px;
+    line-height: 54px;
+}
+.co_icon{
+    width: 102px;
+    color: #FFFFFF;
+    background: #6026EB;
+    border-radius: 29px;
+
+    text-align: center;
+}
+.meme_icon {
+    width: 128px;
+    left: 111px;
+    color: #6026EB;
+}
+/* content */
+.subtitle_content {
+    font-family: "Segoe UI Semibold";
+    font-size: 14px;
+    width: 604px;
+    line-height: 19px;
+    text-align: center;
+
+    position: relative;
+    left: calc(50% - 302px);
+}
+/* Side circle */
+.circle {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: -200;
+}
+.circle div{
+    width: 428px;
+    height: 428px;
+    background: transparent linear-gradient(180deg, #9222D2 0%, #2A1169 100%);
+    border: 1px solid #707070;
+    border-radius: 50%;
+}
+.circle .left {
+    position: absolute;
+    left: -162px;
+    bottom: 9%;
+    animation: circle_move 6s ease 0s infinite;
+}
+.circle .right {
+    position: absolute;
+    left: calc(100% - 237px);
+    top: 9%;
+    animation: circle_move_right 6s ease 0s infinite;
+}
+/* circle animation */
+@keyframes circle_move {
+    0% {bottom: 9%;}
+    50% {bottom: calc(91% - 428px);}
+    100% {bottom: 9%;}
+}
+@keyframes circle_move_right {
+    0% {top: 9%;}
+    50% {top: calc(91% - 428px);}
+    100% {top: 9%;}
+}

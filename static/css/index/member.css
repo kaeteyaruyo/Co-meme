@@ -1,0 +1,50 @@
+.main__members {
+    display: grid;
+    justify-items: center;
+}
+
+.members__title {
+    font-size: 2.5rem;
+}
+
+.members__description {
+    width: 40%;
+    text-align: center;
+}
+
+.members__gallery {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 3rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+}
+
+.members__member {
+    width: 15vw;
+    display: grid;
+    justify-items: center;
+}
+
+.member__img {
+    width: 100%;
+    filter: grayscale(100%);
+    border-radius: 2rem;
+    transition: filter .5s;
+}
+
+.member__img:hover {
+    filter: grayscale(0%);
+}
+
+.member__name {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.member__title {
+    margin: 0;
+    font-size: .9rem;
+}

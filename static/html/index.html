@@ -4,11 +4,11 @@
         <meta charset="utf8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Co-meme</title>
-        <link rel="stylesheet" type="text/css" href="/css/origin.css">
-        <link rel="stylesheet" type="text/css" href="/css/feature.css">
-        <link rel="stylesheet" type="text/css" href="/css/member.css">
         <link rel="stylesheet" type="text/css" href="/css/common/common.css">
         <link rel="stylesheet" type="text/css" href="/css/index/intro.css">
+        <link rel="stylesheet" type="text/css" href="/css/index/origin.css">
+        <link rel="stylesheet" type="text/css" href="/css/index/feature.css">
+        <link rel="stylesheet" type="text/css" href="/css/index/member.css">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">    </head>
     <body>
         <nav class="navigation">
@@ -26,7 +26,6 @@
             </div>
         </nav>
         <main>
-            <!-- 雅培的 -->
             <section class="main__intro">
                 <img class="intro__logo" src="/img/common/logo.svg" width="237" height="57">
                 <h1 class="intro__title">跨世代的社交網路媒體</h1>
@@ -45,20 +44,15 @@
                     <img class="intro__image image__msg image__msg--yellow" src="/img/index/intro/msg-yellow.svg" width="68" height="88">
                 </div>
             </section>
-            <!-- 偵平的 -->
-            <section class="origin" id="origin">
+            <section class="main__origin" id="origin">
                 <div id="question_center">
                     <div class="question_mark">
-                        <div class="top_question_mark">
-                            <p>?</p>
-                        </div>
+                        <div class="top_question_mark">?</div>
                         <div class="bottom_question_mark"></div>
                     </div>
                     <div class="subtitle">
-                        <div>
-                            <img src="../img/index/origin/logo-lg.svg">
-                        </div>
-                        <div>如何開啟世代間的對話?</div>
+                        <img src="/img/common/logo.svg" width="240" height="59">
+                        <span>如何開啟世代間的對話?</span>
                     </div>
                     <div class="subtitle_content">
                         <span>想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的<br>
@@ -70,21 +64,20 @@
                     <div class="right"></div>
                 </div>
             </section>
-            <!-- 芷妡的 -->
             <section class="main__feature" id="feature">
             <!--三大功能-->
-                <p id="box1">
-                    <img src="../img/index/feature/logo-sm.svg" />
+                <div id="box1">
+                    <img src="/img/common/logo.svg" width="240" height="59"/>
                     <span>三大功能</span>
-                </p>
+                </div>
                 <div id="box4">
                     <p>想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的 眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後</p>
                 </div>
-                <div id="function">
+                <div id="features">
                     <!--梗圖文化-->
                     <div class="feature">
                         <div class="Circle">
-                            <img src="../img/index/feature/Group 9.svg" alt="梗圖功能">
+                            <img src="/img/index/feature/meme.svg" alt="梗圖功能">
                         </div>
                         <div class="description">
                             <h2>梗圖功能</h2>
@@ -94,7 +87,7 @@
                     <!--社群連結-->
                     <div class="feature">
                         <div class="Circle">
-                            <img src="../img/index/feature/Icon ionic-md-people.svg" alt="社群連結">
+                            <img src="/img/index/feature/connection.svg" alt="社群連結">
                         </div>
                         <div class="description">
                             <h2>社群連結</h2>
@@ -105,7 +98,7 @@
                     <!--長輩圖功能-->
                     <div class="feature">
                         <div class="Circle">
-                            <img src="../img/index/feature/Icon ionic-md-flower.svg" alt="長輩圖功能">
+                            <img src="/img/index/feature/oldmeme.svg" alt="長輩圖功能">
                         </div>
                         <div class="description">
                             <h2>長輩圖功能</h2>
@@ -113,48 +106,39 @@
                         </div>
                     </div>
                 </div>
-                <!--邀請欄-->
-                <div id="invitation">
-                    <h1>從現在開始邀請你與你的家人一起使用</h1>
-                    <button>
-                        <p>立即加入</p>
-                    </button>
-                </div>
             </section>
-            <!-- 文愷的 -->
-            <section id="member">
-                <h1 align="center" style="margin:50px 0px">
-                    <font size="10">團隊成員</font>
-                </h1>
-                <p align="center">想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的<br>
-                    眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後</p>
-                <div align="center">
-                    <div class="members" style="margin-top:100px">
-                        <div class="member">
-                            <img class="grayscale" src="../img/index/member/1.jpg">
-                            <p class="name">曹能寶</p>
-                            <p class="member">設計師</p>
-                        </div>
-                        <div class="member">
-                            <img class="grayscale" src="../img/index/member/2.jpg">
-                            <p class="name">林芷妡</p>
-                            <p class="member">工程師</p>
-                        </div>
-                        <div class="member">
-                            <img class="grayscale" src="../img/index/member/3.jpg">
-                            <p class="name">段雅培</p>
-                            <p class="member">工程師</p>
-                        </div>
-                        <div class="member">
-                            <img class="grayscale" src="../img/index/member/4.jpg">
-                            <p class="name">謝文愷</p>
-                            <p class="member">工程師</p>
-                        </div>
-                        <div class="member">
-                            <img class="grayscale" src="../img/index/member/5.jpg">
-                            <p class="name">吳偵平</p>
-                            <p class="member">工程師</p>
-                        </div>
+            <section class="main__invitation">
+                <p>從現在開始邀請你與你的家人一起使用</p>
+                <a href="/signup">立即加入</a>
+            </section>
+            <section class="main__members" id="member">
+                <h2 class="members__title">團隊成員</h2>
+                <p class="members__description">想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後</p>
+                <div class="members__gallery">
+                    <div class="members__member">
+                        <img class="member__img" src="/img/index/member/jimmy.jpg" />
+                        <p class="member__name">曹能寶</p>
+                        <p class="member__title">設計師</p>
+                    </div>
+                    <div class="members__member">
+                        <img class="member__img" src="/img/index/member/cindy.jpg" />
+                        <p class="member__name">林芷妡</p>
+                        <p class="member__title">工程師</p>
+                    </div>
+                    <div class="members__member">
+                        <img class="member__img" src="/img/index/member/kinoe.jpg" />
+                        <p class="member__name">段雅培</p>
+                        <p class="member__title">工程師</p>
+                    </div>
+                    <div class="members__member">
+                        <img class="member__img" src="/img/index/member/wenkai.jpg" />
+                        <p class="member__name">謝文愷</p>
+                        <p class="member__title">工程師</p>
+                    </div>
+                    <div class="members__member">
+                        <img class="member__img" src="/img/index/member/ariel.jpg" />
+                        <p class="member__name">吳偵平</p>
+                        <p class="member__title">工程師</p>
                     </div>
                 </div>
             </section>

@@ -1,19 +1,13 @@
 /* 偵平的 */
-body {
-    height: 100vh;
-    margin: 0;
-}
-main {
-    height: 100%;
-}
 .origin {
     height: 100%;
     min-width: 1260px;
+    position: relative;
 }
 #question_center {
-    position: absolute;
-    left: calc(50% - 341px);
-    top: calc(50% - 258px);
+    display: grid;
+    justify-content: center;
+    align-content: center;
 }
 .question_mark {
     width: 326px;
@@ -95,9 +89,11 @@ main {
 /* Side circle */
 .circle {
     height: 100%;
+    width: 100%;
     overflow: hidden;
-    position: relative;
-    z-index: -200;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .circle div{
     width: 428px;

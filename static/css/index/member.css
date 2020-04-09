@@ -1,4 +1,5 @@
 .main__members {
+    margin: 4rem 0;
     display: grid;
     justify-items: center;
 }

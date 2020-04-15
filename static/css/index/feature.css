@@ -1,4 +1,4 @@
-.main__feature{
+.main__feature {
     background-image: url(/img/index/feature/background.png) ;
     background-size: cover;
     background-position: center bottom;
@@ -14,7 +14,7 @@
     display: flex;
 }
 
-.feature__title > span{
+.feature__title > span {
     margin-left: 1rem;
 }
 
@@ -25,7 +25,7 @@
     color: #333333;
 }
 
-.main__function{
+.feature__functions {
     padding: 2rem 0;
     width: 100%;
     display: grid;
@@ -33,7 +33,7 @@
     justify-items: center;
 }
 
-.function{
+.feature__function {
     width: 12rem;
     margin: 1rem;
     display: grid;
@@ -41,7 +41,7 @@
     align-items: start;
 }
 
-.function--Circle{
+.feature__function--circle {
     width: 11rem;
     height: 11rem;
     background-color: #4C26EB;
@@ -51,7 +51,7 @@
     align-items: center;
 }
 
-.function--description{
+.feature__function--description {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -60,8 +60,6 @@
     color: #333333;
     font: 14px/19px;
 }
-
-
 
 .main__invitation {
     display: grid;

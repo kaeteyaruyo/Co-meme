@@ -4,27 +4,27 @@
     height: 100vh;
 }
 
-#question_center {
+.origin__center {
     height: 100%;
     display: grid;
     justify-items: center;
     align-content: center;
 }
 
-.question_mark {
+.center__questions {
     position: relative;
     width: 16rem;
     height: 16rem;
 }
 
 /* question circle */
-.question_mark div{
+.center__question {
     border-radius: 50%;
     position: absolute;
 }
 
 /* circle bottom */
-.bottom_question_mark{
+.center__question--bottom{
     width: 16rem;
     height: 16rem;
     background: #4C26EB;
@@ -33,7 +33,7 @@
     transition: transform 0.5s;
 }
 
-.top_question_mark {
+.center__question--top {
     width: 16rem;
     height: 16rem;
     background: #6026EB;
@@ -44,25 +44,25 @@
 }
 
 /* question hover */
-.top_question_mark:hover + .bottom_question_mark {
+.center__question--top:hover + .center__question--bottom {
     transform: scale(1.25, 1.25);
 }
 
 /* Subtitle */
-.subtitle {
+.center__titles {
     display: flex;
     font-size: 2.5rem;
     font-weight: 600;
     margin: 3rem 0;
 }
 
-.subtitle > span {
+.title__content {
     display: inline-block;
     margin-left: 1rem;
 }
 
 /* content */
-.subtitle_content {
+.center__subtitle {
     font-size: 1rem;
     width: 50%;
     line-height: 1.2rem;
@@ -70,7 +70,7 @@
 }
 
 /* Side circle */
-.circle {
+.origin__circles {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -80,7 +80,7 @@
     z-index: -100;
 }
 
-.circle div{
+.origin__circle {
     width: 428px;
     height: 428px;
     background: transparent linear-gradient(180deg, #9222D2 0%, #2A1169 100%);
@@ -88,28 +88,28 @@
     border-radius: 50%;
 }
 
-.circle .left {
+.origin__circle--left {
     position: absolute;
     left: -162px;
     bottom: 9%;
-    animation: circle_move 6s ease 0s infinite;
+    animation: circle__move--left 6s ease 0s infinite;
 }
 
-.circle .right {
+.origin__circle--right {
     position: absolute;
     left: calc(100% - 237px);
     top: 9%;
-    animation: circle_move_right 6s ease 0s infinite;
+    animation: circle__move--right 6s ease 0s infinite;
 }
 
 /* circle animation */
-@keyframes circle_move {
+@keyframes circle__move--left {
     0% {bottom: 9%;}
     50% {bottom: calc(91% - 428px);}
     100% {bottom: 9%;}
 }
 
-@keyframes circle_move_right {
+@keyframes circle__move--right {
     0% {top: 9%;}
     50% {top: calc(91% - 428px);}
     100% {top: 9%;}

@@ -1,8 +1,7 @@
 .main__intro {
     height: 100vh;
     display: grid;
-    /* grid-template-rows: auto repeat(4, min-content); */
-    grid-template-rows: auto min-content min-content min-content min-content;
+    grid-template-rows: auto repeat(4, min-content);
     grid-template-areas:
     '. images'
     'logo images'

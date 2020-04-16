@@ -1,0 +1,15 @@
+body {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+}
+
+.main__signup {
+    width: fit-content;
+    height: fit-content;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: #CCCCCC 0px 5px 15px 0px;
+}

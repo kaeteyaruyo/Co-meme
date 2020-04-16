@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const port = 8888;
 const root = process.cwd();
+const db = {};
 
 app.use(express.static(path.join(root, '/static')));
 app.use(parser.urlencoded( { extended: true } ));
@@ -13,16 +14,30 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(root, 'static/html/index.html'));
 });
 
-app.get('/login', (req,res) => {
-    res.sendFile(path.join(root, 'static/html/login.html'));
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(root, 'static/html/signup.html'));
 })
 
-app.get('/login/submit', (req,res) => {
-    // get account & password
-    account = req.query.account;
-    password = req.query.password;
-    // respond 
-    res.send('login!');
+app.post('/signup', (req, res) => {
+    db[req.body.account] = req.body.password;
+    res.redirect('/signin');
 })
-app.listen(port);
-console.log(`Listen on ${ port }`);
+
+app.get('/signin', (req, res) => {
+    res.sendFile(path.join(root, 'static/html/signin.html'));
+})
+
+app.post('/signin', (req, res) => {
+    if(db[req.body.account] && db[req.body.account] === req.body.password){
+        res.redirect(`/user/${ req.body.account }`);
+    }
+    res.redirect('signin');
+})
+
+app.get('/user/:account', (req, res) => {
+    res.sendFile(path.join(root, 'static/html/user.html'));
+});
+
+app.listen(port, () => {
+    console.log(`Listen on ${ port }`);
+});

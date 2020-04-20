@@ -1,0 +1,122 @@
+doctype html
+html
+  head
+    meta(charset="utf8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Co-meme
+    link(rel="stylesheet" type="text/css" href="/css/common/common.css")
+    link(rel="stylesheet" type="text/css" href="/css/index/intro.css")
+    link(rel="stylesheet" type="text/css" href="/css/index/origin.css")
+    link(rel="stylesheet" type="text/css" href="/css/index/feature.css")
+    link(rel="stylesheet" type="text/css" href="/css/index/member.css")
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+  body
+    nav.navigation
+      a.navigation__logo(href='/')
+        img(src="/img/common/logo.svg" width="106" height="25")
+      div.navigation__sections
+        a.navigation__section.navigation__section--origin(href="/#origin") 緣起
+        a.navigation__section.navigation__section--feature(href="/#feature") 功能
+        a.navigation__section.navigation__section--member(href="/#member") 成員
+      div.navigation__actions
+        a.navigation__action.navigation__action--signup(href="/signup") 註冊
+        a.navigation__action.navigation__action--signin(href="/signin") 登入
+    main
+      section.main__intro
+        img.intro__logo(src="/img/common/logo.svg" width="237" height="57")
+        h1.intro__title 跨世代的社交網路媒體
+        p.intro__slogan 用對方的語言讓彼此的聲音被聽見
+        a.intro__signup(href="/signup") 馬上加入
+        div.intro__images
+          img.intro__image.image__padel.image__padel--blue(src="/img/index/intro/padel-blue.svg" width="216" height="159")
+          img.intro__image.image__padel.image__padel--purple(src="/img/index/intro/padel-purple.svg" width="216" height="159")
+          img.intro__image.image__man.image__oldman(src="/img/index/intro/oldman.svg" width="89" height="190")
+          img.intro__image.image__man.image__youngman(src="/img/index/intro/youngman.svg" width="89" height="190")
+          img.intro__image.image__msg.image__msg--co(src="/img/index/intro/msg-co.svg" width="119" height="155")
+          img.intro__image.image__msg.image__msg--meme(src="/img/index/intro/msg-meme.svg" width="119" height="155")
+          img.intro__image.image__msg.image__msg--blue(src="/img/index/intro/msg-blue.svg" width="68" height="88")
+          img.intro__image.image__msg.image__msg--pink(src="/img/index/intro/msg-pink.svg" width="68" height="88")
+          img.intro__image.image__msg.image__msg--purple(src="/img/index/intro/msg-purple.svg" width="68" height="88")
+          img.intro__image.image__msg.image__msg--yellow(src="/img/index/intro/msg-yellow.svg" width="68" height="88")
+      section#origin.main__origin
+        div.origin__center
+          div.center__questions
+            div.center__question.center__question--top ?
+            div.center__question.center__question--bottom
+          div.center__titles
+            img.center__title.title__image(src="/img/common/logo.svg" width="240" height="59")
+            span.center__title.title__content 如何開啟世代間的對話?
+          div.center__subtitle
+            span 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+        div.origin__circles
+          div.origin__circle.origin__circle--left
+          div.origin__circle.origin__circle--right
+      section#feature.main__feature
+        div.feature__title
+          img(src="/img/common/logo.svg" width="240" height="59")
+          span 三大功能
+        div.feature__contents
+          p 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的 眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+        div.feature__functions
+          div.feature__function
+            div.feature__function--circle
+              img(src="/img/index/feature/meme.svg" alt="梗圖功能")
+            div.feature__function--description
+              h2 梗圖功能
+              p 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的 眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+          div.feature__function
+            div.feature__function--circle
+              img(src="/img/index/feature/connection.svg" alt="社群連結")
+            div.feature__function--description
+              h2 社群連結
+              p 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的 眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+          div.feature__function
+            div.feature__function--circle
+              img(src="/img/index/feature/oldmeme.svg" alt="長輩圖功能")
+            div.feature__function--description
+              h2 長輩圖功能
+              p 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的 眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+      section.main__invitation
+        p 從現在開始邀請你與你的家人一起使用
+        a(href="/signup") 立即加入
+      section#member.main__members
+        h2.members__title 團隊成員
+        p.members__description 想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後
+        div.members__gallery
+          div.members__member
+            img.member__img(src="/img/index/member/jimmy.jpg")
+            p.member__name 曹能寶
+            p.member__title 設計師
+          div.members__member
+            img.member__img(src="/img/index/member/cindy.jpg")
+            p.member__name 林芷妡
+            p.member__title 工程師
+          div.members__member
+            img.member__img(src="/img/index/member/kinoe.jpg")
+            p.member__name 段雅培
+            p.member__title 工程師
+          div.members__member
+            img.member__img(src="/img/index/member/wenkai.jpg")
+            p.member__name 謝文愷
+            p.member__title 工程師
+          div.members__member
+            img.member__img(src="/img/index/member/ariel.jpg")
+            p.member__name 吳偵平
+            p.member__title 工程師
+    footer.footer
+      div.footer__contactus
+        span.contactus__title 聯繫我們
+        div.contactus__icons
+          div.contactus__line
+          a.contactus__icon(href="#")
+            img(src="/img/common/facebook.svg" width="32" height="32")
+          a.contactus__icon(href="#")
+            img(src="/img/common/google.svg" width="32" height="32")
+          a.contactus__icon(href="#")
+            img(src="/img/common/instagram.svg" width="32" height="32")
+          div.contactus__line
+      div.footer__info
+        span Copyright@UIDD 2020 , team 27
+        div.info__links
+          a(href="#") 聯繫我們
+          a(href="#") 隱私權政策

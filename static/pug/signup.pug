@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    meta(charset="utf8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title 註冊
+    link(rel="stylesheet" type="text/css" href="/css/signup/signup.css")
+  body
+    main
+      div(class="main__signup")
+        h1(class="signup__title") 註冊
+        form(id="signup__form" action="/signup" method="POST")
+          div
+            span= "帳號 "
+            input(type="text" name="account")
+          div
+            span= "密碼 "
+            input(type="password" name="password")
+          button(type="submit") 註冊

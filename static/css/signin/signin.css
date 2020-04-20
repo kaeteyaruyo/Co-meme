@@ -13,3 +13,7 @@ body {
     text-align: center;
     box-shadow: #CCCCCC 0px 5px 15px 0px;
 }
+
+form > div {
+    margin: 1rem 0;
+}

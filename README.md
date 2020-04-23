@@ -10,14 +10,14 @@ This is a meme community for everyone :D
 ### Setup
 
 * Install Node.js and npm
-    * Node.js v10.6.0
-    * npm v6.2.0
+    * Node.js v10.6.0+
+    * npm v6.2.0+
 * Fork this repository to your account
-* Clone the forked repo under yout account to your computer
+* Clone the forked repo under your account to your computer
 * Go to project directory
 * Type `npm install` in command line
     * It will automatically installs all dependecies we need
 
 ### Execution
 
-* Type `node server.js` and the website will run on localhost:8888
+* Type `node app.js` and the website will run on localhost:8888

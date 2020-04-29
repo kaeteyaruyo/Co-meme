@@ -10,7 +10,7 @@
     'signup images';
     justify-content: center;
     align-content: center;
-    background-image: url(/img/index/intro/background.svg);
+    background-image: url(/img/about/intro/background.svg);
     background-size: cover;
     background-position: center bottom;
 }

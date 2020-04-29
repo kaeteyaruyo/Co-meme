@@ -1,4 +1,4 @@
-# Co-meme
+# Co meme
 Meme across generation
 
 ## What's this?

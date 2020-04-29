@@ -1,0 +1,53 @@
+.imageTile {
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    margin: 6rem auto;
+    padding: 0;
+    line-height: 0;
+    border-radius: 1rem;
+    box-shadow: 3px 3px 6px #00000029;
+}
+
+.imageTile__image {
+    width: 100%;
+    height: 100%;
+}
+
+.imageTile__info {
+    display: grid;
+    align-content: end;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #34343450;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: .25s opacity;
+}
+
+.imageTile:hover .imageTile__info {
+    opacity: 1;
+}
+
+.imageTile__info--container {
+    display: flex;
+    padding: .5rem 1rem;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    border-radius: .5rem;
+}
+
+.imageTile__info--data {
+    display: inline-flex;
+    align-items: center;
+}
+
+.imageTile__info--data > span {
+    color: #AAAAAA;
+    margin-left: .5rem;
+}

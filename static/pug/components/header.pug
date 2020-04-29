@@ -3,20 +3,20 @@
 header.header
   div.header__menu
     button.header__menu--button
-      img(src="/img/common/menu.svg" width="24" height="24")
+      img(src="/img/common/header/menu.svg" width="24" height="24")
     a.header__menu--logo(href='/')
       img(src="/img/common/logo.svg" width="106" height="25")
   div.header__search
-    img.header__search--icon(src="/img/common/search.svg" width="24" height="24")
+    img.header__search--icon(src="/img/common/header/search.svg" width="24" height="24")
     input.header__search--input(type="text" placeholder="搜尋")
   if user
     div.header__toolbar
       a.header__tool.header__tool--upload
-        img(src="/img/common/upload.svg" width="24" height="24")
+        img(src="/img/common/header/upload.svg" width="24" height="24")
       button.header__tool.header__tool--notification
-        img(src="/img/common/notification.svg" width="24" height="24")
+        img(src="/img/common/header/notification.svg" width="24" height="24")
       button.header__tool.header__tool--account
-        img(src="/img/common/account.svg" width="24" height="24")
+        img(src="/img/common/header/account.svg" width="24" height="24")
   else
     div.header__actions
       a.header__action.header__action--signup(href="/signup") 註冊

@@ -1,19 +1,35 @@
-doctype html
-html
-  head
-    meta(charset="utf8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title 註冊
-    link(rel="stylesheet" type="text/css" href="/css/signup/signup.css")
-  body
-    main
-      div(class="main__signup")
-        h1(class="signup__title") 註冊
-        form(id="signup__form" action="/signup" method="POST")
-          div
-            span= "帳號 "
-            input(type="text" name="account")
-          div
-            span= "密碼 "
-            input(type="password" name="password")
-          button(type="submit") 註冊
+extends layouts/account.pug
+
+block stylesheet
+  link(rel="stylesheet" type="text/css" href="/css/account/signup.css")
+
+block action
+  div.main__action
+    p.main__action--title 會員註冊
+    form.main__form(name="signup" action="/signup" method="POST" onsubmit="return validateForm()")
+      input.main__form--input(type="text" name="username" placeholder="請輸入使用者名稱（20字以內）" maxlength="20" autofocus required)
+      input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" required oninvalid="this.setCustomValidity('請輸入正確的E-mail格式')")
+      input.main__form--input(type="password" name="password" placeholder="請輸入密碼（8字元以上）" required minlength="7" oninvalid="this.setCustomValidity('密碼長度需至少有8字元')")
+      div.main__form--birthday
+        select.main__form--input.main__form--birthyear(name="birthyear" required)
+          option(disabled selected) 出生年
+          - let now = new Date().getFullYear(), y = now - 120;
+          while y <= now
+            option(value=y)= y++ + '年'
+        select.main__form--input.main__form--birthmonth(name="birthmonth" required)
+          option(disabled selected) 月
+          - let m = 1;
+          while m <= 12
+            option(value=m)= m++ + '月'
+        select.main__form--input.main__form--birthdate(name="birthdate" required)
+          option(disabled selected) 日
+          - let d = 1;
+          while d <= 31
+            option(value=d)= d++ + '日'
+      input.main__form--submit(type="submit" value="創建帳號")
+    div.main__sigin
+      span 已有帳號了？
+      a(href="/signin") 登入
+
+block scripts
+  script(src="/js/account/validation.js")

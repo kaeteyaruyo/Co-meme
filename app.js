@@ -1,10 +1,13 @@
+const path = require('path');
+const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
-const path = require('path');
+
+const config = require('./config.js');
+const User = require('./models/user.js');
+
 const app = express();
-const port = 8888;
 const root = process.cwd();
-const db = {};
 
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
@@ -35,27 +38,58 @@ app.get('/profile/:user', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signup', {
+        title: '會員註冊',
+    });
 });
 
-app.post('/signup', (req, res) => {
-    db[req.body.account] = req.body.password;
-    res.redirect('/signin');
+app.post('/signup', async (req, res) => {
+    const hash = await bcrypt.hash(req.body.password, 10);
+    User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: hash,
+        birthday: `${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`,
+    })
+    .then(() => {
+        res.redirect('/signin');
+    })
+    .catch(err => {
+        if(err.errors[0].message === 'PRIMARY must be unique'){
+            // TODO: frontend error message display
+            res.redirect('/signup');
+        }
+        else{
+            res.status(500).send('Server side error occured');
+        }
+    });
 });
 
 app.get('/signin', (req, res) => {
-    res.render('signin');
+    res.render('signin', {
+        title: '會員登入',
+    });
 });
 
-app.post('/signin', (req, res) => {
-    if(db[req.body.account] && db[req.body.account] === req.body.password){
-        res.redirect(`/user/${ req.body.account }`);
-    }
-    else {
-        res.redirect('signin');
-    }
+app.post('/signin', async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            email: req.body.email
+        },
+        attributes: ['username', 'password'],
+    });
+    bcrypt.compare(req.body.password, user.password)
+    .then(matched => {
+        if(matched){
+            res.redirect(`/profile/${ user.username }`);
+        }
+        else {
+            // TODO: frontend error message display
+            res.redirect('signin');
+        }
+    });
 });
 
-app.listen(port, () => {
-    console.log(`Listen on ${ port }`);
+app.listen(config.port, () => {
+    console.log(`Listen on ${ config.port }`);
 });

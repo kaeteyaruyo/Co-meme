@@ -1,6 +1,11 @@
-extends layout.pug
+extends layouts/base.pug
 
 block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/common/header.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
+
+block header
+  include components/header.pug
 
 block main
 

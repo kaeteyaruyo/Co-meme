@@ -2,12 +2,37 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
+const session = require('express-session')
 
 const config = require('./config.js');
 const User = require('./models/user.js');
 
 const app = express();
 const root = process.cwd();
+
+app.use(session({
+    cookie: {
+        maxAge:   7 * 24 * 60 * 60 * 1000,
+        path:     '/',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure:   false,
+    },
+    name:              'sessionId',
+    secret:            config.session.secret,
+    saveUninitialized: false,
+    resave:            false,
+    unset:             'destroy',
+    rolling:           false,
+    proxy:             false,
+}));
+
+app.use(function (req, res, next) {
+    if (req.session.user) {
+        res.locals.user = req.session.user;
+    }
+    next();
+})
 
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
@@ -31,16 +56,26 @@ app.get('/image', (req, res) => {
     });
 });
 
-app.get('/profile/:user', (req, res) => {
+app.get('/profile/:user', async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            username: req.params.user
+        },
+    });
     res.render('profile', {
-        title: `${ req.params.user }的頁面`,
+        title: `${ user.username }的頁面`,
     });
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup', {
-        title: '會員註冊',
-    });
+    if(req.session.user){
+        res.redirect(`/profile/${ req.session.username }`);
+    }
+    else {
+        res.render('signup', {
+            title: '會員註冊',
+        });
+    }
 });
 
 app.post('/signup', async (req, res) => {
@@ -66,9 +101,14 @@ app.post('/signup', async (req, res) => {
 });
 
 app.get('/signin', (req, res) => {
-    res.render('signin', {
-        title: '會員登入',
-    });
+    if(req.session.user){
+        res.redirect(`/profile/${ req.session.username }`);
+    }
+    else {
+        res.render('signin', {
+            title: '會員登入',
+        });
+    }
 });
 
 app.post('/signin', async (req, res) => {
@@ -81,6 +121,9 @@ app.post('/signin', async (req, res) => {
     bcrypt.compare(req.body.password, user.password)
     .then(matched => {
         if(matched){
+            req.session.user = {
+                username: user.username,
+            }
             res.redirect(`/profile/${ user.username }`);
         }
         else {

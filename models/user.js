@@ -3,13 +3,14 @@ const conncetion = require('./connect.js');
 
 const User = conncetion.define('user', {
     username: {
-        type:      Sequelize.STRING( 20 ),
-        allowNull: true,
+        type:       Sequelize.STRING( 20 ),
+        primaryKey: true,
+        unique:     true,
+        allowNull:  true,
     },
     email: {
         type:       Sequelize.STRING( 300 ),
         allowNull:  false,
-        primaryKey: true,
         unique:     true,
     },
     password: {
@@ -17,8 +18,8 @@ const User = conncetion.define('user', {
         allowNull: true,
     },
     birthday: {
-        type:         Sequelize.DATE,
-        allowNull:    false,
+        type:      Sequelize.DATE,
+        allowNull: false,
     },
 } );
 

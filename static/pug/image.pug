@@ -2,10 +2,9 @@ extends layout.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/common/image.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
 
 block main
-  mixin tag(name)
-    button.tag= name
   mixin message(imgUrl,name, date, content)
     div.message__from
       img.message__from--img(src=imgUrl width="50" height="50")
@@ -43,9 +42,8 @@ block main
         button.author__follow--button 追蹤
       div.element__content= articleContent
       div.element__record
-        div.record__tags
-          each tag in tagList
-            +tag(tag)
+        include components/tags.pug
+        +tags(tagList)
         div.record__all
           button: img.heart__img(src="/img/common/image/heart.svg" width="20" height="20")
           span.heart__num= heartNum

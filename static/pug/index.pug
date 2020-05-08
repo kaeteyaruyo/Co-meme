@@ -1,7 +1,54 @@
 extends layout.pug
+include components/image-tile.pug
 
 block stylesheets
 
 block main
+  link(rel="stylesheet" type="text/css" href="/css/common/index.css")
+  h2 你可能會喜歡的主題
+  div.main__topics
+    div.main__topic
+      div.main__topic--img
+        img(src="")
+      div.main__topic--info
+        p.main__info--font 熱門主題
+        p.main__new--font 本日新增
+
+    div.main__topic
+      div.main__topic--img
+        img(src="")
+      div.main__topic--info
+        p.main__info--font 熱門主題
+        p.main__new--font 本日新增
+    div.main__topic
+      div.main__topic--img
+        img(src="")
+      div.main__topic--info
+        p.main__info--font 熱門主題
+        p.main__new--font 本日新增
+    div.main__topic
+      div.main__topic--img
+        img(src="")
+      div.main__topic--info
+        p.main__info--font 熱門主題
+        p.main__new--font 本日新增
+  h2 為你推薦
+  div.main__button
+    div.main__button--left
+      button 迷因
+      button 長輩圖
+      button 全部
+    div.main__button--right
+      select.main__select
+        option 最新
+        option 最新
+        option 最新
+        option 最新
+  div.main__img
+    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
+    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
+    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
+    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
+
 
 block scripts

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const config = require('../config.js');
 
-const connection = new Sequelize(
+module.exports = new Sequelize(
     config.db.database,
     config.db.username,
     config.db.password,
@@ -33,5 +33,3 @@ const connection = new Sequelize(
         timezone: '+08:00', // for writing to database
     }
 );
-
-module.exports = connection;

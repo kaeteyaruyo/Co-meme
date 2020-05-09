@@ -5,7 +5,14 @@ const parser = require('body-parser');
 const session = require('express-session')
 
 const config = require('./config.js');
-const User = require('./models/user.js');
+const {
+    Comment,
+    Follower,
+    Image,
+    ImageTag,
+    Tag,
+    User,
+} = require('./models/association.js');
 
 const app = express();
 const root = process.cwd();
@@ -40,9 +47,18 @@ app.use(express.static(path.join(root, '/static')));
 app.use(parser.urlencoded( { extended: true } ));
 app.use(parser.json());
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const image = await Image.findAll({
+        attributes: [
+            'content',
+            'category',
+            'likes',
+            'views',
+        ],
+    });
     res.render('index', {
         title: '首頁',
+        image
     });
 });
 
@@ -56,14 +72,19 @@ app.get('/image', (req, res) => {
     });
 });
 
-app.get('/profile/:user', async (req, res) => {
-    const user = await User.findOne({
+app.get('/profile/:user', (req, res) => {
+    User.findOne({
         where: {
-            username: req.params.user
+            userId: req.params.user
         },
-    });
-    res.render('profile', {
-        title: `${ user.username }的頁面`,
+    })
+    .then(user => {
+        res.render('profile', {
+            title: `${ user.username }的頁面`,
+        });
+    })
+    .catch(error => {
+        res.status(500).send({ error });
     });
 });
 
@@ -84,13 +105,14 @@ app.post('/signup', async (req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: hash,
-        birthday: `${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`,
+        birthday: new Date(`${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`),
     })
     .then(() => {
         res.redirect('/signin');
     })
     .catch(err => {
-        if(err.errors[0].message === 'PRIMARY must be unique'){
+        console.log(err.errors)
+        if(err.errors[0].type === 'unique violation'){
             // TODO: frontend error message display
             res.redirect('/signup');
         }
@@ -116,15 +138,20 @@ app.post('/signin', async (req, res) => {
         where: {
             email: req.body.email
         },
-        attributes: ['username', 'password'],
+        attributes: [
+            'userId',
+            'username',
+            'password'
+        ],
     });
     bcrypt.compare(req.body.password, user.password)
     .then(matched => {
         if(matched){
             req.session.user = {
-                username: user.username,
+                id: user.userId,
+                name: user.username,
             }
-            res.redirect(`/profile/${ user.username }`);
+            res.redirect(`/profile/${ user.userId }`);
         }
         else {
             // TODO: frontend error message display

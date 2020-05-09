@@ -1,38 +1,25 @@
 const Sequelize = require('sequelize');
 const database = require('./connect');
 
-module.exports = database.define('user', {
-    userId: {
+module.exports = database.define('tag', {
+    tagId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    username: {
+    tag: {
         type: Sequelize.STRING(50),
         allowNull: false,
         unique: true
     },
-    email: {
-        type: Sequelize.STRING(300),
-        allowNull: false,
-        unique: true
-    },
-    password: {
-        type: Sequelize.CHAR(60),
-        allowNull: false
-    },
-    birthday: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-    },
-    followerCount: {
+    posts: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         defaultValue: '0'
     }
 }, {
-    tableName: 'user',
+    tableName: 'tag',
     freezeTableName: true,
     timestamps: false
 });

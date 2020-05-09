@@ -1,0 +1,124 @@
+.main__action {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: .5rem;
+}
+
+.main__action--title {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.main__form {
+    width: 18rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.main__form--input {
+    display: block;
+    border: none;
+    background-color: #F2F2F2;
+    border-radius: 2rem;
+    margin: .5rem 0;
+    padding: .5rem 1rem;
+}
+
+.main__form--resetPassword {
+    align-self: flex-end;
+    color: #4C26EB;
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.main__form--button {
+    display: block;
+    border: #4C26EB 1px solid;
+    border-radius: 2rem;
+    margin: .25rem 0;
+    padding: .3rem 1rem;
+    font-weight: 500;
+}
+
+.main__form--submit {
+    margin-top: 1.5rem;
+    color: #FFFFFF;
+    background-color: #4C26EB;
+}
+
+.main__form--submit:hover {
+    background-color: #3B1EB8;
+}
+
+.main__form--signup {
+    font-size: small;
+    text-align: center;
+    color: #4C26EB;
+    background-color: #FFFFFF;
+}
+
+.main__form--signup:hover {
+    color: #FFFFFF;
+    background-color: #4C26EB;
+}
+
+.main__divider {
+    width: 100%;
+    margin: 1rem 0;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr min-content 1fr;
+    align-items: center;
+}
+
+.main__divider--line {
+    width: 100%;
+    height: 1px;
+    background-color: #E2E2E2;
+}
+
+.main__divider--text {
+    margin: 0 1rem;
+}
+
+.main__socialSignin {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main__socialSignin--sites {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.main__socialSignin--site{
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background-color: #4C26EB;
+    -webkit-mask-size: 2rem 2rem;
+    mask-size: 2rem 2rem;
+}
+
+.main__socialSignin--facebook {
+    -webkit-mask-image: url(/img/common/facebook.svg);
+    mask-image: url(/img/common/facebook.svg);
+}
+
+.main__socialSignin--google {
+    -webkit-mask-image: url(/img/common/google.svg);
+    mask-image: url(/img/common/google.svg);
+}
+
+.main__socialSignin--instagram {
+    -webkit-mask-image: url(/img/common/instagram.svg);
+    mask-image: url(/img/common/instagram.svg);
+}

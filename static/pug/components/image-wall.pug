@@ -1,0 +1,32 @@
+include image-tile.pug
+link(rel="stylesheet" type="text/css" href="/css/common/image-wall.css")
+
+mixin imageWall(title, category, arrange, sorter, image)
+  section.imageWall
+    h2.imageWall__title= title
+    form.imageWall__actions(name="actions")
+      div.imageWall__category
+        input.imageWall__category--input(type="radio" id="category__meme" name="category" value="meme" checked)
+        label.imageWall__category--label(for="category__meme") 迷因
+        input.imageWall__category--input(type="radio" id="category__elderly" name="category" value="elderly")
+        label.imageWall__category--label(for="category__elderly") 長輩圖
+        input.imageWall__category--input(type="radio" id="category__all" name="category" value="all")
+        label.imageWall__category--label(for="category__all") 全部
+      div.imageWall__action--right
+        div.imageWall__arrange
+          input.imageWall__arrange--input(type="radio" id="arrange__grid" name="arrange" value="grid" checked)
+          label.imageWall__arrange--label(for="arrange__grid")
+            div.imageWall__arrange--icon.arrange__icon--grid
+          input.imageWall__arrange--input(type="radio" id="arrange__waterfall" name="arrange" value="waterfall")
+          label.imageWall__arrange--label(for="arrange__waterfall")
+            div.imageWall__arrange--icon.arrange__icon--waterfall
+        select.imageWall__sorter
+          option(value="latest") 最新
+          option(value="most_voted") 最多讚
+    div.imageWall__tiles.imageWall__tiles--grid
+      each tile in image
+        +imageTile(tile)
+      each tile in image
+        +imageTile(tile)
+  script(src="/js/components/image-wall.js")
+

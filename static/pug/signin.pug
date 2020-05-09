@@ -1,19 +1,25 @@
-doctype html
-html
-  head
-    meta(charset="utf8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title 登入
-    link(rel="stylesheet" type="text/css" href="/css/signin/signin.css")
-  body
-    main
-      div(class="main__signin")
-        h1(class="signin__title") 登入
-        form(id="signin__form" action="/signin" method="POST")
-          div
-            span= "帳號 "
-            input(type="text" name="account")
-          div
-            span= "密碼 "
-            input(type="password" name="password")
-          button(type="submit") 登入
+extends layouts/account.pug
+
+block stylesheet
+  link(rel="stylesheet" type="text/css" href="/css/account/signin.css")
+
+block action
+  div.main__action
+    img(src="/img/signin/account.svg" width="120" height="120")
+    p.main__action--title 會員登入
+    form.main__form(action="/signin" method="POST")
+      input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required oninvalid="this.setCustomValidity('請輸入正確的E-mail格式')")
+      input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
+      a.main__form--resetPassword(href="/resetPassword") 忘記密碼?
+      input.main__form--button.main__form--submit(type="submit" value="登入")
+      a.main__form--button.main__form--signup(href="signup") 註冊
+    div.main__divider
+      div.main__divider--line
+      span.main__divider--text 或
+      div.main__divider--line
+    div.main__socialSignin
+      p.main__socialSignin--title 使用其他方式登入
+      div.main__socialSignin--sites
+        a.main__socialSignin--site.main__socialSignin--facebook(href="#")
+        a.main__socialSignin--site.main__socialSignin--google(href="#")
+        a.main__socialSignin--site.main__socialSignin--instagram(href="#")

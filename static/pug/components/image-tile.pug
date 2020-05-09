@@ -1,6 +1,8 @@
-mixin imageTile(url, likes, comments, shares)
+link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
+
+mixin imageTile({content, likes, comments = 0, views})
   div.imageTile
-    img.imageTile__image(src=url)
+    img.imageTile__image(src=`data:image/png;base64, ${ content }`)
     div.imageTile__info
       div.imageTile__info--container
         div.imageTile__info--data.imageTile__info--likes
@@ -9,6 +11,6 @@ mixin imageTile(url, likes, comments, shares)
         div.imageTile__info--data.imageTile__info--comments
           img(src="/img/common/image-tile/comment.svg" width="16" height="16")
           span= comments
-        div.imageTile__info--data.imageTile__info--shares
+        div.imageTile__info--data.imageTile__info--views
           img(src="/img/common/image-tile/share.svg" width="16" height="16")
-          span= shares
+          span= views

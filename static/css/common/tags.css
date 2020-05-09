@@ -1,0 +1,16 @@
+.tag{
+    background-color: #6026EB;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 0.2rem 0.7rem;
+    border-radius: 1.5rem;
+}
+.tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.tags > * {
+    margin: 0 0.6rem 0.6rem 0;
+}

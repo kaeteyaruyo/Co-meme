@@ -1,10 +1,12 @@
-extends layout.pug
-include components/image-tile.pug
+extends layouts/base.pug
 
 block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/common/index.css")
+
+block header
+  include components/header.pug
 
 block main
-  link(rel="stylesheet" type="text/css" href="/css/common/index.css")
   h2 你可能會喜歡的主題
   div.main__topics
     div.main__topic
@@ -44,11 +46,5 @@ block main
         option 最新
         option 最新
         option 最新
-  div.main__img
-    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
-    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
-    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
-    +imageTile("/img/common/image-tile/thumbnail.png",10,10,10)
-
 
 block scripts

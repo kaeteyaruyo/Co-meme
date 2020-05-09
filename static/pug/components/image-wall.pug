@@ -1,7 +1,7 @@
 include image-tile.pug
 link(rel="stylesheet" type="text/css" href="/css/common/image-wall.css")
 
-mixin imageWall(title, category, arrange, sorter, image)
+mixin imageWall(title, images)
   section.imageWall
     h2.imageWall__title= title
     form.imageWall__actions(name="actions")
@@ -24,9 +24,7 @@ mixin imageWall(title, category, arrange, sorter, image)
           option(value="latest") 最新
           option(value="most_voted") 最多讚
     div.imageWall__tiles.imageWall__tiles--grid
-      each tile in image
-        +imageTile(tile)
-      each tile in image
-        +imageTile(tile)
+      each image in images
+        +imageTile(image)
   script(src="/js/components/image-wall.js")
 

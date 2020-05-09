@@ -48,8 +48,9 @@ app.use(parser.urlencoded( { extended: true } ));
 app.use(parser.json());
 
 app.get('/', async (req, res) => {
-    const image = await Image.findAll({
+    const images = await Image.findAll({
         attributes: [
+            'imageId',
             'content',
             'category',
             'likes',
@@ -58,7 +59,7 @@ app.get('/', async (req, res) => {
     });
     res.render('index', {
         title: '首頁',
-        image
+        images
     });
 });
 

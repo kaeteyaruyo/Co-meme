@@ -1,7 +1,7 @@
 extends layouts/base.pug
 
 block stylesheets
-  link(rel="stylesheet" type="text/css" href="/css/common/image.css")
+  link(rel="stylesheet" type="text/css" href="/css/image/image.css")
   link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
 
 block header
@@ -62,11 +62,11 @@ block main
             button.input__button--cancel 取消
             button.input__button--send 留言
       div.element__message
-        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
-        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
-        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
-        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg", "曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg", "曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg", "曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg", "曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
   div.main__similar
     p.similar__title= "更多相似"
-  include components/image-tile.pug
+
 block scripts

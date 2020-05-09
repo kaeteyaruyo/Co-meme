@@ -102,5 +102,5 @@ input[type="radio"] {
 }
 
 .imageWall__tiles--waterfall > .imageTile {
-    height: fit-content;
+    height: unset;
 }

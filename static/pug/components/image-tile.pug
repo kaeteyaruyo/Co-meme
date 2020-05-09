@@ -1,7 +1,7 @@
 link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
 
-mixin imageTile({content, likes, comments = 0, views})
-  div.imageTile
+mixin imageTile({imageId, content, likes, comments = 0, views})
+  a.imageTile(href=`/image/${ imageId }`)
     img.imageTile__image(src=`data:image/png;base64, ${ content }`)
     div.imageTile__info
       div.imageTile__info--container

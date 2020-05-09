@@ -1,50 +1,27 @@
 extends layouts/base.pug
 
 block stylesheets
-  link(rel="stylesheet" type="text/css" href="/css/common/index.css")
+  link(rel="stylesheet" type="text/css" href="/css/index/index.css")
 
 block header
   include components/header.pug
 
 block main
-  h2 你可能會喜歡的主題
-  div.main__topics
-    div.main__topic
-      div.main__topic--img
-        img(src="")
-      div.main__topic--info
-        p.main__info--font 熱門主題
-        p.main__new--font 本日新增
-
-    div.main__topic
-      div.main__topic--img
-        img(src="")
-      div.main__topic--info
-        p.main__info--font 熱門主題
-        p.main__new--font 本日新增
-    div.main__topic
-      div.main__topic--img
-        img(src="")
-      div.main__topic--info
-        p.main__info--font 熱門主題
-        p.main__new--font 本日新增
-    div.main__topic
-      div.main__topic--img
-        img(src="")
-      div.main__topic--info
-        p.main__info--font 熱門主題
-        p.main__new--font 本日新增
-  h2 為你推薦
-  div.main__button
-    div.main__button--left
-      button 迷因
-      button 長輩圖
-      button 全部
-    div.main__button--right
-      select.main__select
-        option 最新
-        option 最新
-        option 最新
-        option 最新
+  include components/image-wall.pug
+  mixin topic(img, title, newPosts, color)
+    div(class=`highlight__topic highlight__topic--${ color }`)
+      img.highlight__topic--img(src=img)
+      div.highlight__topic--info
+        p.topic__info--title= title
+        p.topic__info--newPosts= `本日增加${ newPosts }則貼文`
+  div.main__highlight
+    h2.main__highlight--title 大家都在討論
+    div.main__highlight--gallery
+      div.highlight--gallery--scrollable
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 71, 'yellow')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 18, 'purple')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 9, 'blue')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 130, 'pink')
+  +imageWall('為你推薦', images)
 
 block scripts

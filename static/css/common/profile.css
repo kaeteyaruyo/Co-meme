@@ -67,17 +67,6 @@
 }
 
 
-.setting__right--sortor {
-    margin-top: 1rem;
-    box-sizing: border-box;
-    border-radius: 3rem;
-    border: #FFFFFF 1px solid ;
-    background:#FFFFFF;
-    font-size: 0.9rem;
-    display: block;
-    padding: 0.5rem 3rem;
-}
-
 
 .posts__imgList {
     width: 100%;

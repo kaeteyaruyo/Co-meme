@@ -1,10 +1,72 @@
 extends layouts/base.pug
 
 block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/common/image.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
 
 block header
   include components/header.pug
 
 block main
-
+  mixin message(imgUrl,name, date, content)
+    div.message__from
+      img.message__from--img(src=imgUrl width="50" height="50")
+      div
+        span.message__from--name= name
+        span.message__from--date= date+"前"
+        p.message__from--content= content
+  -var articleTitle = "超好笑貼圖迷因"
+  -var articlePostdate = "2小時"
+  -var imgUrl = "/img/common/image-tile/thumbnail.png"
+  -var authorImg = "/img/common/image/author.svg"
+  -var authorName = " 曹能寶"
+  -var followerNum = 122
+  -var articleContent = "想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後想問我的角色 是天使 你回我而天使的角色 是陪你 做朋友當我就站在你身後最寂寞的場所猜測你的眼神 你的心去哪了追逐你的眼神 我還能去哪呢當我就站在你身後"
+  -var tagList = ['親子教育','親子教育','教育','COVID-19']
+  -var heartNum = "500"
+  -var commentNum = "1.2k"
+  div.main__post
+    div.post__picture
+      img.post__picture--content(src=imgUrl)
+      img.picture__picture--info(src="/img/common/image/info.svg")
+    div.post__element
+      div.element__title
+        div.title__content
+          h1.title__content--main= articleTitle
+          p.title__content--postdate= "發布時間 : " + articlePostdate + "前"
+        div.title_tool
+          button: img.tool__share(src="/img/common/image/share.svg" width="20" height="20")
+          button: img.tool__more(src="/img/common/image/more.svg" width="20" height="20")
+      div.element__author
+        img.author__info--img(src=authorImg width="50" height="50")
+        div.author__data
+          p.author__data--name= authorName
+          p.author__data--follower= "追蹤者 "+ followerNum + "人"
+        button.author__follow--button 追蹤
+      div.element__content= articleContent
+      div.element__record
+        include components/tags.pug
+        +tags(tagList)
+        div.record__all
+          button: img.heart__img(src="/img/common/image/heart.svg" width="20" height="20")
+          span.heart__num= heartNum
+          button: img.comment__img(src="/img/common/image/comment.svg" width="20" height="20")
+          span.comment__num= commentNum
+      hr.element__divider
+      div.element__comment
+        img.comment__from(src=authorImg width="50" height="50")
+        div.comment__input
+          div.input__bar
+            input.bar__content(placeholder="寫下你的留言")
+          div.input__button
+            button.input__button--cancel 取消
+            button.input__button--send 留言
+      div.element__message
+        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+        +message("/img/common/image/author.svg","曹能寶", "2小時", "想問我的角色 是天使 你回我而天使的角色")
+  div.main__similar
+    p.similar__title= "更多相似"
+  include components/image-tile.pug
 block scripts

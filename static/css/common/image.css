@@ -1,0 +1,172 @@
+.main * {
+    margin: 0;
+    padding: 0;
+}
+.main {
+    background-color: #F7F7F7;
+    padding-top: 2rem;
+}
+.main__post {
+    margin: 0 2rem 0 2rem;
+    background-color: #FFFFFF;
+    padding: 2% 2% 2% 2%;
+    display: grid;
+    grid-template-columns: 35fr 65fr;
+    grid-gap: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+}
+.post__picture {
+    position: relative;
+    width: 100%;
+}
+.post__element {
+    width: 100%;
+    position: relative;
+}
+.post__picture--content {
+    width: 100%;
+}
+.picture__picture--info {
+    width: 7%;
+    position: absolute;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    right: 1rem;
+    top: 1rem;
+}
+.element__title {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    margin-bottom: 1.5rem;
+}
+.title__content--main {
+    font-size: 28px;
+    color: #333333;
+}
+.title__content--postdate {
+    font-size: 14px;
+    color: #333333;
+}
+.title_tool{
+    text-align: right;
+    position: relative;
+}
+.tool__share{
+    margin-right: 0.5rem;
+}
+.element__author {
+    display: grid;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.author__data {
+    margin-left: 3.5rem;
+    width: 5rem;
+    position: absolute;
+}
+.author__data--name {
+    font-size: 20px;
+}
+.author__data--follower {
+    font-size: 12px;
+    color: #333333;
+}
+.author__follow--button {
+    font-size: 14px;
+    color: #FFFFFF;
+    background-color: #4C26EB;
+    padding: 0.3rem 1.5rem;
+    border-radius: 3rem;
+    margin-left: 9rem;
+    position: absolute;
+}
+.element__content {
+    font-size: 14px;
+    margin: 0 3rem 1.5rem 0;
+}
+.element__record {
+    display: grid;
+    grid-template-columns: 8fr 1fr;
+}
+.record__all {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+.heart__num, .comment__num {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin-left: 0.75rem;
+}
+.heart__num {
+    margin-right: 3.5rem;
+}
+.element__divider {
+    border-top: 1px solid;
+    color: #f2f2ff;
+    margin: 0.4rem 0 0.4rem 0;
+}
+.element__comment {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    margin: 1rem 0;
+}
+.input__bar {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 2rem;
+    padding: 0.25rem 1rem;
+    border-radius: 2rem;
+    background-color: #F2F2F2;
+    margin-bottom: 1rem;
+}
+.bar__content {
+    flex-grow: 1;
+    border: none;
+    background: none;
+}
+.input__button {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+.input__button--cancel {
+    color: #4C26EB;
+    padding: 0.5rem 1.5rem;
+    margin-right: 1rem;
+}
+.input__button--send {
+    color: #ffffff;
+    background-color: #4C26EB;
+    border-radius: 3rem;
+    padding: 0.5rem 1.5rem;
+}
+/* mixin */
+.message__from {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    padding: 0.5rem 0;
+}
+.message__from--name {
+    font-size: 20px;
+    margin-right: 1rem;
+}
+.message__from--date {
+    font-size: 12px;
+    color: #333333;
+}
+.message__from--content {
+    font-size: 14px;
+    margin-top: 0.5rem;
+}
+.main__similar {
+    margin: 0 2rem 0 2rem;
+    padding: 2% 0;
+}
+.similar__title {
+    font-size: 24px;
+}

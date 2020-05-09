@@ -1,7 +1,42 @@
 extends layout.pug
 
+//- 引入CSS
 block stylesheets
-
+  link(rel="stylesheet" type="text/css" href="/css/common/header.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/profile.css")
+//- 設定grid和flex的差異?=grid是二維，flex一維
+//- 寫pug
 block main
+  div.main__profile
+    div.profile__selfInfo
+      img.profile__selfInfo--header(src="/img/common/header/account.svg" width="120" height="120")
+      span.profile__selfInfo--name 曹能寶
+      button.profile__selfInfo--subscribe 追蹤
+    div.profile__navi
+      button.profile__navi--posts 貼文
+      button.profile__navi--follow 關注主題
+      button.profile__navi--favorite 收藏
+      button.profile__navi--tags 標籤雲
+    div.profile__navi--rectangle
+  div.main__posts
+    div.posts__setting
+      div.setting__left
+        button 迷因
+        button 長輩圖
+      div.setting__right
+        div.setting__right--arrange
+          button.setting__right--arrangeA
+            img(src='')
+          button.setting__right--arrangeB
+            img(src='')
+        select.setting__right--sortor
+          option(value="latest") 最新
+    div.posts__imgList
+      include components/image-tile.pug
+      +imageTile("/img/common/image-tile/thumbnail.png", 500, 12, 80)
+      +imageTile("/img/common/image-tile/thumbnail.png", 40, 2, 6)
+      +imageTile("/img/common/image-tile/thumbnail.png", 1200, 122, 880)
+      +imageTile("/img/common/image-tile/thumbnail.png", 5050, 102, 800)
 
+//- 引入JavaScript
 block scripts

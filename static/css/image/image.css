@@ -1,172 +1,205 @@
-.main * {
-    margin: 0;
-    padding: 0;
-}
 .main {
     background-color: #F7F7F7;
-    padding-top: 2rem;
+    padding: 2rem;
 }
+
 .main__post {
-    margin: 0 2rem 0 2rem;
-    background-color: #FFFFFF;
-    padding: 2% 2% 2% 2%;
+    min-height: 80vh;
     display: grid;
-    grid-template-columns: 35fr 65fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
     grid-gap: 1.5rem;
-    border-radius: 10px;
+    border-radius: 1rem;
+    padding: 2rem;
+    background-color: #FFFFFF;
     box-shadow: 0px 3px 6px #00000029;
 }
+
 .post__picture {
     position: relative;
     width: 100%;
+    object-fit: contain;
 }
-.post__element {
-    width: 100%;
-    position: relative;
-}
+
 .post__picture--content {
+    border-radius: 1rem;
     width: 100%;
 }
-.picture__picture--info {
-    width: 7%;
-    position: absolute;
+
+.post__picture--info {
+    width: 2rem;
     background-color: #FFFFFF;
     border-radius: 50%;
+    position: absolute;
     right: 1rem;
     top: 1rem;
 }
-.element__title {
-    display: grid;
-    grid-template-columns: 8fr 2fr;
-    margin-bottom: 1.5rem;
+
+.post__information {
+    width: 100%;
+    min-height: 80vh;
 }
-.title__content--main {
-    font-size: 28px;
-    color: #333333;
-}
-.title__content--postdate {
-    font-size: 14px;
-    color: #333333;
-}
-.title_tool{
-    text-align: right;
-    position: relative;
-}
-.tool__share{
-    margin-right: 0.5rem;
-}
-.element__author {
-    display: grid;
+
+.information__author {
+    display: flex;
+    justify-content: start;
     align-items: center;
-    margin-bottom: 1.5rem;
 }
-.author__data {
-    margin-left: 3.5rem;
-    width: 5rem;
-    position: absolute;
+
+.information__author--data {
+    margin: 0 1rem;
 }
+
 .author__data--name {
-    font-size: 20px;
+    margin: 0;
+    font-size: larger;
 }
+
 .author__data--follower {
-    font-size: 12px;
+    margin: 0;
+    font-size: small;
     color: #333333;
 }
-.author__follow--button {
-    font-size: 14px;
+
+.information__author--follow {
+    font-size: 1rem;
     color: #FFFFFF;
     background-color: #4C26EB;
-    padding: 0.3rem 1.5rem;
-    border-radius: 3rem;
-    margin-left: 9rem;
-    position: absolute;
+    margin: 0 1rem;
+    padding: .25rem 1.5rem;
+    border-radius: 1.5rem;
 }
-.element__content {
-    font-size: 14px;
-    margin: 0 3rem 1.5rem 0;
-}
-.element__record {
-    display: grid;
-    grid-template-columns: 8fr 1fr;
-}
-.record__all {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 0.6rem;
-}
-.heart__num, .comment__num {
-    font-size: 14px;
-    color: #aaaaaa;
-    margin-left: 0.75rem;
-}
-.heart__num {
-    margin-right: 3.5rem;
-}
-.element__divider {
-    border-top: 1px solid;
-    color: #f2f2ff;
-    margin: 0.4rem 0 0.4rem 0;
-}
-.element__comment {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
+
+.information__description {
     margin: 1rem 0;
+    font-size: large;
 }
-.input__bar {
-    box-sizing: border-box;
-    display: flex;
-    width: 100%;
-    height: 2rem;
-    padding: 0.25rem 1rem;
-    border-radius: 2rem;
-    background-color: #F2F2F2;
-    margin-bottom: 1rem;
-}
-.bar__content {
-    flex-grow: 1;
-    border: none;
-    background: none;
-}
-.input__button {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 14px;
-}
-.input__button--cancel {
-    color: #4C26EB;
-    padding: 0.5rem 1.5rem;
-    margin-right: 1rem;
-}
-.input__button--send {
-    color: #ffffff;
-    background-color: #4C26EB;
-    border-radius: 3rem;
-    padding: 0.5rem 1.5rem;
-}
-/* mixin */
-.message__from {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    padding: 0.5rem 0;
-}
-.message__from--name {
-    font-size: 20px;
-    margin-right: 1rem;
-}
-.message__from--date {
-    font-size: 12px;
+
+.information__timestamp {
     color: #333333;
 }
-.message__from--content {
-    font-size: 14px;
-    margin-top: 0.5rem;
+
+.information__actions {
+    display: flex;
+    justify-content: space-around;
+    border-top: #E2E2E2 1px solid;
+    border-bottom: #E2E2E2 1px solid;
+    padding: 1rem 0;
 }
-.main__similar {
-    margin: 0 2rem 0 2rem;
-    padding: 2% 0;
+
+.information__action {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 0;
+    padding: 0;
 }
-.similar__title {
-    font-size: 24px;
+
+.action__like--img {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #AAAAAA;
+    -webkit-mask-image: url(/img/image/like.svg);
+    mask-image: url(/img/image/like.svg);
 }
+
+.action__like--count {
+    margin-left: 1rem;
+    color: #AAAAAA;
+}
+
+.information__action--like:hover > .action__like--img {
+    background-color: #F57575;
+}
+
+.information__action--like:hover > .action__like--count {
+    color: #F57575;
+}
+
+.action__share--img {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #AAAAAA;
+    -webkit-mask-image: url(/img/image/share.svg);
+    mask-image: url(/img/image/share.svg);
+}
+
+.action__share--label {
+    margin-left: 1rem;
+    color: #AAAAAA;
+}
+
+.information__comment {
+    display: flex;
+    margin: 1rem 0;
+}
+
+.information__comment--input {
+    flex-grow: 1;
+    margin: 0 1rem;
+    padding: .25rem 1rem;
+    border: none;
+    border-radius: 1.5rem;
+    background-color: #F2F2F2;
+}
+
+.information__comment--submit {
+    color: #FFFFFF;
+    background-color: #4C26EB;
+    border-radius: 2rem;
+    padding: .5rem 1.5rem;
+}
+
+.information__messages {
+    width: 100%;
+    height: 50vh;
+    overflow-y: auto;
+}
+
+/* mixin */
+.message {
+    display: grid;
+    width: 100%;
+    margin: 1rem 0;
+    grid-template-rows: auto;
+    grid-template-columns: min-content min-content auto;
+    grid-template-areas:
+    "msg-icon msg-author msg-timestamp"
+    "msg-icon msg-content msg-content";
+    justify-items: start;
+    align-items: center;
+}
+
+.message__author--icon {
+    grid-area: msg-icon;
+    margin-right: .5rem;
+}
+
+.message__author--name {
+    grid-area: msg-author;
+    color: #333333;
+    margin-right: 1rem;
+}
+
+.message__timestamp {
+    grid-area: msg-timestamp;
+    color: #333333;
+    font-size: smaller;
+}
+
+.message__content {
+    grid-area: msg-content;
+    color: #333333;
+    font-size: small;
+}
+
+.main__similar--title {
+    color: #333333;
+    font-weight: 500;
+}
+
+.main__similar--list {
+    display: flex;
+}
+

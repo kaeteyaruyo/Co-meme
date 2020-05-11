@@ -13,7 +13,7 @@ module.exports = database.define('tag', {
         allowNull: false,
         unique: true
     },
-    posts: {
+    postCount: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         defaultValue: '0'

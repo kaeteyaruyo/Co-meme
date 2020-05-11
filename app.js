@@ -48,6 +48,7 @@ app.use(parser.urlencoded( { extended: true } ));
 app.use(parser.json());
 
 app.get('/', async (req, res) => {
+    // TODO: add comment count in attribute
     const images = await Image.findAll({
         attributes: [
             'imageId',
@@ -67,16 +68,70 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/image', (req, res) => {
-    res.render('image', {
-        title: '圖片',
+app.get('/image/:id', (req, res) => {
+    Image.findOne({
+        where: {
+            imageId: req.params.id,
+        },
+        attributes: [
+            'content',
+            'description',
+            'likes',
+            'createdAt',
+        ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'userId',
+                    'username',
+                    'icon',
+                    'followerCount',
+                ],
+            },
+            {
+                model: Comment,
+                as: 'comments',
+                attributes: [
+                    'comment',
+                    'createdAt'
+                ],
+                include: {
+                    model: User,
+                    as: 'author',
+                    attributes: [
+                        'userId',
+                        'username',
+                        'icon',
+                    ],
+                },
+            },
+            {
+                model: Tag,
+                as: 'tags',
+                attributes: [
+                    'tag',
+                    'tagId',
+                ],
+            },
+        ]
+    })
+    .then(image => {
+        res.render('image', {
+            title: '圖片',
+            image
+        });
+    })
+    .catch(error => {
+        res.status(500).send({ error });
     });
 });
 
-app.get('/profile/:user', (req, res) => {
+app.get('/profile/:id', (req, res) => {
     User.findOne({
         where: {
-            userId: req.params.user
+            userId: req.params.id
         },
     })
     .then(user => {

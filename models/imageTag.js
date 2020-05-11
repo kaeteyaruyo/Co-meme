@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const database = require('./connect');
 
 module.exports = database.define('imageTag', {
-    image: {
+    imageId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         primaryKey: true,
@@ -11,7 +11,7 @@ module.exports = database.define('imageTag', {
             key: 'imageId'
         }
     },
-    tag: {
+    tagId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         primaryKey: true,

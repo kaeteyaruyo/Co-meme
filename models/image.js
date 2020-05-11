@@ -19,16 +19,12 @@ module.exports = database.define('image', {
         type: Sequelize.INTEGER(4),
         allowNull: false
     },
-    title: {
-        type: Sequelize.STRING(160),
-        allowNull: true
-    },
-    author: {
+    userId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
     },
     description: {
-        type: Sequelize.STRING(500),
+        type: Sequelize.STRING(200),
         allowNull: true
     },
     views: {

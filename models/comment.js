@@ -12,7 +12,11 @@ module.exports = database.define('comment', {
         type: Sequelize.STRING(500),
         allowNull: false
     },
-    author: {
+    imageId: {
+        type: Sequelize.INTEGER(10).UNSIGNED,
+        allowNull: false,
+    },
+    userId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
     },

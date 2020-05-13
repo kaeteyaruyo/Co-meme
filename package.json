@@ -26,5 +26,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
+  },
+  "nodemonConfig": {
+    "ignore": ["static/*", "test/*"],
+    "delay": "2500"
   }
 }

@@ -3,7 +3,6 @@
 }
 
 .imageWall__title {
-    color: #333333;
     font-size: 1.5rem;
     font-weight: 500;
 }
@@ -80,16 +79,6 @@ input[type="radio"] {
 .arrange__icon--waterfall {
     -webkit-mask-image: url(/img/common/image-wall/view-waterfall.svg);
     mask-image: url(/img/common/image-wall/view-waterfall.svg);
-}
-
-.imageWall__sorter {
-    color: #333333;
-    height: 2rem;
-    margin-left: 1rem;
-    padding: 0 1rem;
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 2rem;
 }
 
 .imageWall__tiles {

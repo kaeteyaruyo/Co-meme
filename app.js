@@ -36,7 +36,7 @@ app.use(session({
 
 app.use(function (req, res, next) {
     if (req.session.user) {
-        res.locals.user = req.session.user;
+        res.locals.activeUser = req.session.user;
     }
     next();
 })
@@ -48,14 +48,12 @@ app.use(parser.urlencoded( { extended: true } ));
 app.use(parser.json());
 
 app.get('/', async (req, res) => {
-    // TODO: add comment count in attribute
     const images = await Image.findAll({
         attributes: [
             'imageId',
             'content',
             'category',
             'likes',
-            'views',
         ],
     });
     res.render('index', {
@@ -137,6 +135,7 @@ app.get('/profile/:id', (req, res) => {
     .then(user => {
         res.render('profile', {
             title: `${ user.username }的頁面`,
+            user,
         });
     })
     .catch(error => {

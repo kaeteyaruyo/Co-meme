@@ -1,7 +1,7 @@
 extends layouts/base.pug
 
 block stylesheets
-  link(rel="stylesheet" type="text/css" href="/css/image/image.css")
+  link(rel="stylesheet" type="text/css" href="/css/image.css")
   link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
 
 block header
@@ -26,9 +26,11 @@ block main
     div.post__information
       div.information__author
         if image.author.icon
-          img.information__author--icon(src=`data:image/png;base64, ${ image.author.icon }` width="45" height="45")
+          a.information__author--link(href=`/profile/${ image.author.userId }`)
+            img.information__author--icon(src=`data:image/png;base64, ${ image.author.icon }` width="45" height="45")
         else
-          img.information__author--icon(src="/img/common/account.svg" width="45" height="45")
+          a.information__author--link(href=`/profile/${ image.author.userId }`)
+            img.information__author--icon(src="/img/common/account.svg" width="45" height="45")
         div.information__author--data
           p.author__data--name= image.author.username
           p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`

@@ -5,6 +5,7 @@ body {
     font-family: 'Noto Sans TC', sans-serif;
     width: 100vw;
     max-width: 100%;
+    color: #333333;
 }
 
 a {
@@ -12,6 +13,7 @@ a {
 }
 
 button {
+    cursor: pointer;
     border: none;
     background: none;
     outline: none;

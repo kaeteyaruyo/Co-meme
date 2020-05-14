@@ -28,6 +28,12 @@ app.get('/image', (req, res) => {
     });
 });
 
+app.get('/upload', (req, res) => {
+    res.render('upload', {
+        title: '上傳',
+    });
+});
+
 app.get('/profile/:user', (req, res) => {
     res.render('profile', {
         title: `${ req.params.user }的頁面`,

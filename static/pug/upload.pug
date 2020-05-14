@@ -1,7 +1,87 @@
 extends layout.pug
 
 block stylesheets
+  link(rel="stylesheet", type="text/css" href="/css/common/upload.css")
 
 block main
-
+  -var imageUrl="/img/common/image-tile/thumbnail.png"
+  div.main__upload
+    div.upload__flow
+      div.flow__step.flow__step--one
+        span.step__content 上傳圖片
+        div.step__circles
+          div.step__circle.step__circle--top 1
+          div.step__circle.step__circle--bottom
+      div.flow__divider
+        hr.divider__line
+      div.flow__step.flow__step--two
+        span.step__content 編輯圖片資訊
+        div.step__circles
+          div.step__circle.step__circle--top 2
+          div.step__circle.step__circle--bottom
+      div.flow__divider
+        hr.divider__line
+      div.flow__step.flow__step--three
+        span.step__content 添加標籤
+        div.step__circles
+          div.step__circle.step__circle--top 3
+          div.step__circle.step__circle--bottom
+    div.upload__divider
+      hr.divider__line
+    form(id="upload__form" action="/upload" method="POST")
+      div.upload__content
+        div.content__one
+          div.one__circles
+            div.one__circle.one__circle--top
+              img.one__circle--img(src="img/common/upload/photo.svg" width="160")
+            div.one__circle.one__circle--bottom
+          p.one__title 將你要上傳的圖片檔案拖曳到這裡
+          div.one__button
+            button.one__button--select(type="button") 選擇檔案
+          p.one__comment 正在為你上傳圖片，請稍後幾秒
+        div.content__two
+          div.two__picture
+            img.two__picture--content(src=imageUrl)
+          div.two__element
+            div.element__title
+              p.element__title--content 編輯圖片資訊
+              p.element__title--comment 為你的圖片增加一些資訊，讓他更容易被大家找到
+            div.element__describe
+              p.element__describe--title 描述
+              div.element__describe--input
+                input.element__describe--bar(name="describe" eplaceholder="請輸入圖片描述")
+            p.element__classifier--title 種類
+            div.element__classifier
+              div.classifier__meme
+                input.element__classifier--input(type="radio" id="meme" name="classifier" value="meme" checked)
+                div.element__classifier--radio
+                  div
+                label.element__classifier--label(for="meme") 迷因
+              div.classifier__elder
+                input.element__classifier--input(type="radio" id="elder" name="classifier" value="elder")
+                div.element__classifier--radio
+                  div
+                label.element__classifier--label(for="elder") 長輩圖
+            p.element__privacy--title 隱私性
+            div.element__privacy
+              select(name="privacy")
+                option(value="public") 公開
+                option(value="public") 公開
+                option(value="only_follow") 僅限我追蹤的人
+                option(value="private") 私密
+            div.element__buttons
+              button.element__button--back(type="button") 返回
+              button.element__button--next(type="button") 下一步
+        div.content__three
+          p.three__title 為你的圖片分類
+          div.three__keyword
+            div.three__keyword--input
+              input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off")
+            button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
+          textarea#keywords.three__textarea(name="tags" autocomplete="off")
+          div.three__tags
+          div.three__buttons
+              button.three__button--back(type="button") 返回
+              button.three__button--next(type="button") 發布圖片
 block scripts
+  script(src="/js/common/upload.js")

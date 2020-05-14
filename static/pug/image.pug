@@ -8,14 +8,12 @@ block header
   include components/header.pug
 
 block main
+  include components/icon.pug
   include components/tags.pug
   include components/image-tile.pug
   mixin message(comment)
     div.message
-      if icon
-        img.message__author--icon(src=`data:image/png;base64, ${ comment.author.icon }` width="35" height="35")
-      else
-        img.message__author--icon(src="/img/common/account.svg" width="35" height="35")
+      +icon("message__author--icon", comment.author.icon, 35)
       span.message__author--name= comment.author.username
       span.message__timestamp= comment.createdAt
       span.message__content= comment.comment
@@ -25,12 +23,8 @@ block main
       img.post__picture--info(src="/img/image/info.svg")
     div.post__information
       div.information__author
-        if image.author.icon
-          a.information__author--link(href=`/profile/${ image.author.userId }`)
-            img.information__author--icon(src=`data:image/png;base64, ${ image.author.icon }` width="45" height="45")
-        else
-          a.information__author--link(href=`/profile/${ image.author.userId }`)
-            img.information__author--icon(src="/img/common/account.svg" width="45" height="45")
+        a.information__author--link(href=`/profile/${ image.author.userId }`)
+          +icon("information__author--icon", image.author.icon, 45)
         div.information__author--data
           p.author__data--name= image.author.username
           p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`
@@ -46,10 +40,7 @@ block main
           div.action__share--img
           span.action__share--label 分享
       div.information__comment
-        if image.author.icon
-          img.information__comment--icon(src=`data:image/png;base64, ${ image.author.icon }` width="35" height="35")
-        else
-          img.information__comment--icon(src="/img/common/account.svg" width="35" height="35")
+        +icon("information__comment--icon", image.author.icon, 35)
         input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
         button.information__comment--submit 留言
       div.information__messages

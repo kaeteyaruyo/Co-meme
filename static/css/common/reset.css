@@ -5,6 +5,9 @@ body {
     font-family: 'Noto Sans TC', sans-serif;
     width: 100vw;
     max-width: 100%;
+}
+
+* {
     color: #333333;
 }
 
@@ -12,7 +15,7 @@ a {
     text-decoration: none;
 }
 
-button {
+button, label {
     cursor: pointer;
     border: none;
     background: none;

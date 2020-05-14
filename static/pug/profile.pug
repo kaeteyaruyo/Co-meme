@@ -7,9 +7,10 @@ block header
   include components/header.pug
 
 block main
+  include components/icon.pug
   div.main__profile
     div.profile__header
-      img.profile__header--icon(src="/img/common/account.svg" width="120" height="120")
+      +icon("profile__header--icon", user.icon, 120)
       span.profile__header--name= user.username
       span.profile__header--followerCount= `有${ user.followerCount }人正在追蹤`
       button.profile__header--subscribe 追蹤

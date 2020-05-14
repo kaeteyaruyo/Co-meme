@@ -26,6 +26,7 @@
     padding: 0;
     line-height: 0;
     border-radius: 50%;
+    transition: background-color .3s;
 }
 
 .header__menu--button:hover {
@@ -66,20 +67,22 @@
 .header__action--signup {
     color: #4C26EB;
     margin-right: 1rem;
+    transition: background-color .3s;
 }
 
 .header__action--signup:hover {
-    background: #F2F2F2;
+    background-color: #F2F2F2;
 }
 
 .header__action--signin {
     color: #FFFFFF;
     background-color: #4C26EB;
     border: #4C26EB 1px solid;
+    transition: background-color .3s;
 }
 
 .header__action--signin:hover {
-    background: #3B1EB8;
+    background-color: #3B1EB8;
 }
 
 .header__toolbar {
@@ -88,8 +91,111 @@
     align-items: center;
 }
 
-.header__tool {
+.header__tool--upload {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: .25rem 1rem;
+    border: #4C26EB 1px solid;
+    border-radius: 2rem;
+    transition: background-color .3s;
+}
+
+.tool__upload--icon {
+    width: 24px;
+    height: 24px;
+    background-color: #4C26EB;
+    -webkit-mask-image: url(/img/common/header/upload.svg);
+    mask-image: url(/img/common/header/upload.svg);
+    transition: background-color .3s;
+}
+
+.tool__upload--text {
     display: inline-block;
-    line-height: 0;
-    padding: 0 .75rem;
+    margin-left: .5rem;
+    color: #4C26EB;
+    font-weight: 500;
+    transition: color .3s;
+}
+
+.header__tool--upload:hover {
+    background-color: #4C26EB;
+}
+
+.header__tool--upload:hover > .tool__upload--icon {
+    background-color: #FFFFFF;
+}
+
+.header__tool--upload:hover > .tool__upload--text {
+    color: #FFFFFF;
+}
+
+.header__tool--account {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    padding: .25rem 1rem;
+    border-radius: 2rem;
+    transition: background-color .3s;
+}
+
+.header__tool--account:hover {
+    background-color: #F7F7F7;
+}
+
+.tool__account--username {
+    display: block;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.tool__account--menu {
+    opacity: 0;
+    width: -webkit-fill-available;
+    width: fill-available;
+    height: 0;
+    position: absolute;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 1rem;
+    left: 0;
+    top: 3rem;
+    transition: opacity .3s;
+}
+
+#account__menu {
+    display: none;
+}
+
+#account__menu:checked + .header__tool--account > .tool__account--menu {
+    height: auto;
+    opacity: 1;
+}
+
+.tool__account--menu > a {
+    display: block;
+    text-align: center;
+    padding: .5rem 0;
+    transition: background-color .3s;
+}
+
+.tool__account--menu > a:not(:first-child) {
+    border-top: #E2E2E2 1px solid;
+}
+
+.tool__account--menu > a:last-child {
+    background-color: #F57575;
+    color: #FFFFFF;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.tool__account--menu > a:hover {
+    background-color: #F7F7F7;
+}
+
+.tool__account--menu > a:last-child:hover {
+    background-color: #E26060;
 }

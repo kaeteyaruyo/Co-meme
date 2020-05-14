@@ -131,6 +131,11 @@ app.get('/profile/:id', (req, res) => {
         where: {
             userId: req.params.id
         },
+        attributes: [
+            'username',
+            'icon',
+            'followerCount',
+        ],
     })
     .then(user => {
         res.render('profile', {
@@ -196,7 +201,8 @@ app.post('/signin', async (req, res) => {
         attributes: [
             'userId',
             'username',
-            'password'
+            'password',
+            'icon',
         ],
     });
     bcrypt.compare(req.body.password, user.password)
@@ -205,6 +211,7 @@ app.post('/signin', async (req, res) => {
             req.session.user = {
                 id: user.userId,
                 name: user.username,
+                icon: user.icon,
             }
             res.redirect(`/profile/${ user.userId }`);
         }
@@ -213,6 +220,11 @@ app.post('/signin', async (req, res) => {
             res.redirect('signin');
         }
     });
+});
+
+app.get('/signout', async (req, res) => {
+    delete req.session.user;
+    res.redirect('/');
 });
 
 app.listen(config.port, () => {

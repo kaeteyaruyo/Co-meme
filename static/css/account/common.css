@@ -1,0 +1,64 @@
+.main {
+    height: 100vh;
+}
+
+.main__foreground {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    justify-self: center;
+    align-self: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.main__slogan {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 3rem;
+}
+
+.main__slogan--title {
+    font-size: 3rem;
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.main__slogan--subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.main__background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #F7F7F7;
+    z-index: -1;
+}
+
+.main__background--circle {
+    position: absolute;
+    width: 16rem;
+    height: 16rem;
+    border: 1px solid #707070;
+    border-radius: 50%;
+    background-image: linear-gradient(180deg, #9822D2 0%, #2A1169 100%);
+}
+
+.main__background--circle1 {
+    top: 71px;
+    left: -100px;
+}
+
+.main__background--circle2 {
+    bottom: -60px;
+    right: 505px;
+}

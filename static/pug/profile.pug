@@ -1,7 +1,31 @@
-extends layout.pug
+extends layouts/base.pug
 
 block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/profile.css")
+
+block header
+  include components/header.pug
 
 block main
+  include components/icon.pug
+  div.main__profile
+    div.profile__header
+      +icon("profile__header--icon", user.icon, 120)
+      span.profile__header--name= user.username
+      span.profile__header--followerCount= `有${ user.followerCount }人正在追蹤`
+      button.profile__header--subscribe 追蹤
+    div.profile__navi
+      input.profile__navi--input#tab__posts(type="radio" name="tab" value="posts" checked)
+      label.profile__navi--tab.profile__navi--posts(for="tab__posts") 貼文
+      input.profile__navi--input#tab__topics(type="radio" name="tab" value="topics")
+      label.profile__navi--tab.profile__navi--topics(for="tab__topics") 關注主題
+      input.profile__navi--input#tab__follwing(type="radio" name="tab" value="follwing")
+      label.profile__navi--tab.profile__navi--follwing(for="tab__follwing") 關注創作者
+      input.profile__navi--input#tab__tags(type="radio" name="tab" value="tags")
+      label.profile__navi--tab.profile__navi--tags(for="tab__tags") 標籤雲
+  section.main__panel.main__posts
+  section.main__panel.main__topics
+  section.main__panel.main__following
+  section.main__panel.main__tags
 
 block scripts

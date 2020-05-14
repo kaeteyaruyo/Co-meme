@@ -17,6 +17,7 @@ This is a meme community for everyone :D
 * Go to project directory
 * Type `npm install` in command line
     * It will automatically installs all dependecies we need
+* Type `cp config.js.default config.js` and fill in required information
 
 ### Execution
 

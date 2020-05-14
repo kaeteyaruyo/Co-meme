@@ -1,0 +1,14 @@
+module.exports = {
+    host: '127.0.0.1',
+    port: 8888,
+    session: {
+        secret: '',
+    },
+    db: {
+        database: '',
+        username: '',
+        password: '',
+        host: '',
+        port: 3306,
+    },
+};

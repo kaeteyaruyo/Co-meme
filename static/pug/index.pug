@@ -1,7 +1,27 @@
-extends layout.pug
+extends layouts/base.pug
 
 block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/index.css")
+
+block header
+  include components/header.pug
 
 block main
+  include components/image-wall.pug
+  mixin topic(img, title, newPosts, color)
+    div(class=`highlight__topic highlight__topic--${ color }`)
+      img.highlight__topic--img(src=img)
+      div.highlight__topic--info
+        p.topic__info--title= title
+        p.topic__info--newPosts= `本日增加${ newPosts }則貼文`
+  div.main__highlight
+    h2.main__highlight--title 大家都在討論
+    div.main__highlight--gallery
+      div.highlight--gallery--scrollable
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 71, 'yellow')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 18, 'purple')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 9, 'blue')
+        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 130, 'pink')
+  +imageWall('為你推薦', images)
 
 block scripts

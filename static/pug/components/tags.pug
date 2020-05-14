@@ -1,4 +1,4 @@
-mixin tags(tagList)
+mixin tags(tags)
   div.tags
-    each tagName in tagList
-      button.tag= tagName
+    each tag in tags
+      a.tag(href=`/topic/${ tag.tagId }`)= tag.tag

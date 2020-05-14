@@ -1,0 +1,27 @@
+include image-tile.pug
+link(rel="stylesheet" type="text/css" href="/css/common/image-wall.css")
+
+mixin imageWall(title, images)
+  section.imageWall
+    h2.imageWall__title= title
+    form.imageWall__actions(name="actions")
+      div.imageWall__category
+        input.imageWall__category--input#category__meme(type="radio" name="category" value="meme" checked)
+        label.imageWall__category--label(for="category__meme") 迷因
+        input.imageWall__category--input#category__elderly(type="radio" name="category" value="elderly")
+        label.imageWall__category--label(for="category__elderly") 長輩圖
+        input.imageWall__category--input#category__all(type="radio" name="category" value="all")
+        label.imageWall__category--label(for="category__all") 全部
+      div.imageWall__action--right
+        div.imageWall__arrange
+          input.imageWall__arrange--input#arrange__grid(type="radio" name="arrange" value="grid" checked)
+          label.imageWall__arrange--label(for="arrange__grid")
+            div.imageWall__arrange--icon.arrange__icon--grid
+          input.imageWall__arrange--input#arrange__waterfall(type="radio" name="arrange" value="waterfall")
+          label.imageWall__arrange--label(for="arrange__waterfall")
+            div.imageWall__arrange--icon.arrange__icon--waterfall
+    div.imageWall__tiles.imageWall__tiles--grid
+      each image in images
+        +imageTile(image)
+  script(src="/js/components/image-wall.js")
+

@@ -1,0 +1,76 @@
+.main {
+    padding: 0 3rem;
+    background-color:#F7F7F7;
+}
+
+.main__highlight {
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+.main__highlight--title {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.main__highlight--gallery {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: .5rem;
+}
+
+.highlight--gallery--scrollable {
+    display: flex;
+    width: fit-content;
+}
+
+.highlight__topic {
+    display: inline-flex;
+    margin-right: 1rem;
+    width: 20rem;
+    height: 8rem;
+    border-radius: 1rem;
+    box-shadow: 3px 3px 6px #00000029;
+}
+
+.highlight__topic--yellow {
+    background-color: #EBB026;
+}
+
+.highlight__topic--purple {
+    background-color: #6026EB;
+}
+
+.highlight__topic--blue {
+    background-color: #2668EB;
+}
+
+.highlight__topic--pink {
+    background-color: #F57575;
+}
+
+.highlight__topic--img {
+    width: 50%;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.highlight__topic--info {
+    width: 50%;
+    display: grid;
+    align-content: center;
+    padding: 0 .5rem;
+    color: #FFFFFF;
+}
+
+.topic__info--title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.topic__info--newPosts {
+    margin: 0;
+}

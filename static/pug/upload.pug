@@ -78,10 +78,9 @@ block main
             div.three__keyword--input
               input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off")
             button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
-          textarea#keywords.three__textarea(name="tags" autocomplete="off")
           div.three__tags
           div.three__buttons
               button.three__button--back(type="button") 返回
-              button.three__button--next(type="button") 發布圖片
+              button.three__button--next(type="submit") 發布圖片
 block scripts
   script(src="/js/common/upload.js")

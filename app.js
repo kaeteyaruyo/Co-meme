@@ -34,6 +34,11 @@ app.get('/upload', (req, res) => {
     });
 });
 
+app.post('/upload', (req, res) => {
+    console.log(req.body);
+    res.redirect('/');
+});
+
 app.get('/profile/:user', (req, res) => {
     res.render('profile', {
         title: `${ req.params.user }的頁面`,

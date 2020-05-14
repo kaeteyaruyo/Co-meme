@@ -59,16 +59,16 @@ document.addEventListener("click", closeAllSelect);
 
 /* three step : keyword input*/
 var keyword = document.getElementById("keyword");
-var keywords = document.getElementById("keywords");
 var tagsBlock = document.getElementsByClassName("three__tags")[0];
+var tagCount = 0;
 function addTag() {
     /* Add tag in tags block */
-    tag = document.createElement("button");
-    tag.innerHTML = keyword.value;
+    tag = document.createElement("input");
+    tag.setAttribute("value", keyword.value);
     tag.setAttribute("class", "three__tag");
-    tag.setAttribute("type", "button");
+    tag.setAttribute("type", "text");
+    tag.setAttribute("name", `tags[]`);
+    tagCount++;
     tagsBlock.appendChild(tag);
-    /* Add tag in textarea */
-    keywords.value += keyword.value + "\n";
     keyword.value = '';
 }

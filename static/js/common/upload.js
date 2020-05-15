@@ -1,3 +1,12 @@
+/* one step : upload image */
+Dropzone.options.myDropzone = {
+    url: 'upload',
+    paramName: 'image',
+    // autoProcessQueue: false,
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true,
+}
+// var mydropzone = new Dropzone("div#myDropzone", {url: "/upload"});
 /* two step : custom select menu */
 var selectDiv = document.getElementsByClassName("element__privacy")[0];
 var select = selectDiv.getElementsByTagName("select")[0];

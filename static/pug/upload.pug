@@ -28,13 +28,15 @@ block main
           div.step__circle.step__circle--bottom
     div.upload__divider
       hr.divider__line
-    form(id="upload__form" action="/upload" method="POST")
+    form(id="uploadForm" action="/upload" method="POST")
       div.upload__content
         div.content__one
-          div.one__circles
-            div.one__circle.one__circle--top
-              img.one__circle--img(src="img/common/upload/photo.svg" width="160")
-            div.one__circle.one__circle--bottom
+          div.one__upload
+            div.dropzone#myDropzone
+          //- div.one__circles
+          //-   div.one__circle.one__circle--top
+          //-     img.one__circle--img(src="img/common/upload/photo.svg" width="160")
+          //-   div.one__circle.one__circle--bottom
           p.one__title 將你要上傳的圖片檔案拖曳到這裡
           div.one__button
             button.one__button--select(type="button") 選擇檔案
@@ -83,4 +85,5 @@ block main
               button.three__button--back(type="button") 返回
               button.three__button--next(type="submit") 發布圖片
 block scripts
+  script(src="/js/common/dropzone.js")
   script(src="/js/common/upload.js")

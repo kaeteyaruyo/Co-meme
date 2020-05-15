@@ -36,7 +36,7 @@ app.get('/upload', (req, res) => {
 
 app.post('/upload', (req, res) => {
     console.log(req.body);
-    res.redirect('/');
+    res.send('ok');
 });
 
 app.get('/profile/:user', (req, res) => {

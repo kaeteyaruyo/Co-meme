@@ -10,38 +10,53 @@ block main
       div.flow__step.flow__step--one
         span.step__content 上傳圖片
         div.step__circles
-          div.step__circle.step__circle--top 1
-          div.step__circle.step__circle--bottom
+          img.step__check--img(src="/img/common/upload/check.svg")
+          div#step1Flow
+            div.step__circle.step__circle--top 1
+            div.step__circle.step__circle--bottom
       div.flow__divider
         hr.divider__line
       div.flow__step.flow__step--two
         span.step__content 編輯圖片資訊
         div.step__circles
-          div.step__circle.step__circle--top 2
-          div.step__circle.step__circle--bottom
+          img.step__check--img(src="/img/common/upload/check.svg")
+          div#step2Flow
+            div.step__circle.step__circle--top 2
+            div.step__circle.step__circle--bottom
       div.flow__divider
         hr.divider__line
       div.flow__step.flow__step--three
         span.step__content 添加標籤
         div.step__circles
-          div.step__circle.step__circle--top 3
-          div.step__circle.step__circle--bottom
+          img.step__check--img(src="/img/common/upload/check.svg")
+          div#step3Flow
+            div.step__circle.step__circle--top 3
+            div.step__circle.step__circle--bottom
     div.upload__divider
       hr.divider__line
-    form(id="uploadForm" action="/upload" method="POST")
+    form(id="uploadForm" action="/upload" method="POST" enctype='multipart/form-data')
       div.upload__content
-        div.content__one
-          div.one__upload
-            div.dropzone#myDropzone
-          //- div.one__circles
-          //-   div.one__circle.one__circle--top
-          //-     img.one__circle--img(src="img/common/upload/photo.svg" width="160")
-          //-   div.one__circle.one__circle--bottom
+        div#step1.content__one.content__one--hide
+          div.one__image--show
+            div.image__block
+              div.image__mask
+              label#imageUpdate.mask__update
+                img(src="/img/common/upload/photo.svg" width="20" style="margin-right: 0.5rem;")
+                span 更新上傳圖片
+              img#imageView.image__content(src="")
+            p.image__label 檔案名稱
+            p.image__text
+          div.one__circles
+            div.one__circle.one__circle--top
+              img.one__circle--img(src="img/common/upload/photo.svg" width="160")
+            div.one__circle.one__circle--bottom
           p.one__title 將你要上傳的圖片檔案拖曳到這裡
           div.one__button
-            button.one__button--select(type="button") 選擇檔案
+            label.one__button--select 選擇檔案
+              input#imageUploader(type="file" name="image" accept="image/*" style="display:none;")
+            button.one__button--select(type="button" onclick="step1GotoStep2()" style="display:none;margin:auto;") 下一步
           p.one__comment 正在為你上傳圖片，請稍後幾秒
-        div.content__two
+        div#step2.content__two.content__two--hide
           div.two__picture
             img.two__picture--content(src=imageUrl)
           div.two__element
@@ -55,12 +70,12 @@ block main
             p.element__classifier--title 種類
             div.element__classifier
               div.classifier__meme
-                input.element__classifier--input(type="radio" id="meme" name="classifier" value="meme" checked)
+                input.element__classifier--input(type="radio" id="meme" name="category" value="meme" checked)
                 div.element__classifier--radio
                   div
                 label.element__classifier--label(for="meme") 迷因
               div.classifier__elder
-                input.element__classifier--input(type="radio" id="elder" name="classifier" value="elder")
+                input.element__classifier--input(type="radio" id="elder" name="category" value="elder")
                 div.element__classifier--radio
                   div
                 label.element__classifier--label(for="elder") 長輩圖
@@ -72,17 +87,17 @@ block main
                 option(value="only_follow") 僅限我追蹤的人
                 option(value="private") 私密
             div.element__buttons
-              button.element__button--back(type="button") 返回
-              button.element__button--next(type="button") 下一步
-        div.content__three
+              button.element__button--back(type="button" onclick="step2GotoStep1()") 返回
+              button.element__button--next(type="button" onclick="step2GotoStep3()") 下一步
+        div#step3.content__three.content__three--hide
           p.three__title 為你的圖片分類
           div.three__keyword
             div.three__keyword--input
-              input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off")
+              input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off" size="1")
             button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
           div.three__tags
           div.three__buttons
-              button.three__button--back(type="button") 返回
+              button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
               button.three__button--next(type="submit") 發布圖片
 block scripts
   script(src="/js/common/dropzone.js")

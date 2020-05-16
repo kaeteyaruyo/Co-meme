@@ -1,12 +1,102 @@
-/* one step : upload image */
-Dropzone.options.myDropzone = {
-    url: 'upload',
-    paramName: 'image',
-    // autoProcessQueue: false,
-    acceptedFiles: 'image/*',
-    addRemoveLinks: true,
+/* start : get all steps */
+step1 = document.getElementById("step1");
+step2 = document.getElementById("step2");
+step3 = document.getElementById("step3");
+step1.classList.toggle("content__one--hide");
+
+flow = [];
+flowtext = document.getElementsByClassName("step__content");
+flow.push(document.getElementById("step1Flow"));
+flow.push(document.getElementById("step2Flow"));
+flow.push(document.getElementById("step3Flow"));
+for (i=2;i<=3;i++) {
+    turnGrey(i);
 }
-// var mydropzone = new Dropzone("div#myDropzone", {url: "/upload"});
+function turnGrey(index) {
+    index--;
+    flow[index].childNodes[1].style.display="none";
+    flow[index].childNodes[0].style.backgroundColor="#AAAAAA";
+    flowtext[index].style.color = "#AAAAAA";
+}
+function turnPurple(index) {
+    index--;
+    flow[index].childNodes[1].style.display="block";
+    flow[index].childNodes[0].style.backgroundColor="#4C26EB";
+    flowtext[index].style.color = "#333333";
+}
+function turnCheck(index) {
+    index--;
+    flow[index].classList.toggle("step__check--none");
+}
+/* next or back step */
+function step1GotoStep2() {
+    step1AndStep2();
+    turnCheck(1);
+    turnPurple(2);
+}
+function step2GotoStep1() {
+    step1AndStep2();
+    turnGrey(2);
+    turnCheck(1);
+    turnPurple(1);
+}
+function step2GotoStep3() {
+    step2AndStep3();
+    turnCheck(2);
+    turnPurple(3);
+}
+function step3GotoStep2() {
+    step2AndStep3();
+    turnGrey(3);
+    turnCheck(2);
+    turnPurple(2);
+}
+function step1AndStep2() {
+    step1.classList.toggle("content__one--hide");
+    step2.classList.toggle("content__two--hide");
+}
+function step2AndStep3() {
+    step2.classList.toggle("content__two--hide");
+    step3.classList.toggle("content__three--hide");
+}
+
+/* one step : upload image */
+var emptyImage = document.getElementsByClassName("one__circles")[0];
+var imageLoadend = document.getElementsByClassName("one__image--show")[0];
+var imagetitle = document.getElementsByClassName("one__title")[0];
+var imageSelect = document.getElementsByClassName("one__button--select")[0];
+var nextStep = document.getElementsByClassName("one__button--select")[1];
+var imageComment = document.getElementsByClassName("one__comment")[0];
+var imageUploader = document.getElementById("imageUploader");
+var imageView = document.getElementById("imageView");
+var imageText = imageLoadend.childNodes[2];
+var fileReader = new FileReader();
+var filename = NaN;
+
+imageUploader.addEventListener("change", function(event) {
+    if(this.files.length>0) {
+        fileReader.readAsDataURL(this.files[0]);
+        filename = this.files[0].name;
+    }
+});
+fileReader.onloadstart = function(event) {
+    emptyImage.style.display = "none";
+}
+fileReader.onload = function(event) {
+    imageLoadend.style.display = "block";
+    imagetitle.innerHTML = "你的圖片已上傳完成";
+    imageSelect.style.display = "none";
+    nextStep.style.display = "block";
+    imageComment.style.visibility = "visible";
+    imageComment.innerHTML = "前往編輯圖片資訊";
+    imageView.src = this.result;
+    imageText.innerHTML = filename;
+};
+imageView.addEventListener("mouseenter", function(event) {
+    var imageMask = imageLoadend.childNodes[0].childNodes[0];
+    imageMask.style.height = `${imageView.offsetHeight}px`;
+    imageMask.style.width = `${imageView.offsetWidth}px`;
+});
 /* two step : custom select menu */
 var selectDiv = document.getElementsByClassName("element__privacy")[0];
 var select = selectDiv.getElementsByTagName("select")[0];
@@ -69,15 +159,23 @@ document.addEventListener("click", closeAllSelect);
 /* three step : keyword input*/
 var keyword = document.getElementById("keyword");
 var tagsBlock = document.getElementsByClassName("three__tags")[0];
-var tagCount = 0;
 function addTag() {
     /* Add tag in tags block */
     tag = document.createElement("input");
     tag.setAttribute("value", keyword.value);
     tag.setAttribute("class", "three__tag");
-    tag.setAttribute("type", "text");
-    tag.setAttribute("name", `tags[]`);
-    tagCount++;
+    tag.setAttribute("type", "button");
+    tag.setAttribute("onclick", "removeTag(this)");
     tagsBlock.appendChild(tag);
+    tagtext = document.createElement("input");
+    tagtext.setAttribute("value", keyword.value);
+    tagtext.setAttribute("name", `tags[]`);
+    tagtext.style.display = "none";
+    tagsBlock.appendChild(tagtext);
     keyword.value = '';
+}
+function removeTag(tagbtn) {
+    tagtext = tagbtn.nextSibling;
+    tagbtn.remove();
+    tagtext.remove();
 }

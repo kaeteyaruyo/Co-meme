@@ -145,6 +145,20 @@ app.get('/profile/:id', (req, res) => {
     })
     .catch(error => {
         res.status(500).send({ error });
+app.get('/upload', (req, res) => {
+    res.render('upload', {
+        title: '上傳',
+    });
+});
+
+app.post('/upload', (req, res) => {
+    console.log(req.body);
+    res.send('ok');
+});
+
+app.get('/profile/:user', (req, res) => {
+    res.render('profile', {
+        title: `${ req.params.user }的頁面`,
     });
 });
 

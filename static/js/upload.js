@@ -69,10 +69,39 @@ var nextStep = document.getElementsByClassName("one__button--select")[1];
 var imageComment = document.getElementsByClassName("one__comment")[0];
 var imageUploader = document.getElementById("imageUploader");
 var imageView = document.getElementById("imageView");
-var imageText = imageLoadend.childNodes[2];
+var progressbar = document.getElementById("progressbar");
+var imageMiddle = imageLoadend.childNodes[0];
+var imageText = imageLoadend.childNodes[3];
+var imagePost = document.getElementById("imagePost");
 var fileReader = new FileReader();
 var filename = NaN;
-
+function circleChange() {
+    var top = emptyImage.childNodes[1];
+    var buttom = emptyImage.childNodes[2];
+    top.classList.toggle("circle__top--colorchange");
+    top.classList.toggle("circle__top--scalechange");
+    buttom.classList.toggle("circle__bottom--scalechange");
+}
+emptyImage.addEventListener("dragenter", function(event) {
+    circleChange();
+});
+emptyImage.addEventListener("dragleave", function(event) {
+    circleChange();
+});
+emptyImage.addEventListener("drop", function(event) {
+    circleChange();
+    var files = event.dataTransfer.files;
+    if(files.length > 0) {
+        fileReader.readAsDataURL(files[0]);
+        filename = files[0].name;
+    }
+});
+window.addEventListener("dragover", function (event) {
+    event.preventDefault();
+});
+window.addEventListener("drop", function (event) {
+    event.preventDefault();
+});
 imageUploader.addEventListener("change", function(event) {
     if(this.files.length>0) {
         fileReader.readAsDataURL(this.files[0]);
@@ -81,22 +110,50 @@ imageUploader.addEventListener("change", function(event) {
 });
 fileReader.onloadstart = function(event) {
     emptyImage.style.display = "none";
-}
-fileReader.onload = function(event) {
     imageLoadend.style.display = "block";
-    imagetitle.innerHTML = "你的圖片已上傳完成";
+    imageMiddle.style.display = "block";
+    imagetitle.innerHTML = "正在為你上傳圖片";
     imageSelect.style.display = "none";
     nextStep.style.display = "block";
+    nextStep.style.backgroundColor = "#9B88EB";
     imageComment.style.visibility = "visible";
+    imageComment.innerHTML = "正在為你調整圖片，請稍後幾秒";
+}
+fileReader.onprogress = function(event) {
+    var percentNow = NaN;
+    if(event.lengthComputable) {
+        percentNow = parseInt((event.loaded/event.total)*100, 10);
+    }
+    if(percentNow < 100) {
+        progressbar.style.width = `${percentNow}%`;
+    }
+}
+fileReader.onload = function(event) {
+    imageMiddle.style.display = "none";
+    imagetitle.innerHTML = "你的圖片已上傳完成";
+    nextStep.style.backgroundColor = "#4C26EB";
     imageComment.innerHTML = "前往編輯圖片資訊";
+    imageView.style.display = "block";
     imageView.src = this.result;
+    imagePost.src = this.result;
     imageText.innerHTML = filename;
 };
-imageView.addEventListener("mouseenter", function(event) {
-    var imageMask = imageLoadend.childNodes[0].childNodes[0];
+imageLoadend.childNodes[1].addEventListener("mouseenter", function(event) {
+    var imageMask = event.target.childNodes[0];
     imageMask.style.height = `${imageView.offsetHeight}px`;
     imageMask.style.width = `${imageView.offsetWidth}px`;
 });
+function updateImage() {
+    emptyImage.style.display = "grid";
+    progressbar.style.width = "0%";
+    imageLoadend.style.display = "none";
+    imageView.src="";
+    imagetitle.innerHTML = "將你要上傳的圖片拖曳到這裡";
+    imageSelect.style.display = "inline";
+    nextStep.style.display = "none";
+    imageComment.style.visibility = "hidden";
+    imageComment.innerHTML = "前往編輯圖片資訊";
+}
 /* two step : custom select menu */
 var selectDiv = document.getElementsByClassName("element__privacy")[0];
 var select = selectDiv.getElementsByTagName("select")[0];

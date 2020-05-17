@@ -95,6 +95,29 @@
     position: relative;
     margin: auto;
     margin-top: 4rem;
+    border-radius: 10px 10px 10 10px;
+}
+.image__middle {
+    display: none;
+    width: 19rem;
+    height: 19rem;
+    background-color: rgba(170,170,170,0.57);
+    border-radius: 10px 10px 0 0;
+}
+.middle__progress {
+    width: 13rem;
+    height: 0.5rem;
+    background-color: #e2e2e2;
+    border-radius: 1rem;
+    position: relative;
+    margin: auto;
+    top: 10rem;
+}
+#progressbar {
+    width: 0%;
+    height: 100%;
+    background-color: #4c26eb;
+    border-radius: 1rem;
 }
 .image__block {
     display: grid;
@@ -103,14 +126,20 @@
 }
 .image__mask {
     position: absolute;
+    display: none;
 }
-.image__mask:hover{
+.mask__update {
+    position: absolute;
+    display: none;
+}
+.image__block:hover > .image__mask {
+    display: block;
     background-color: black;
     border-radius: 10px 10px 0 0;
     opacity: 50%;
 }
-.mask__update {
-    position: absolute;
+.image__block:hover > .mask__update{
+    display: block;
     font-size: 14px;
     font-weight: bold;
     color: #ffffff;
@@ -132,24 +161,27 @@
 }
 
 .one__circles {
-    display: block;
     width: 19rem;
     height: 19rem;
     position: relative;
     padding: 4rem 0;
     margin: auto;
+    display: grid;
+    align-items: center;
+    justify-items: center;
 }
 .one__circle{
     border-radius: 50%;
     position: absolute;
 }
 .one__circle--bottom {
-    display: none;
-    width: 19rem;
-    height: 19rem;
+    width: 15rem;
+    height: 15rem;
     z-index: 0;
     background-color: #4c26eb;
     opacity: 0.38;
+    z-index: 1;
+    transition-duration: 0.3s;
 }
 .one__circle--top {
     width: 15rem;
@@ -158,11 +190,35 @@
     background-color: #AAAAAA;
     margin: 2rem 2rem;
     text-align: center;
+    z-index: 2;
+    transition-duration: 0.3s;
 }
 .one__circle--img {
-    position: relative;
-    top: 3.5rem;
+    position: absolute;
+    z-index: 3;
 }
+.circle__top--colorchange {
+    background-color: #4C26EB;
+}
+.circle__top--scalechange {
+    transform: scale(0.8);
+    transition-duration: 0.3s;
+}
+.circle__bottom--scalechange {
+    transform: scale(1.2);
+    transition-duration: 0.3s;
+}
+/* .one__circle--top:hover, .one__circle--img:hover + .one__circle.one__circle--top{
+    background-color: #4C26EB;
+}
+.one__circle--top:hover, .one__circle--img:hover + .one__circle--top{
+    transform: scale(0.8);
+    transition-duration: 0.3s;
+}
+.one__circle--top:hover +.one__circle--bottom, .one__circle--img:hover ~ .one__circle--bottom{
+    transform: scale(1.2);
+    transition-duration: 0.3s;
+} */
 .one__title {
     text-align: center;
     font-size: 28px;

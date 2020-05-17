@@ -4,13 +4,12 @@ block stylesheets
   link(rel="stylesheet", type="text/css" href="/css/common/upload.css")
 
 block main
-  -var imageUrl="/img/common/image-tile/thumbnail.png"
   div.main__upload
     div.upload__flow
       div.flow__step.flow__step--one
         span.step__content 上傳圖片
         div.step__circles
-          img.step__check--img(src="/img/common/upload/check.svg")
+          img.step__check--img(src="/img/upload/check.svg")
           div#step1Flow
             div.step__circle.step__circle--top 1
             div.step__circle.step__circle--bottom
@@ -19,7 +18,7 @@ block main
       div.flow__step.flow__step--two
         span.step__content 編輯圖片資訊
         div.step__circles
-          img.step__check--img(src="/img/common/upload/check.svg")
+          img.step__check--img(src="/img/upload/check.svg")
           div#step2Flow
             div.step__circle.step__circle--top 2
             div.step__circle.step__circle--bottom
@@ -28,7 +27,7 @@ block main
       div.flow__step.flow__step--three
         span.step__content 添加標籤
         div.step__circles
-          img.step__check--img(src="/img/common/upload/check.svg")
+          img.step__check--img(src="/img/upload/check.svg")
           div#step3Flow
             div.step__circle.step__circle--top 3
             div.step__circle.step__circle--bottom
@@ -38,17 +37,20 @@ block main
       div.upload__content
         div#step1.content__one.content__one--hide
           div.one__image--show
+            div.image__middle
+              div.middle__progress
+                div#progressbar
             div.image__block
               div.image__mask
-              label#imageUpdate.mask__update
-                img(src="/img/common/upload/photo.svg" width="20" style="margin-right: 0.5rem;")
+              button#imageUpdate.mask__update(type="button" onclick="updateImage()")
+                img(src="/img/upload/photo.svg" width="20" style="margin-right: 0.5rem;")
                 span 更新上傳圖片
               img#imageView.image__content(src="")
             p.image__label 檔案名稱
             p.image__text
           div.one__circles
+            img.one__circle--img(src="img/upload/photo.svg" width="120")
             div.one__circle.one__circle--top
-              img.one__circle--img(src="img/common/upload/photo.svg" width="160")
             div.one__circle.one__circle--bottom
           p.one__title 將你要上傳的圖片檔案拖曳到這裡
           div.one__button
@@ -58,7 +60,7 @@ block main
           p.one__comment 正在為你上傳圖片，請稍後幾秒
         div#step2.content__two.content__two--hide
           div.two__picture
-            img.two__picture--content(src=imageUrl)
+            img#imagePost.two__picture--content
           div.two__element
             div.element__title
               p.element__title--content 編輯圖片資訊
@@ -100,5 +102,4 @@ block main
               button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
               button.three__button--next(type="submit") 發布圖片
 block scripts
-  script(src="/js/common/dropzone.js")
-  script(src="/js/common/upload.js")
+  script(src="/js/upload.js")

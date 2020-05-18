@@ -4,6 +4,7 @@ const Image = require('./image');
 const ImageTag = require('./imageTag');
 const Tag = require('./tag');
 const User = require('./user');
+const TagFollower = require('./tagFollower');
 
 Image.hasMany(Comment, {
     foreignKey: 'imageId',
@@ -69,6 +70,22 @@ Image.belongsToMany(Tag, {
     onUpdate: 'CASCADE'
 });
 
+Tag.belongsToMany(User, {
+    through: TagFollower,
+    foreignKey: 'tagId',
+    as: 'user',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+User.belongsToMany(Tag, {
+    through: TagFollower,
+    as: 'tags',
+    foreignKey: 'userId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
 module.exports = {
     Comment,
     Follower,
@@ -76,4 +93,5 @@ module.exports = {
     ImageTag,
     Tag,
     User,
+    TagFollower,
 };

@@ -38,33 +38,17 @@
 
 .main__form--button {
     display: block;
-    border: #4C26EB 1px solid;
-    border-radius: 2rem;
     margin: .25rem 0;
-    padding: .3rem 1rem;
     font-weight: 500;
 }
 
 .main__form--submit {
     margin-top: 1.5rem;
-    color: #FFFFFF;
-    background-color: #4C26EB;
-}
-
-.main__form--submit:hover {
-    background-color: #3B1EB8;
 }
 
 .main__form--signup {
     font-size: small;
     text-align: center;
-    color: #4C26EB;
-    background-color: #FFFFFF;
-}
-
-.main__form--signup:hover {
-    color: #FFFFFF;
-    background-color: #4C26EB;
 }
 
 .main__divider {

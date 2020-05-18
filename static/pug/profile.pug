@@ -2,6 +2,7 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/profile.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
@@ -13,7 +14,7 @@ block main
       +icon("profile__header--icon", user.icon, 120)
       span.profile__header--name= user.username
       span.profile__header--followerCount= `有${ user.followerCount }人正在追蹤`
-      button.profile__header--subscribe 追蹤
+      button.button--solid.profile__header--subscribe 追蹤
     div.profile__navi
       input.profile__navi--input#tab__posts(type="radio" name="tab" value="posts" checked)
       label.profile__navi--tab.profile__navi--posts(for="tab__posts") 貼文

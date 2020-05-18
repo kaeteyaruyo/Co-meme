@@ -2,6 +2,7 @@ extends layouts/account.pug
 
 block stylesheet
   link(rel="stylesheet" type="text/css" href="/css/account/signin.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block action
   div.main__action
@@ -11,8 +12,8 @@ block action
       input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required oninvalid="this.setCustomValidity('請輸入正確的E-mail格式')")
       input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
       a.main__form--resetPassword(href="/resetPassword") 忘記密碼?
-      input.main__form--button.main__form--submit(type="submit" value="登入")
-      a.main__form--button.main__form--signup(href="signup") 註冊
+      input.button--solid.main__form--button.main__form--submit(type="submit" value="登入")
+      a.button--hollow.main__form--button.main__form--signup(href="signup") 註冊
     div.main__divider
       div.main__divider--line
       span.main__divider--text 或

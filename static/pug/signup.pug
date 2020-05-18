@@ -2,6 +2,7 @@ extends layouts/account.pug
 
 block stylesheet
   link(rel="stylesheet" type="text/css" href="/css/account/signup.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block action
   div.main__action
@@ -26,7 +27,7 @@ block action
           - let d = 1;
           while d <= 31
             option(value=d)= d++ + '日'
-      input.main__form--submit(type="submit" value="創建帳號")
+      input.button--solid.main__form--submit(type="submit" value="創建帳號")
     div.main__sigin
       span 已有帳號了？
       a(href="/signin") 登入

@@ -1,0 +1,44 @@
+extends layouts/base.pug
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/recommend.css")
+
+block header
+  include components/header.pug
+
+block main
+  include components/tag-card.pug
+  include components/user-card.pug
+  include components/image-wall.pug
+  section.main__section.main__tag
+    h2.main--subtitle.main__tag--subtitle 你可能會喜歡的標籤?
+    button#tag__cards--left.cards__button--left
+      img(src="/img/recommend/button-left.svg" width="32" height="32")
+    div.main--cards.main__tag--cards
+      div#tag__cards--container.cards--container
+        +tagCard({tagId:1, tag: 'COVID-19', newPostCount:19, followerCount: 300, image: {content: ''},})
+        +tagCard({tagId:2, tag: '親子教育', newPostCount:12, followerCount: 592, image: {content: ''},})
+        +tagCard({tagId:3, tag: '資訊系', newPostCount:223, followerCount: 1934, image: {content: ''},})
+        +tagCard({tagId:1, tag: 'COVID-19', newPostCount:19, followerCount: 300, image: {content: ''},})
+        +tagCard({tagId:2, tag: '親子教育', newPostCount:12, followerCount: 592, image: {content: ''},})
+        +tagCard({tagId:3, tag: '資訊系', newPostCount:223, followerCount: 1934, image: {content: ''},})
+    button#tag__cards--right.cards__button--right
+      img(src="/img/recommend/button-right.svg" width="32" height="32")
+  section.main__section.main__user
+    h2.main--subtitle.main__user--subtitle 你可能會喜歡的創作者?
+    button#user__cards--left.cards__button--left
+      img(src="/img/recommend/button-left.svg" width="32" height="32")
+    div.main--cards.main__user--cards
+      div#user__cards--container.cards--container
+        +userCard({userId:1, username: '創作者', followerCount: 30, icon: null })
+        +userCard({userId:2, username: '創作者', followerCount: 59, icon: null })
+        +userCard({userId:3, username: '創作者', followerCount: 19, icon: null })
+        +userCard({userId:1, username: '創作者', followerCount: 30, icon: null })
+        +userCard({userId:2, username: '創作者', followerCount: 59, icon: null })
+        +userCard({userId:3, username: '創作者', followerCount: 19, icon: null })
+    button#user__cards--right.cards__button--right
+      img(src="/img/recommend/button-right.svg" width="32" height="32")
+  +imageWall('看看最近在流行什麼?', images)
+
+block scripts
+  script(src="/js/recommend.js")

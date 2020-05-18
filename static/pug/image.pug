@@ -3,13 +3,14 @@ extends layouts/base.pug
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/image.css")
   link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
 
 block main
   include components/icon.pug
-  include components/tags.pug
+  include components/tag-chips.pug
   include components/image-tile.pug
   mixin message(comment)
     div.message
@@ -28,7 +29,7 @@ block main
         div.information__author--data
           p.author__data--name= image.author.username
           p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`
-        button.information__author--follow 追蹤
+        button.button--solid.information__author--follow 追蹤
       p.information__description= image.description
       +tags(image.tags)
       p.information__timestamp= `發佈時間: ${ image.createdAt }`
@@ -42,7 +43,7 @@ block main
       div.information__comment
         +icon("information__comment--icon", image.author.icon, 35)
         input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
-        button.information__comment--submit 留言
+        button.button--solid 留言
       div.information__messages
         each comment in image.comments
           +message(comment)

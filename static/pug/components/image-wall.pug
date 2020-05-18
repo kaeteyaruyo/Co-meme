@@ -6,12 +6,12 @@ mixin imageWall(title, images)
     h2.imageWall__title= title
     form.imageWall__actions(name="actions")
       div.imageWall__category
-        input.imageWall__category--input#category__meme(type="radio" name="category" value="meme" checked)
+        input.imageWall__category--input#category__all(type="radio" name="category" value="all" checked)
+        label.imageWall__category--label(for="category__all") 全部
+        input.imageWall__category--input#category__meme(type="radio" name="category" value="meme")
         label.imageWall__category--label(for="category__meme") 迷因
         input.imageWall__category--input#category__elderly(type="radio" name="category" value="elderly")
         label.imageWall__category--label(for="category__elderly") 長輩圖
-        input.imageWall__category--input#category__all(type="radio" name="category" value="all")
-        label.imageWall__category--label(for="category__all") 全部
       div.imageWall__action--right
         div.imageWall__arrange
           input.imageWall__arrange--input#arrange__grid(type="radio" name="arrange" value="grid" checked)

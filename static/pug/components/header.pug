@@ -1,4 +1,5 @@
 link(rel="stylesheet" type="text/css" href="/css/common/header.css")
+link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 include icon.pug
 
@@ -26,5 +27,5 @@ header.header
           a(href="/signout") 登出
   else
     div.header__actions
-      a.header__action.header__action--signup(href="/signup") 註冊
-      a.header__action.header__action--signin(href="/signin") 登入
+      a.button--flat.header__action--signup(href="/signup") 註冊
+      a.button--solid.header__action--signin(href="/signin") 登入

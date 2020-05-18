@@ -12,6 +12,7 @@ const {
     ImageTag,
     Tag,
     User,
+    TagFollower,
 } = require('./models/association.js');
 
 const app = express();
@@ -64,6 +65,51 @@ app.get('/', async (req, res) => {
 
 app.get('/about', (req, res) => {
     res.render('about');
+});
+
+app.get('/recommend', async (req, res) => {
+    const images = await Image.findAll({
+        attributes: [
+            'imageId',
+            'content',
+            'category',
+            'likes',
+        ],
+    });
+    res.render('recommend', {
+        title: '為你推薦',
+        images
+    });
+});
+
+app.get('/latest', async (req, res) => {
+    const images = await Image.findAll({
+        attributes: [
+            'imageId',
+            'content',
+            'category',
+            'likes',
+        ],
+    });
+    res.render('latest', {
+        title: '最新內容',
+        images
+    });
+});
+
+app.get('/tag/:id',  async(req, res) => {
+    const images = await Image.findAll({
+        attributes: [
+            'imageId',
+            'content',
+            'category',
+            'likes',
+        ],
+    });
+    res.render('tag', {
+        title: '標籤',
+        images
+    });
 });
 
 app.get('/image/:id', (req, res) => {

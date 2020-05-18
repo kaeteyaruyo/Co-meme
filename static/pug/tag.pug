@@ -1,0 +1,23 @@
+extends layouts/base.pug
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/tag.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+
+block header
+  include components/header.pug
+
+block main
+  - let tag = {}
+  include components/image-wall.pug
+  section.main__banner
+    div.main__banner--image
+    div.main__banner--info
+      div.banner__info
+        p.banner__info--title= tag.tag || '標籤'
+        span.banner__info--newPostCount= `本日新增${ tag.newPostCount || 0 }則新貼文`
+      button.button--solid.banner__follow 關注
+  section.main__imageWall
+    +imageWall('', images)
+
+block scripts

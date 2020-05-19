@@ -5,6 +5,8 @@ block stylesheets
 
 block header
   include components/header.pug
+  include components/sidebar.pug
+  include components/notFound.pug
 
 block main
   include components/icon.pug
@@ -24,6 +26,7 @@ block main
       input.profile__navi--input#tab__tags(type="radio" name="tab" value="tags")
       label.profile__navi--tab.profile__navi--tags(for="tab__tags") 標籤雲
   section.main__panel.main__posts
+    +notFound
   section.main__panel.main__topics
   section.main__panel.main__following
   section.main__panel.main__tags

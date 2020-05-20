@@ -1,16 +1,20 @@
 link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
+include icon.pug
 
 mixin imageTile(image)
-  a.imageTile(href=`/image/${ image.imageId }`)
-    img.imageTile__image(src=`data:image/png;base64, ${ image.content }`)
+  div.imageTile
+    a.imageTile__image(href=`/image/${ image.imageId }`)
+      img(src=`data:image/png;base64, ${ image.content }`)
     div.imageTile__info
-      div.imageTile__info--container
-        div.imageTile__info--data.imageTile__info--likes
-          img(src="/img/common/image-tile/like.svg" width="16" height="16")
-          span= image.likes
-        div.imageTile__info--data.imageTile__info--comments
-          img(src="/img/common/image-tile/comment.svg" width="16" height="16")
-          span= 0
-        div.imageTile__info--data.imageTile__info--views
-          img(src="/img/common/image-tile/share.svg" width="16" height="16")
-          span= image.views
+      div.imageTile__author
+        +icon('imageTile__author--icon', image.author.icon, 36)
+        div.imageTile__author--text
+          p.imageTile__author--name= image.author.username
+          p.imageTile__author--timestamp= image.createdAt
+      div.imageTile__action
+        button.imageTile__action--button.imageTile__action--like
+          div.imageTile__action--icon.imageTile__like--icon
+          p.imageTile__action--label.imageTile__like--label= image.likes
+        button.imageTile__action--button.imageTile__action--share
+          div.imageTile__action--icon.imageTile__share--icon
+          p.imageTile__action--label.imageTile__share--label 分享

@@ -53,10 +53,21 @@ app.get('/', async (req, res) => {
         attributes: [
             'imageId',
             'content',
-            'category',
             'likes',
+            'createdAt',
         ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ]
     });
+
     res.render('index', {
         title: '首頁',
         images
@@ -72,9 +83,19 @@ app.get('/recommend', async (req, res) => {
         attributes: [
             'imageId',
             'content',
-            'category',
             'likes',
+            'createdAt',
         ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ]
     });
     res.render('recommend', {
         title: '為你推薦',
@@ -87,9 +108,19 @@ app.get('/latest', async (req, res) => {
         attributes: [
             'imageId',
             'content',
-            'category',
             'likes',
+            'createdAt',
         ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ]
     });
     res.render('latest', {
         title: '最新內容',
@@ -259,7 +290,7 @@ app.post('/signin', async (req, res) => {
                 name: user.username,
                 icon: user.icon,
             }
-            res.redirect(`/profile/${ user.userId }`);
+            res.redirect('/');
         }
         else {
             // TODO: frontend error message display

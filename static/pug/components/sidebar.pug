@@ -1,0 +1,22 @@
+link(rel="stylesheet" type="text/css" href="/css/common/sidebar.css")
+
+include tags.pug
+
+aside.sidebar
+  div.sidebar__menu
+    a.sidebar__menu--button.sidebar__menu--home(href='/')
+      div.sidebar__menu--icon.sidebar__menu--homeIcon
+      span.sidebar__menu--label 首頁
+    a.sidebar__menu--button.sidebar__menu--recommend(href='/')
+      div.sidebar__menu--icon.sidebar__menu--recommendIcon
+      span.sidebar__menu--label 為你推薦
+    a.sidebar__menu--button.sidebar__menu--following(href='/')
+      div.sidebar__menu--icon.sidebar__menu--followingIcon
+      span.sidebar__menu--label 最新內容
+  div.sidebar__menu--rectangle
+  div.sidebar__popularTags
+    span 熱門標籤
+    div.sidebar__popularTags--titles
+      +tags([{tagId: 1, tag: '武漢肺炎'}, {tagId: 2, tag: '男女關係'}])
+    button 顯示更多
+

@@ -1,0 +1,98 @@
+.sidebar {
+    position: fixed;
+    box-sizing: border-box;
+    width: 12rem;
+    height: 100vh;
+    display: grid;
+    align-content: flex-start;
+    box-shadow: 0px 3px 6px #00000029;
+    z-index: 8;
+    font-size: .9rem;
+    margin-top: 3.5rem;
+    background-color: #FFFFFF;
+}
+.sidebar__menu {
+    padding: 1.5rem 0 1rem 0;
+    margin: 0 1rem;
+    border-bottom: #E2E2E2 1px solid ;
+    margin-bottom: .5rem;
+    display: grid;
+    align-content: center;
+    align-items: center;
+}
+.sidebar__menu--button {
+    padding: .5rem;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    transition: all .3s;
+}
+
+.sidebar__menu--button:hover {
+    background-color: #F2F2F2;
+}
+.sidebar__menu--icon{
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+    background-color: #AAAAAA;
+    transition: all 0.3s;
+}
+
+.sidebar__menu--button:hover > .sidebar__menu--icon{
+    background-color: #4C26EB;
+}
+
+.sidebar__menu--label {
+    color: #333333;
+}
+
+.sidebar__menu--button:hover > .sidebar__menu--label{
+    font-weight: bold;
+}
+
+.sidebar__menu--homeIcon {
+    -webkit-mask-image: url(/img/common/sidebar/home.svg);
+    mask-image: url(/img/common/sidebar/home.svg);
+}
+
+.sidebar__menu--recommendIcon {
+    -webkit-mask-image: url(/img/common/sidebar/star.svg);
+    mask-image: url(/img/common/sidebar/star.svg);
+}
+
+.sidebar__menu--followingIcon {
+    -webkit-mask-image: url(/img/common/sidebar/hotjar.svg);
+    mask-image: url(/img/common/sidebar/hotjar.svg);
+}
+
+.sidebar__menu--rectangle {
+    width: .3rem;
+    height: 1rem;
+    border-radius: .3rem;
+    border: #4C26EB 1px solid ;
+    background: #4C26EB ;
+}
+.sidebar__popularTags {
+    padding: 1.2rem 0 1rem 0;
+    margin: 0 1rem;
+    display: grid;
+    align-items: flex-start;
+    align-content:center ;
+}
+
+.sidebar__popularTags > span {
+    padding-bottom: 1rem;
+}
+
+.sidebar__popularTags--titles{
+    flex-wrap: wrap;
+}
+
+.sidebar__popularTags > button {
+    padding: .5rem;
+    background: #E2E2E2;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+

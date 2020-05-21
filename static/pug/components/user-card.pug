@@ -1,0 +1,11 @@
+link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+include icon.pug
+
+mixin userCard(user)
+  a.userCard(href=`/profile/${ user.userId }`)
+    +icon('userCard__icon', user.icon, 56)
+    div.userCard__info
+      p.userCard__info--username= user.username
+      span.userCard__info--followerCount= `${ user.followerCount || 0 }人追蹤`
+    button.button--hollow.userCard__follow 追蹤

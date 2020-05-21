@@ -1,0 +1,17 @@
+extends layouts/base.pug
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/latest.css")
+
+block header
+  include components/header.pug
+
+block main
+  include components/sidebar.pug
+  include components/image-wall.pug
+  article.main__container
+    +sidebar
+    section.main__latest
+      +imageWall('看看最近在流行什麼?', images)
+
+block scripts

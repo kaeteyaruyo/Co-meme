@@ -1,0 +1,36 @@
+.button--hollow {
+    padding: .25rem 1.5rem;
+    color: #4C26EB;
+    border: #4C26EB 1px solid;
+    border-radius: 1.5rem;
+    transition: all .3s;
+}
+
+.button--hollow:hover {
+    color: #FFFFFF;
+    background-color: #4C26EB;
+}
+
+.button--solid {
+    padding: .25rem 1.5rem;
+    color: #FFFFFF;
+    background-color: #4C26EB;
+    border: #4C26EB 1px solid;
+    border-radius: 1.5rem;
+    transition: all .3s;
+}
+
+.button--solid:hover {
+    background-color: #3B1EB8;
+}
+
+.button--flat {
+    padding: .25rem 1.5rem;
+    color: #4C26EB;
+    border-radius: 1.5rem;
+    transition: all .3s;
+}
+
+.header__action--signup:hover {
+    background-color: #F2F2F2;
+}

@@ -39,10 +39,6 @@ input[type="radio"] {
     box-shadow: 3px 3px 6px #00000029;
 }
 
-.imageWall__action--right {
-    display: flex;
-}
-
 .imageWall__arrange {
     display: flex;
     background: #FFFFFF;

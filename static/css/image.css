@@ -1,18 +1,41 @@
 .main {
     background-color: #F7F7F7;
-    padding: 2rem;
+}
+
+.main__container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content auto;
 }
 
 .main__post {
+    position: relative;
     min-height: 77.5vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 1.5rem;
     border-radius: 1rem;
+    margin: 2rem;
     padding: 2rem;
     background-color: #FFFFFF;
     box-shadow: 0px 3px 6px #00000029;
+}
+
+.post__back {
+    width: 24px;
+    height: 24px;
+    background-color: #AAAAAA;
+    -webkit-mask-image: url(/img/image/close.svg);
+    mask-image: url(/img/image/close.svg);
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+}
+
+.post__back:hover {
+    background-color: #666666;
 }
 
 .post__picture {
@@ -67,11 +90,7 @@
 
 .information__author--follow {
     font-size: 1rem;
-    color: #FFFFFF;
-    background-color: #4C26EB;
     margin: 0 1rem;
-    padding: .25rem 1.5rem;
-    border-radius: 1.5rem;
 }
 
 .information__description {
@@ -141,13 +160,6 @@
     border: none;
     border-radius: 1.5rem;
     background-color: #F2F2F2;
-}
-
-.information__comment--submit {
-    color: #FFFFFF;
-    background-color: #4C26EB;
-    border-radius: 2rem;
-    padding: .5rem 1.5rem;
 }
 
 .information__messages {

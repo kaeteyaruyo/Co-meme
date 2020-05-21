@@ -37,18 +37,8 @@
 
 .main__form--submit {
     display: block;
-    border: #4C26EB 1px solid;
-    border-radius: 2rem;
-    margin: .25rem 0;
-    padding: .3rem 1rem;
+    margin: 1.5rem 0 .25rem;
     font-weight: 500;
-    margin-top: 1.5rem;
-    color: #FFFFFF;
-    background-color: #4C26EB;
-}
-
-.main__form--submit:hover {
-    background-color: #3B1EB8;
 }
 
 .main__sigin {

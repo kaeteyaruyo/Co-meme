@@ -7,21 +7,53 @@ block header
   include components/header.pug
 
 block main
-  include components/image-wall.pug
-  mixin topic(img, title, newPosts, color)
-    div(class=`highlight__topic highlight__topic--${ color }`)
-      img.highlight__topic--img(src=img)
-      div.highlight__topic--info
-        p.topic__info--title= title
-        p.topic__info--newPosts= `本日增加${ newPosts }則貼文`
-  div.main__highlight
-    h2.main__highlight--title 大家都在討論
-    div.main__highlight--gallery
-      div.highlight--gallery--scrollable
-        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 71, 'yellow')
-        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 18, 'purple')
-        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 9, 'blue')
-        +topic('/img/common/image-tile/thumbnail.png', '熱門標籤', 130, 'pink')
-  +imageWall('為你推薦', images)
+  include components/sidebar.pug
+  include components/tag-card.pug
+  include components/user-card.pug
+  mixin post(image)
+    div.post
+      a.post__image(href=`/image/${ image.imageId }`)
+        img(src=`data:image/png;base64, ${ image.content }`)
+      div.post__info
+        div.post__author
+          +icon('post__author--icon', image.author.icon, 36)
+          div.post__author--text
+            p.post__author--name= image.author.username
+            p.post__author--timestamp= image.createdAt
+        div.post__action
+          button.post__action--button.post__action--like
+            div.post__action--icon.post__like--icon
+            p.post__action--label.post__like--label= image.likes
+          button.post__action--button.post__action--share
+            div.post__action--icon.post__share--icon
+            p.post__action--label.post__share--label 分享
+
+  article.main__container
+    +sidebar
+    section.main__timeline
+      div.timeline__category
+        input.timeline__category--input#category__all(type="radio" name="category" value="all" checked)
+        label.timeline__category--label(for="category__all") 全部
+        input.timeline__category--input#category__meme(type="radio" name="category" value="meme")
+        label.timeline__category--label(for="category__meme") 迷因
+        input.timeline__category--input#category__elderly(type="radio" name="category" value="elderly")
+        label.timeline__category--label(for="category__elderly") 長輩圖
+      div.timeline__posts
+        each post in posts
+          +post(post)
+    section.main__recommend
+      div.main__recommend--overview.main__recommend--users
+        p.main__recommend--title 推薦的創作者
+        div.main__recommend--cards
+          each user in recommendUsers
+            +userCard(user)
+        a.main__recommend--more(href='/recommend') 顯示更多
+      div.main__recommend--overview.main__recommend--tags
+        p.main__recommend--title 推薦的標籤
+        div.main__recommend--cards
+          each tag in recommendTags
+            +tagCard(tag)
+        a.main__recommend--more(href=`/recommend`) 顯示更多
 
 block scripts
+  script(src="/js/index.js")

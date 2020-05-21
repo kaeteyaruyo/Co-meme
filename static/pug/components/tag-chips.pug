@@ -1,0 +1,6 @@
+link(rel="stylesheet" type="text/css" href="/css/common/tag-chips.css")
+
+mixin tags(tags)
+  div.tags
+    each tag in tags
+      a.tag(href=`/tag/${ tag.tagId }`)= tag.tag

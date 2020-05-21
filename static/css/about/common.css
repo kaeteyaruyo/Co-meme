@@ -100,7 +100,7 @@ main > section {
     font-size: .8rem;
 }
 
-.info__links > a{
+.footer__info--links > a{
     display: inline-block;
     margin-left: 1rem;
     color: #6026EB;

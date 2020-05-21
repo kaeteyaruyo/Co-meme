@@ -2,9 +2,12 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
-const session = require('express-session')
+const { Op } = require('sequelize');
 
 const config = require('./config.js');
+const authenticate = require('./route/authenticate');
+const session = require('./route/session');
+const upload = require('./route/upload');
 const {
     Comment,
     Follower,
@@ -12,27 +15,18 @@ const {
     ImageTag,
     Tag,
     User,
+    TagFollower,
 } = require('./models/association.js');
 
 const app = express();
 const root = process.cwd();
 
-app.use(session({
-    cookie: {
-        maxAge:   7 * 24 * 60 * 60 * 1000,
-        path:     '/',
-        httpOnly: true,
-        sameSite: 'lax',
-        secure:   false,
-    },
-    name:              'sessionId',
-    secret:            config.session.secret,
-    saveUninitialized: false,
-    resave:            false,
-    unset:             'destroy',
-    rolling:           false,
-    proxy:             false,
-}));
+app.set('view engine', 'pug');
+app.set('views', path.join(root, '/static/pug'));
+app.use(express.static(path.join(root, '/static')));
+app.use(parser.urlencoded({ extended: true }));
+app.use(parser.json({ type:  '*/json' }));
+app.use(session);
 
 app.use(function (req, res, next) {
     if (req.session.user) {
@@ -41,24 +35,107 @@ app.use(function (req, res, next) {
     next();
 })
 
-app.set('view engine', 'pug');
-app.set('views', path.join(root, '/static/pug'));
-app.use(express.static(path.join(root, '/static')));
-app.use(parser.urlencoded( { extended: true } ));
-app.use(parser.json());
-
-app.get('/', async (req, res) => {
-    const images = await Image.findAll({
+async function sidebarData(req, res, next){
+    res.locals.sidebar = {};
+    res.locals.sidebar.tags = await Tag.findAll({
         attributes: [
-            'imageId',
-            'content',
-            'category',
-            'likes',
+            'tagId',
+            'tag',
         ],
+        limit: 5,
     });
+    next();
+}
+
+app.get('/', sidebarData, async (req, res) => {
+    const dayAgo = new Date();
+    dayAgo.setDate(dayAgo.getDate() - 1);
+
+    let posts;
+    if(req.session.user){
+        posts = await Image.findAll({
+            attributes: [
+                'imageId',
+                'content',
+                'likes',
+                'createdAt',
+            ],
+            include: [
+                {
+                    model: User,
+                    as: 'author',
+                    where: {
+                        userId: [req.session.user.id]
+                    },
+                    attributes: [
+                        'username',
+                        'icon',
+                    ],
+                },
+            ],
+            limit: 10,
+        });
+    }
+    else {
+        posts = await Image.findAll({
+            order: [
+                ['createdAt', 'DESC'],
+            ],
+            attributes: [
+                'imageId',
+                'content',
+                'likes',
+                'createdAt',
+            ],
+            include: [
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: [
+                        'username',
+                        'icon',
+                    ],
+                },
+            ],
+            limit: 10,
+        });
+    }
+
+    const recommendUsers = await User.findAll({
+        attributes: [
+            'userId',
+            'username',
+            'followerCount',
+            'icon',
+        ],
+        order: [
+            ['followerCount', 'DESC'],
+        ],
+        limit: 4,
+    });
+
+    const recommendTags = await Tag.findAll({
+        attributes: [
+            'tagId',
+            'tag',
+        ],
+        include: [
+            {
+                model: Image,
+                as: 'images',
+                attributes: [
+                    'content'
+                ],
+            },
+        ],
+        limit: 2,
+    });
+
     res.render('index', {
         title: '首頁',
-        images
+        posts,
+        recommendUsers,
+        recommendTags,
     });
 });
 
@@ -66,7 +143,136 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/image/:id', (req, res) => {
+app.get('/recommend', sidebarData, async (req, res) => {
+    const images = await Image.findAll({
+        order: [
+            ['createdAt', 'DESC'],
+        ],
+        attributes: [
+            'imageId',
+            'content',
+            'likes',
+            'createdAt',
+        ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ],
+    });
+
+    const recommendUsers = await User.findAll({
+        attributes: [
+            'userId',
+            'username',
+            'followerCount',
+            'icon',
+        ],
+        order: [
+            ['followerCount', 'DESC'],
+        ],
+        limit: 8,
+    });
+
+    const recommendTags = await Tag.findAll({
+        attributes: [
+            'tagId',
+            'tag',
+        ],
+        include: [
+            {
+                model: Image,
+                as: 'images',
+                attributes: [
+                    'content'
+                ],
+            },
+        ],
+        limit: 8,
+    });
+
+    res.render('recommend', {
+        title: '為你推薦',
+        images,
+        recommendUsers,
+        recommendTags,
+    });
+});
+
+app.get('/latest', sidebarData, async (req, res) => {
+    const images = await Image.findAll({
+        order: [
+            ['createdAt', 'DESC'],
+        ],
+        attributes: [
+            'imageId',
+            'content',
+            'likes',
+            'createdAt',
+        ],
+        include: [
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ],
+        limit: 10,
+    });
+
+    res.render('latest', {
+        title: '最新內容',
+        images
+    });
+});
+
+app.get('/tag/:id', sidebarData, async (req, res) => {
+    const tag = await Tag.findOne({
+        where: {
+            tagId: req.params.id,
+        },
+    });
+    const images = await Image.findAll({
+        attributes: [
+            'imageId',
+            'content',
+            'category',
+            'likes',
+        ],
+        include: [
+            {
+                model: Tag,
+                as: 'tags',
+                where: {
+                    tagId: req.params.id,
+                }
+            },
+            {
+                model: User,
+                as: 'author',
+                attributes: [
+                    'username',
+                    'icon',
+                ],
+            },
+        ],
+    });
+    res.render('tag', {
+        title: tag.tag,
+        tag,
+        images
+    });
+});
+
+app.get('/image/:id', sidebarData, (req, res) => {
     Image.findOne({
         where: {
             imageId: req.params.id,
@@ -126,7 +332,23 @@ app.get('/image/:id', (req, res) => {
     });
 });
 
-app.get('/profile/:id', (req, res) => {
+app.get('/profile/:id', sidebarData, async (req, res) => {
+    // await User.findAll({
+    //     attributes: [
+    //         'userId',
+    //         'username',
+    //         'icon',
+    //         'followerCount',
+    //     ],
+    //     include: [{
+    //         model: User,
+    //         as: 'following',
+    //         where: {
+    //             userId: req.session.user.id,
+    //         },
+    //     }],
+    // });
+
     User.findOne({
         where: {
             userId: req.params.id
@@ -145,20 +367,27 @@ app.get('/profile/:id', (req, res) => {
     })
     .catch(error => {
         res.status(500).send({ error });
-app.get('/upload', (req, res) => {
+    });
+});
+
+app.get('/upload', authenticate, (req, res) => {
     res.render('upload', {
         title: '上傳',
     });
 });
 
-app.post('/upload', (req, res) => {
-    console.log(req.body);
-    res.send('ok');
-});
-
-app.get('/profile/:user', (req, res) => {
-    res.render('profile', {
-        title: `${ req.params.user }的頁面`,
+app.post('/upload', authenticate, upload.single('image'), (req, res) => {
+    Image.create({
+        content: req.file.buffer,
+        category: req.body.category,
+        userId: req.session.user.id,
+        description: req.body.description,
+    })
+    .then(record => {
+        res.redirect(`/image/${ record.imageId }`);
+    })
+    .catch(error => {
+        res.status(500).send({ error });
     });
 });
 
@@ -227,7 +456,7 @@ app.post('/signin', async (req, res) => {
                 name: user.username,
                 icon: user.icon,
             }
-            res.redirect(`/profile/${ user.userId }`);
+            res.redirect('/');
         }
         else {
             // TODO: frontend error message display
@@ -239,6 +468,22 @@ app.post('/signin', async (req, res) => {
 app.get('/signout', async (req, res) => {
     delete req.session.user;
     res.redirect('/');
+});
+
+// TODO: handle button events
+app.get('/like', authenticate, async(req, res) => {
+});
+
+app.get('/follow/user', authenticate, async(req, res) => {
+});
+
+app.get('/follow/tag', authenticate, async(req, res) => {
+});
+
+app.use(function(req, res, next) {
+    res.status(404).render('error', {
+        title: '查無內容',
+    });
 });
 
 app.listen(config.port, () => {

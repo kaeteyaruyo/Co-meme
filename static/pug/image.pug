@@ -2,14 +2,16 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/image.css")
-  link(rel="stylesheet" type="text/css" href="/css/common/tags.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-chips.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
 
 block main
+  include components/sidebar.pug
   include components/icon.pug
-  include components/tags.pug
+  include components/tag-chips.pug
   include components/image-tile.pug
   mixin message(comment)
     div.message
@@ -17,40 +19,40 @@ block main
       span.message__author--name= comment.author.username
       span.message__timestamp= comment.createdAt
       span.message__content= comment.comment
-  div.main__post
-    div.post__picture
-      img.post__picture--content(src=`data:image/png;base64, ${ image.content }`)
-      img.post__picture--info(src="/img/image/info.svg")
-    div.post__information
-      div.information__author
-        a.information__author--link(href=`/profile/${ image.author.userId }`)
-          +icon("information__author--icon", image.author.icon, 45)
-        div.information__author--data
-          p.author__data--name= image.author.username
-          p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`
-        button.information__author--follow 追蹤
-      p.information__description= image.description
-      +tags(image.tags)
-      p.information__timestamp= `發佈時間: ${ image.createdAt }`
-      div.information__actions
-        button.information__action.information__action--like
-          div.action__like--img
-          span.action__like--count= image.likes
-        button.information__action.information__action--share
-          div.action__share--img
-          span.action__share--label 分享
-      div.information__comment
-        +icon("information__comment--icon", image.author.icon, 35)
-        input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
-        button.information__comment--submit 留言
-      div.information__messages
-        each comment in image.comments
-          +message(comment)
-  div.main__similar
-    h2.main__similar--title 更多相似
-    div.main__similar--list
-      +imageTile({imageId: 2, content: '', likes: 2, views: 10})
-      +imageTile({imageId: 2, content: '', likes: 2, views: 10})
-      +imageTile({imageId: 2, content: '', likes: 2, views: 10})
-      +imageTile({imageId: 2, content: '', likes: 2, views: 10})
+  article.main__container
+    +sidebar
+    section.main__post
+      button.post__back
+      div.post__picture
+        img.post__picture--content(src=`data:image/png;base64, ${ image.content }`)
+        img.post__picture--info(src="/img/image/info.svg")
+      div.post__information
+        div.information__author
+          a.information__author--link(href=`/profile/${ image.author.userId }`)
+            +icon("information__author--icon", image.author.icon, 45)
+          div.information__author--data
+            p.author__data--name= image.author.username
+            p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`
+          button.button--solid.information__author--follow 追蹤
+        p.information__description= image.description
+        +tags(image.tags)
+        p.information__timestamp= `發佈時間: ${ image.createdAt }`
+        div.information__actions
+          button.information__action.information__action--like
+            div.action__like--img
+            span.action__like--count= image.likes
+          button.information__action.information__action--share
+            div.action__share--img
+            span.action__share--label 分享
+        div.information__comment
+          +icon("information__comment--icon", image.author.icon, 35)
+          input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
+          button.button--solid 留言
+        div.information__messages
+          each comment in image.comments
+            +message(comment)
+    //- div.main__similar
+    //-   h2.main__similar--title 更多相似
+    //-   div.main__similar--list
 block scripts
+  script(src="/js/image.js")

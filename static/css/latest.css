@@ -1,0 +1,14 @@
+.main {
+    background-color:#F7F7F7;
+}
+
+.main__container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.main__latest {
+    margin: 0 2rem;
+}

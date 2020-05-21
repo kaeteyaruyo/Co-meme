@@ -1,7 +1,10 @@
-extends layout.pug
+extends layouts/base.pug
 
 block stylesheets
-  link(rel="stylesheet", type="text/css" href="/css/common/upload.css")
+  link(rel="stylesheet", type="text/css" href="/css/upload.css")
+
+block header
+  include components/header.pug
 
 block main
   div.main__upload
@@ -33,7 +36,7 @@ block main
             div.step__circle.step__circle--bottom
     div.upload__divider
       hr.divider__line
-    form(id="uploadForm" action="/upload" method="POST" enctype='multipart/form-data')
+    form(id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data")
       div.upload__content
         div#step1.content__one.content__one--hide
           div.one__image--show
@@ -68,16 +71,16 @@ block main
             div.element__describe
               p.element__describe--title 描述
               div.element__describe--input
-                input.element__describe--bar(name="describe" eplaceholder="請輸入圖片描述")
+                input.element__describe--bar(name="description" eplaceholder="請輸入圖片描述")
             p.element__classifier--title 種類
             div.element__classifier
               div.classifier__meme
-                input.element__classifier--input(type="radio" id="meme" name="category" value="meme" checked)
+                input.element__classifier--input(type="radio" id="meme" name="category" value="0" checked)
                 div.element__classifier--radio
                   div
                 label.element__classifier--label(for="meme") 迷因
               div.classifier__elder
-                input.element__classifier--input(type="radio" id="elder" name="category" value="elder")
+                input.element__classifier--input(type="radio" id="elder" name="category" value="1")
                 div.element__classifier--radio
                   div
                 label.element__classifier--label(for="elder") 長輩圖
@@ -99,7 +102,7 @@ block main
             button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
           div.three__tags
           div.three__buttons
-              button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
-              button.three__button--next(type="submit") 發布圖片
+            button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
+            button.three__button--next(type="submit") 發布圖片
 block scripts
   script(src="/js/upload.js")

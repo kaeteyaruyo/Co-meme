@@ -1,0 +1,20 @@
+include tag-chips.pug
+link(rel="stylesheet" type="text/css" href="/css/common/sidebar.css")
+script(src="/js/components/sidebar.js")
+
+mixin sidebar
+  aside.sidebar
+    div.sidebar__menu
+      a.sidebar__menu--button.sidebar__menu--home(href='/')
+        div.sidebar__menu--icon.sidebar__menu--homeIcon
+        span.sidebar__menu--label 首頁
+      a.sidebar__menu--button.sidebar__menu--recommend(href='/recommend')
+        div.sidebar__menu--icon.sidebar__menu--recommendIcon
+        span.sidebar__menu--label 為你推薦
+      a.sidebar__menu--button.sidebar__menu--latest(href='/latest')
+        div.sidebar__menu--icon.sidebar__menu--latestIcon
+        span.sidebar__menu--label 最新內容
+    div.sidebar__popularTags
+      span.sidebar__popularTags--title 熱門標籤
+      +tags(sidebar.tags)
+      button.sidebar__popularTags--more 顯示更多

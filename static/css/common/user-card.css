@@ -1,0 +1,34 @@
+.userCard {
+    display: grid;
+    grid-template-rows: min-content;
+    grid-template-columns: min-content auto auto;
+    justify-items: start;
+    align-items: center;
+    align-content: center;
+    box-sizing: border-box;
+    width: 20rem;
+    height: 5rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    box-shadow: 3px 3px 6px #00000029;
+    background-color: #FFFFFF;
+}
+
+.userCard__info {
+    margin-left: 1rem;
+}
+
+.userCard__info--username {
+    margin: 0;
+    font-weight: bold;
+    font-size: large;
+}
+
+.userCard__info--followerCount {
+    font-size: small;
+}
+
+.userCard__follow {
+    justify-self: end;
+    font-weight: 500;
+}

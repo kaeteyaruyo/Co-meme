@@ -24,9 +24,15 @@ const root = process.cwd();
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
 app.use(express.static(path.join(root, '/static')));
-app.use(parser.urlencoded({ extended: true }));
-app.use(parser.json({ type:  '*/json' }));
 app.use(session);
+app.use(parser.urlencoded({
+    limit: '5GB',
+    extended: true,
+}));
+app.use(parser.json({
+    limit: '5GB',
+    type: '*/json',
+}));
 
 app.use(function (req, res, next) {
     if (req.session.user) {
@@ -376,7 +382,12 @@ app.get('/upload', authenticate, (req, res) => {
     });
 });
 
-app.post('/upload', authenticate, upload.single('image'), (req, res) => {
+app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
+    // Tag.findAllOrCreate({
+    //     where
+    // });
+    console.log(req.file)
+    console.log(req.body)
     Image.create({
         content: req.file.buffer,
         category: req.body.category,

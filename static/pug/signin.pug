@@ -9,7 +9,7 @@ block action
     img(src="/img/signin/account.svg" width="120" height="120")
     p.main__action--title 會員登入
     form.main__form(action="/signin" method="POST")
-      input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required oninvalid="this.setCustomValidity('請輸入正確的E-mail格式')")
+      input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required)
       input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
       a.main__form--resetPassword(href="/resetPassword") 忘記密碼?
       input.button--solid.main__form--button.main__form--submit(type="submit" value="登入")

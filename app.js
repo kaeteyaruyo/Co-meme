@@ -503,6 +503,29 @@ app.get('/follow/user', authenticate, async(req, res) => {
 app.get('/follow/tag', authenticate, async(req, res) => {
 });
 
+app.get('/comment', authenticate, async (req, res) => {
+    console.log(req.query)
+    const comment = await Comment.create({
+        imageId: req.query.imageId,
+        userId: req.session.user.id,
+        comment: req.query.comment,
+    });
+    const author = await User.findOne({
+        where: {
+            userId: req.session.user.id,
+        },
+        attributes: [
+            'username',
+            'icon'
+        ],
+    });
+    console.log(comment)
+    res.send(JSON.stringify({
+        comment,
+        author,
+    }));
+});
+
 app.use(function(req, res, next) {
     res.status(404).render('error', {
         title: '查無內容',

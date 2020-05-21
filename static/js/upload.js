@@ -225,6 +225,7 @@ function addTag() {
     tag.setAttribute("onclick", "removeTag(this)");
     tagsBlock.appendChild(tag);
     tagtext = document.createElement("input");
+    tagtext.setAttribute("type", 'text');
     tagtext.setAttribute("value", keyword.value);
     tagtext.setAttribute("name", `tags[]`);
     tagtext.style.display = "none";

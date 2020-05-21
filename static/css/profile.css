@@ -60,3 +60,10 @@
 .profile__navi--input:checked + .profile__navi--tab {
     font-weight: bold;
 }
+
+.main__profile--panel {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    padding: 2rem;
+}

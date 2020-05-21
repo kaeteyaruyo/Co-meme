@@ -480,6 +480,12 @@ app.get('/follow/user', authenticate, async(req, res) => {
 app.get('/follow/tag', authenticate, async(req, res) => {
 });
 
+app.use(function(req, res, next) {
+    res.status(404).render('error', {
+        title: '查無內容',
+    });
+});
+
 app.listen(config.port, () => {
     console.log(`Listen on ${ config.port }`);
 });

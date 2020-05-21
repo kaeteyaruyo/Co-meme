@@ -1,20 +1,16 @@
 .main {
-    padding: 0 3rem;
     background-color:#F7F7F7;
 }
 
 .main__container {
+    position: relative;
     width: 100%;
     display: grid;
-    grid-template-columns: auto min-content;
+    grid-template-columns: min-content auto min-content;
 }
 
 .main__timeline {
-    margin: 2rem 2rem 0 0;
-}
-
-input[type="radio"] {
-    display: none;
+    margin: 2rem 2rem 0;
 }
 
 .timeline__category {
@@ -23,6 +19,10 @@ input[type="radio"] {
     background: #FFFFFF;
     height: 2rem;
     border-radius: 2rem;
+}
+
+.timeline__category--input {
+    display: none;
 }
 
 .timeline__category--label {
@@ -50,26 +50,27 @@ input[type="radio"] {
     height: unset;
 }
 
-.main__follow {
+.main__recommend {
+    padding-right: 2rem;
     position: -webkit-sticky;
     position: sticky;
     height: fit-content;
 }
 
-.main__follow--overview {
+.main__recommend--overview {
     margin-top: 2rem;
 }
 
-.main__follow--title {
+.main__recommend--title {
     margin: 0 0 1rem;
     font-weight: 500;
 }
 
-.main__follow--cards > * {
+.main__recommend--cards > * {
     margin-bottom: 1rem;
 }
 
-.main__follow--more {
+.main__recommend--more {
     cursor: pointer;
     display: block;
     width: 100%;
@@ -82,7 +83,7 @@ input[type="radio"] {
     transition: all .3s;
 }
 
-.main__follow--more:hover {
+.main__recommend--more:hover {
     background-color: #E2E2E2;
 }
 
@@ -142,7 +143,6 @@ input[type="radio"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: .75rem 0;
     transition: all .3s;
 }
 
@@ -176,7 +176,7 @@ input[type="radio"] {
 }
 
 .post__action--label {
-    margin: 0 0 0 .5rem;
+    margin-left:.5rem;
     color: #AAAAAA;
     transition: all .3s;
 }

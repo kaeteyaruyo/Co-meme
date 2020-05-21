@@ -1,5 +1,5 @@
 const imageWall = document.querySelector('.imageWall__tiles');
-const followPanel = document.querySelector('.main__follow');
+const followPanel = document.querySelector('.main__recommend');
 const rem = 16;
 
 Array.from(document.querySelectorAll('input[name="category"]')).forEach(option => {

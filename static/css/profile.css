@@ -2,7 +2,14 @@
     background: #F7F7F7;
 }
 
-.main__profile {
+.main__container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.main__profile--banner {
     display: grid;
     justify-content: center;
     width: 100%;
@@ -12,7 +19,7 @@
     z-index: 1;
 }
 
-.profile__header {
+.profile__banner--header {
     display: grid;
     justify-items: center;
     align-items: start;
@@ -29,7 +36,7 @@
     margin: 2rem 0 1rem;
 }
 
-.profile__navi {
+.profile__banner--navi {
     border-top :#E2E2E2 1px solid ;
     display: flex;
     justify-content: center;

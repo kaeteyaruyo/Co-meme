@@ -1,4 +1,5 @@
 link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
+script(src="/js/components/image-tile.js")
 include icon.pug
 
 mixin imageTile(image)
@@ -12,7 +13,7 @@ mixin imageTile(image)
           p.imageTile__author--name= image.author.username
           p.imageTile__author--timestamp= image.createdAt
       div.imageTile__action
-        button.imageTile__action--button.imageTile__action--like
+        button.imageTile__action--button.imageTile__action--like(onclick=`sendLike(this, ${ image.imageId })`)
           div.imageTile__action--icon.imageTile__like--icon
           p.imageTile__action--label.imageTile__like--label= image.likes
         button.imageTile__action--button.imageTile__action--share

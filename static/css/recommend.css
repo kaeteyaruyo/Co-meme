@@ -1,7 +1,17 @@
 .main {
-    padding: 0 3rem;
     background-color:#F7F7F7;
     grid-template-columns: 100%;
+}
+
+.main__container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+
+.main__recommend {
+    margin: 0 2rem;
 }
 
 .main__section {

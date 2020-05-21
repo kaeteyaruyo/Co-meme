@@ -7,7 +7,11 @@ block header
   include components/header.pug
 
 block main
+  include components/sidebar.pug
   include components/image-wall.pug
-  +imageWall('看看最近在流行什麼?', images)
+  article.main__container
+    +sidebar
+    section.main__latest
+      +imageWall('看看最近在流行什麼?', images)
 
 block scripts

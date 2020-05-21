@@ -1,4 +1,4 @@
-/* start : get all steps */
+/* start: get all steps */
 step1 = document.getElementById("step1");
 step2 = document.getElementById("step2");
 step3 = document.getElementById("step3");

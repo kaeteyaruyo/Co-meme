@@ -5,10 +5,9 @@ block stylesheets
 
 block header
   include components/header.pug
-  include components/sidebar.pug
-  include components/notFound.pug
 
 block main
+  include components/sidebar.pug
   include components/tag-card.pug
   include components/user-card.pug
   mixin post(image)
@@ -30,6 +29,7 @@ block main
             p.post__action--label.post__share--label 分享
 
   article.main__container
+    +sidebar
     section.main__timeline
       div.timeline__category
         input.timeline__category--input#category__all(type="radio" name="category" value="all" checked)
@@ -39,39 +39,21 @@ block main
         input.timeline__category--input#category__elderly(type="radio" name="category" value="elderly")
         label.timeline__category--label(for="category__elderly") 長輩圖
       div.timeline__posts
-        each image in images
-          +post(image)
-    section.main__follow
-      if activeUser
-        div.main__follow--overview.main__follow--users
-          p.main__follow--title 你關注中的創作者
-          div.main__follow--cards
-            +userCard({userId:1, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:2, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:3, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:4, username: '創作者', followerCount: 30, icon: null })
-          a.main__follow--more(href=`/profile/${ activeUser.id }#following`) 顯示更多
-        div.main__follow--overview.main__follow--tags
-          p.main__follow--title 你關注中的標籤
-          div.main__follow--cards
-            +tagCard({tagId:1, tag: 'COVID-19', newPostCount:19, followerCount: 300, image: {content: ''},})
-            +tagCard({tagId:2, tag: '親子教育', newPostCount:12, followerCount: 592, image: {content: ''},})
-          a.main__follow--more(href=`/profile/${ activeUser.id }#topics`) 顯示更多
-      else
-        div.main__follow--overview.main__follow--users
-          p.main__follow--title 熱門創作者
-          div.main__follow--cards
-            +userCard({userId:1, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:2, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:3, username: '創作者', followerCount: 30, icon: null })
-            +userCard({userId:4, username: '創作者', followerCount: 30, icon: null })
-          a.main__follow--more(href='/recommend') 顯示更多
-        div.main__follow--overview.main__follow--tags
-          p.main__follow--title 熱門標籤
-          div.main__follow--cards
-            +tagCard({tagId:1, tag: 'COVID-19', newPostCount:19, followerCount: 300, image: {content: ''},})
-            +tagCard({tagId:2, tag: '親子教育', newPostCount:12, followerCount: 592, image: {content: ''},})
-          a.main__follow--more(href=`/recommend`) 顯示更多
+        each post in posts
+          +post(post)
+    section.main__recommend
+      div.main__recommend--overview.main__recommend--users
+        p.main__recommend--title 推薦的創作者
+        div.main__recommend--cards
+          each user in recommendUsers
+            +userCard(user)
+        a.main__recommend--more(href='/recommend') 顯示更多
+      div.main__recommend--overview.main__recommend--tags
+        p.main__recommend--title 推薦的標籤
+        div.main__recommend--cards
+          each tag in recommendTags
+            +tagCard(tag)
+        a.main__recommend--more(href=`/recommend`) 顯示更多
 
 block scripts
   script(src="/js/index.js")

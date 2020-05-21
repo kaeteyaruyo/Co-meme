@@ -7,6 +7,13 @@
     box-shadow: 3px 3px 6px #00000029;
 }
 
+.tagCard__placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    background-image: linear-gradient(168deg, #4C26EB 0%, #6F1376 100%);
+}
+
 .tagCard__image {
     width: 100%;
     height: 100%;

@@ -383,30 +383,35 @@ app.get('/upload', authenticate, (req, res) => {
 });
 
 app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
-    const tagIds = await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
-        where: {
-            tag,
-        }
-    })))
-    .then(res => res.map(data => data[0].tagId));
-    Image.create({
-        content: req.file.buffer,
-        category: req.body.category,
-        userId: req.session.user.id,
-        description: req.body.description,
-    })
-    .then(async record => {
-        await Promise.all(tagIds.map(tagId =>
-            ImageTag.create({
-                imageId: record.imageId,
-                tagId,
-            })
-        ));
-        res.redirect(`/image/${ record.imageId }`);
-    })
-    .catch(error => {
-        res.status(500).send({ error });
-    });
+    if(!req.file){
+        res.redirect('/');
+    }
+    else {
+        const tagIds = await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+            where: {
+                tag,
+            }
+        })))
+        .then(res => res.map(data => data[0].tagId));
+        Image.create({
+            content: req.file.buffer,
+            category: req.body.category,
+            userId: req.session.user.id,
+            description: req.body.description,
+        })
+        .then(async record => {
+            await Promise.all(tagIds.map(tagId =>
+                ImageTag.create({
+                    imageId: record.imageId,
+                    tagId,
+                })
+            ));
+            res.redirect(`/image/${ record.imageId }`);
+        })
+        .catch(error => {
+            res.status(500).send({ error });
+        });
+    }
 });
 
 app.get('/signup', (req, res) => {

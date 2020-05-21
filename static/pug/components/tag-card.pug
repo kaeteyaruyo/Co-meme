@@ -2,7 +2,10 @@ link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
 
 mixin tagCard(tag)
   a.tagCard(href=`/tag/${ tag.tagId }`)
-    img.tagCard__image(src=`data:image/png;base64, ${ tag.images[0].content }`)
+    if tag.images[0]
+      img.tagCard__image(src=`data:image/png;base64, ${ tag.images[0].content }`)
+    else
+      div.tagCard__placeholder
     div.tagCard__info
       p.tagCard__info--tagName= tag.tag
       span.tagCard__info--newPostCount= `本日增加${ tag.newPostCount || 0 }則貼文`

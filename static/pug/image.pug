@@ -46,8 +46,8 @@ block main
             span.action__share--label 分享
         div.information__comment
           +icon("information__comment--icon", image.author.icon, 35)
-          input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
-          button.button--solid 留言
+          input#comment.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
+          button.button--solid(onclick="sendComment()") 留言
         div.information__messages
           each comment in image.comments
             +message(comment)

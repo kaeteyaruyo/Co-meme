@@ -24,9 +24,15 @@ const root = process.cwd();
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
 app.use(express.static(path.join(root, '/static')));
-app.use(parser.urlencoded({ extended: true }));
-app.use(parser.json({ type:  '*/json' }));
 app.use(session);
+app.use(parser.urlencoded({
+    limit: '5GB',
+    extended: true,
+}));
+app.use(parser.json({
+    limit: '5GB',
+    type: '*/json',
+}));
 
 app.use(function (req, res, next) {
     if (req.session.user) {
@@ -376,19 +382,36 @@ app.get('/upload', authenticate, (req, res) => {
     });
 });
 
-app.post('/upload', authenticate, upload.single('image'), (req, res) => {
-    Image.create({
-        content: req.file.buffer,
-        category: req.body.category,
-        userId: req.session.user.id,
-        description: req.body.description,
-    })
-    .then(record => {
-        res.redirect(`/image/${ record.imageId }`);
-    })
-    .catch(error => {
-        res.status(500).send({ error });
-    });
+app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
+    if(!req.file){
+        res.redirect('/');
+    }
+    else {
+        const tagIds = await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+            where: {
+                tag,
+            }
+        })))
+        .then(res => res.map(data => data[0].tagId));
+        Image.create({
+            content: req.file.buffer,
+            category: req.body.category,
+            userId: req.session.user.id,
+            description: req.body.description,
+        })
+        .then(async record => {
+            await Promise.all(tagIds.map(tagId =>
+                ImageTag.create({
+                    imageId: record.imageId,
+                    tagId,
+                })
+            ));
+            res.redirect(`/image/${ record.imageId }`);
+        })
+        .catch(error => {
+            res.status(500).send({ error });
+        });
+    }
 });
 
 app.get('/signup', (req, res) => {
@@ -478,6 +501,29 @@ app.get('/follow/user', authenticate, async(req, res) => {
 });
 
 app.get('/follow/tag', authenticate, async(req, res) => {
+});
+
+app.get('/comment', authenticate, async (req, res) => {
+    console.log(req.query)
+    const comment = await Comment.create({
+        imageId: req.query.imageId,
+        userId: req.session.user.id,
+        comment: req.query.comment,
+    });
+    const author = await User.findOne({
+        where: {
+            userId: req.session.user.id,
+        },
+        attributes: [
+            'username',
+            'icon'
+        ],
+    });
+    console.log(comment)
+    res.send(JSON.stringify({
+        comment,
+        author,
+    }));
 });
 
 app.use(function(req, res, next) {

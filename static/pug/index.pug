@@ -2,6 +2,7 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/index.css")
+  link(rel="stylesheet", type="text/css" href="/css/section.css")
 
 block header
   include components/header.pug
@@ -27,10 +28,28 @@ block main
           button.post__action--button.post__action--share
             div.post__action--icon.post__share--icon
             p.post__action--label.post__share--label 分享
+  mixin uploadBlock(href,imgUrl,title)
+    a.upload__all(href=href)
+      div.upload__left
+        div.upload__left--outter
+        div.upload__left--inner
+          img.upload__left--img(src=imgUrl width="48" height="48")
+      div.upload__right
+        span.upload__right--title= title
+        br
+        span.upload__right--subtitle= title
 
   article.main__container
     +sidebar
     section.main__timeline
+      div.timeline__upload
+        div.upload__title
+          div.upload__title--icon
+          span.upload__title--content 發佈圖片
+        div.upload__local
+          +uploadBlock("./upload","/img/upload/photo.svg","從你的電腦中上傳")
+        div.upload__online
+          +uploadBlock("","/img/upload/pencil.svg","線上模板立即製作")
       div.timeline__category
         input.timeline__category--input#category__all(type="radio" name="category" value="all" checked)
         label.timeline__category--label(for="category__all") 全部

@@ -46,7 +46,7 @@ block main
             div.image__block
               div.image__mask
               button#imageUpdate.mask__update(type="button" onclick="updateImage()")
-                img(src="/img/upload/photo.svg" width="20" style="margin-right: 0.5rem;")
+                img(src="/img/upload/photo.svg" width="20")
                 span 更新上傳圖片
               img#imageView.image__content(src="")
             p.image__label 檔案名稱
@@ -74,16 +74,14 @@ block main
                 input.element__describe--bar(name="description" eplaceholder="請輸入圖片描述")
             p.element__classifier--title 種類
             div.element__classifier
-              div.classifier__meme
+              label.classifier__meme
                 input.element__classifier--input(type="radio" id="meme" name="category" value="0" checked)
                 div.element__classifier--radio
-                  div
-                label.element__classifier--label(for="meme") 迷因
-              div.classifier__elder
+                span.element__classifier--text(for="meme") 迷因
+              label.classifier__elder
                 input.element__classifier--input(type="radio" id="elder" name="category" value="1")
                 div.element__classifier--radio
-                  div
-                label.element__classifier--label(for="elder") 長輩圖
+                span.element__classifier--text(for="elder") 長輩圖
             p.element__privacy--title 隱私性
             div.element__privacy
               select(name="privacy")

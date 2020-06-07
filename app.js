@@ -2,12 +2,15 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
-const { Op } = require('sequelize');
 
 const config = require('./config.js');
-const authenticate = require('./route/authenticate');
-const session = require('./route/session');
-const upload = require('./route/upload');
+const authenticate = require('./route/utils/authenticate');
+const session = require('./route/utils/session');
+const upload = require('./route/utils/upload');
+const imagesAPI = require('./route/images');
+const usersAPI = require('./route/users');
+const tagsAPI = require('./route/tags');
+
 const {
     Comment,
     Follower,
@@ -33,6 +36,10 @@ app.use(parser.json({
     limit: '5GB',
     type: '*/json',
 }));
+
+app.use('/api/images', imagesAPI);
+app.use('/api/users', usersAPI);
+app.use('/api/tags', tagsAPI);
 
 app.use(function (req, res, next) {
     if (req.session.user) {
@@ -302,7 +309,6 @@ app.get('/image/:id', sidebarData, (req, res) => {
             },
             {
                 model: Comment,
-                as: 'comments',
                 attributes: [
                     'comment',
                     'createdAt'
@@ -334,6 +340,7 @@ app.get('/image/:id', sidebarData, (req, res) => {
         });
     })
     .catch(error => {
+        console.log(error)
         res.status(500).send({ error });
     });
 });

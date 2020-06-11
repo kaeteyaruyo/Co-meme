@@ -1,27 +1,56 @@
-const backButton = document.querySelector('.post__back');
-
-backButton.addEventListener('click', () => {
-    // window.history.back();
-    window.location.pathname = "/"
-});
+import commentHTML from 'static/pug/components/comment.pug';
 
 const commentSection = document.querySelector('.information__messages');
-function sendComment() {
-    console.log('lala')
-    fetch(`/comment?imageId=${ window.location.pathname.split('/').pop() }&comment=${ document.getElementById('comment').value }`)
-    .then(res => res.json())
-    .then(data => {
-        commentSection.insertAdjacentHTML('beforeend',
-        `
-        <div class="message">
-        <img class="message__author--icon" src="${ data.author.icon ? 'data:image/png;base64, ' + data.author.icon : '/img/common/account.svg' }" width="35" height="35" />
-        <span class="message__author--name">${ data.author.username }</span>
-        <span class="message__timestamp">${ data.comment.createdAt }</span>
-        <span class="message__content">${ data.comment.comment }</span>
-        </div>
-        `);
+const commentInput = document.querySelector('#comment__input');
+const imageId = window.location.pathname.split('/').pop();
+
+fetch(`/api/comment/${ imageId }`)
+.then(res => {
+    if(res.status === 200){
+        return res.json()
+    }
+    throw res;
+})
+.then(comments => {
+    comments.forEach(comment => {
+        commentSection.insertAdjacentHTML('beforeend', commentHTML(comment));
+    });
+})
+.catch(error => {
+    console.error(error)
+});
+
+document.querySelector('#comment__submit').addEventListener('click', function (event) {
+    event.preventDefault();
+    fetch(`/api/comment/${ imageId }`, {
+        method: 'POST',
+        body: JSON.stringify({
+            comment: commentInput.value,
+        }),
+        headers: {
+            'content-type': 'application/json'
+        },
+    })
+    .then(res => {
+        if(res.status === 200){
+            return res.json()
+        }
+        throw res;
+    })
+    .then(comment => {
+        commentSection.insertAdjacentHTML('afterbegin', commentHTML(comment));
+        commentInput.value = '';
     })
     .catch(error => {
-        window.location.pathname = '/signin'
+        if(error.status === 401){
+            window.location.pathname = '/signin'
+        }
+        else {
+            console.error(error)
+        }
     });
-}
+});
+
+document.querySelector('.post__back').addEventListener('click', () => {
+    window.history.back();
+});

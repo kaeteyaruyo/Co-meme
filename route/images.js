@@ -8,7 +8,7 @@
  *         * 使用者姓名
  *         * 使用者頭像
  *     * 按讚的使用者列表（只含使用者編號）
- * 本 api 提供分頁功能，一頁有 12 筆資料
+ * 本 api 提供分頁功能，一頁有 13 筆資料
  */
 
 const express = require('express');
@@ -17,7 +17,7 @@ const authenticate = require('./utils/authenticate');
 const daysAgo = require('./utils/days-ago');
 
 const apis = express.Router();
-const pageSize = 12;
+const pageSize = 13;
 
 const {
     Image,
@@ -334,5 +334,13 @@ apis.get('/user/:userId(\\d+)', (req, res) => {
         res.status(500).send({ message: err });
     });
 });
+
+/**
+ * 取得跟某圖片相似的圖片，固定取得 5 張
+ */
+apis.get('/similar/:imageId(\\d+)', authenticate, (req, res) => {
+    // TODO: implement this route
+    res.status(500).send({ message: 'This route is not yet implemented.' });
+})
 
 module.exports = apis;

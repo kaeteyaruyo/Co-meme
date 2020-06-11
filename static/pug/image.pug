@@ -12,13 +12,6 @@ block main
   include components/sidebar.pug
   include components/icon.pug
   include components/tag-chips.pug
-  include components/image-tile.pug
-  mixin message(comment)
-    div.message
-      +icon("message__author--icon", comment.author.icon, 35)
-      span.message__author--name= comment.author.username
-      span.message__timestamp= comment.createdAt
-      span.message__content= comment.comment
   article.main__container
     +sidebar
     section.main__post
@@ -40,19 +33,18 @@ block main
         div.information__actions
           button.information__action.information__action--like
             div.action__like--img
-            span.action__like--count= image.likes
+            span.action__like--count= image.likedUsers.length
           button.information__action.information__action--share
             div.action__share--img
             span.action__share--label 分享
-        div.information__comment
-          +icon("information__comment--icon", image.author.icon, 35)
-          input#comment.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
-          button.button--solid(onclick="sendComment()") 留言
+        form.information__comment
+          a(href=`/profile/${ image.author.userId }`)
+            +icon("information__comment--icon", image.author.icon, 35)
+          input#comment__input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
+          button#comment__submit.button--solid(type="submit") 留言
         div.information__messages
-          each comment in image.comments
-            +message(comment)
     //- div.main__similar
     //-   h2.main__similar--title 更多相似
     //-   div.main__similar--list
 block scripts
-  script(src="/js/image.js")
+  script(src="/bundle/image.bundle.js")

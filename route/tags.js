@@ -1,14 +1,10 @@
 /**
- * tag API 分為兩個 subroute:
- *    * /card: 用來取得 tag card 上所需的資料，包含：
- *        * 標籤編號
- *        * 標籤名稱
- *        * 本日新增貼文數
- *        * 追蹤者列表
- *        * 有這個標籤的其中一張圖片（取最新的那一張）
- *    * /chip: 用來取得 tag chip 所需的資料，包含：
- *        * 標籤編號
- *        * 標籤名稱
+ * tag API 用來取得 tag card 上所需的資料，包含：
+ *    * 標籤編號
+ *    * 標籤名稱
+ *    * 本日新增貼文數
+ *    * 追蹤者列表
+ *    * 有這個標籤的其中一張圖片（取最新的那一張）
  */
 
 const express = require('express');
@@ -29,7 +25,7 @@ const {
  * 透過協同過濾為使用者推薦可能會喜歡的標籤，需檢查登入狀態
  * @param {Number} count - 需要回傳幾個標籤
  */
-apis.get('/card/recommend', authenticate, (req, res) => {
+apis.get('/recommend', authenticate, (req, res) => {
     // TODO: implement this route
     res.status(500).send({ message: 'This route is not yet implemented.' });
 })
@@ -38,7 +34,7 @@ apis.get('/card/recommend', authenticate, (req, res) => {
  * 取得熱門的標籤，以一週內發文數排序
  * @param {Number} count - 需要回傳幾個標籤
  */
-apis.get('/card/hot', (req, res) => {
+apis.get('/hot', (req, res) => {
     Tag.findAll({
         attributes: [
             'tagId',
@@ -124,7 +120,7 @@ apis.get('/card/hot', (req, res) => {
 /**
  * 取得某使用者有追蹤的標籤
  */
-apis.get('/card/following/:userId(\\d+)', (req, res) => {
+apis.get('/following/:userId(\\d+)', (req, res) => {
     Tag.findAll({
         attributes: [
             'tagId',
@@ -193,45 +189,6 @@ apis.get('/card/following/:userId(\\d+)', (req, res) => {
         .then(tags => {
             res.send(tags);
         });
-    })
-    .catch(err => {
-        res.status(500).send({ message: err });
-    });
-});
-
-/**
- * 取得熱門的標籤，以一週內發文數排序
- * @param {Number} count - 需要回傳幾個標籤
- */
-apis.get('/chip/hot', (req, res) => {
-    Tag.findAll({
-        attributes: [
-            'tagId',
-            'tag',
-            [Sequelize.fn('COUNT', Sequelize.col('images.imageId')), 'imageCount'],
-        ],
-        include: [
-            {
-                model: Image,
-                as: 'images',
-                where: {
-                    createdAt: {
-                        [Op.gte]: daysAgo(7),
-                    },
-                },
-            }
-        ],
-        group: ['tagId'],
-        order: [
-            [Sequelize.literal('imageCount'), 'DESC'],
-        ],
-        includeIgnoreAttributes : false,
-    })
-    .then(tags => {
-        res.send(tags.slice(0, req.query.count).map(tag => ({
-            tagId: tag.tagId,
-            tag: tag.tag,
-        })));
     })
     .catch(err => {
         res.status(500).send({ message: err });

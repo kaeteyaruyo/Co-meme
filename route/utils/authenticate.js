@@ -3,6 +3,7 @@ module.exports = function (req, res, next){
         next();
     }
     else {
-        res.redirect('/signin');
+        res.status(401).send({message: 'Unauthorized'});
+        // res.status(401).redirect('/signin');
     }
 }

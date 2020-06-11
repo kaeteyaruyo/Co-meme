@@ -23,7 +23,6 @@ module.exports = database.define('comment', {
     },
     createdAt: {
         type: Sequelize.DATE,
-        allowNull: false,
         get() {
             return relativeDate(this.getDataValue('createdAt'));
         }

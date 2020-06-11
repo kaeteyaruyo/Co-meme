@@ -1,0 +1,7 @@
+include icon.pug
+
+div.message
+  +icon("message__author--icon", author.icon, 35)
+  a(href=`/profile/${ author.userId }`).message__author--name= author.username
+  span.message__timestamp= createdAt
+  span.message__content= comment

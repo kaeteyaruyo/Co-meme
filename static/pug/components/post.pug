@@ -1,0 +1,18 @@
+include icon.pug
+
+div.post
+  a.post__image(href=`/image/${ imageId }`)
+    img(src=`data:image/png;base64, ${ content }`)
+  div.post__info
+    div.post__author
+      +icon('post__author--icon', author.icon, 36)
+      div.post__author--text
+        p.post__author--name= author.username
+        p.post__author--timestamp= createdAt
+    div.post__action
+      button.post__action--button.post__action--like
+        div.post__action--icon.post__like--icon
+        p.post__action--label.post__like--label= likedUsers.length
+      button.post__action--button.post__action--share
+        div.post__action--icon.post__share--icon
+        p.post__action--label.post__share--label 分享

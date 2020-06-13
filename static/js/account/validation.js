@@ -17,24 +17,27 @@ const signupForm =  document.getElementById('signupForm');
 signupForm.addEventListener('submit',function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const searchParams = new URLSearchParams();
+    const data = {};
     for (const pair of formData) {
-        searchParams.append(pair[0], pair[1], pair[2], pair[3], pair[4], pair[5]);
+        data[pair[0]] = pair[1];
     }
     fetch('/signup',{
         method: 'POST',
-        body: searchParams
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
     })
     .then((res) => {
         return res.text();
     })
     .then((data) => {
         window.alert(data);
-        window.location.assign(window.location.href);
+        // window.location.assign(window.location.href);
     })
     .catch((err) => {
         window.alert(err);
-        window.location.assign(window.location.href);
+        // window.location.assign(window.location.href);
     })
 
 })

@@ -1,28 +1,31 @@
 // Send signin form
 const signinForm =  document.getElementById('signinForm');
-console.log(signinForm);
 
 signinForm.addEventListener('submit',function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    const searchParams = new URLSearchParams();
+    const data = {};
     for (const pair of formData) {
-        searchParams.append(pair[0], pair[1]);
+        data[pair[0]] = pair[1];
     }
     fetch('/signin',{
         method: 'POST',
-        body: searchParams
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
     })
     .then((res) => {
-        return res.text();
+        if(res.status == 200) {
+            return res.text();
+        }
+        throw res;
     })
     .then((data) => {
-        window.alert(data);
-        window.location.assign(window.location.href);
+        window.location.pathname = "/";
     })
     .catch((err) => {
         window.alert(err);
         window.location.assign(window.location.href);
     })
-
 })

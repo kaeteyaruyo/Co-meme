@@ -480,12 +480,13 @@ app.post('/signin', async (req, res) => {
                 name: user.username,
                 icon: user.icon,
             }
-            res.redirect('/');
+            res.send('OK');
+            // res.redirect('/');
         }
         else {
             // TODO: frontend error message display
             // res.redirect('signin');
-            res.send("密碼錯誤");
+            res.send("帳號或密碼錯誤");
         }
     });
 });
@@ -506,7 +507,6 @@ app.get('/follow/tag', authenticate, async(req, res) => {
 });
 
 app.get('/comment', authenticate, async (req, res) => {
-    console.log(req.query)
     const comment = await Comment.create({
         imageId: req.query.imageId,
         userId: req.session.user.id,
@@ -521,7 +521,6 @@ app.get('/comment', authenticate, async (req, res) => {
             'icon'
         ],
     });
-    console.log(comment)
     res.send(JSON.stringify({
         comment,
         author,

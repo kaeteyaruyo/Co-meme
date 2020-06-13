@@ -5,6 +5,7 @@ const ImageTag = require('./imageTag');
 const Tag = require('./tag');
 const User = require('./user');
 const TagFollower = require('./tagFollower');
+const LikeImage = require('./likeImage');
 
 Image.hasMany(Comment, {
     foreignKey: 'imageId',
@@ -41,7 +42,7 @@ Image.belongsTo(User, {
 User.belongsToMany(User, {
     through: Follower,
     foreignKey: 'userId',
-    as: 'followed',
+    as: 'followers',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
@@ -64,8 +65,8 @@ Tag.belongsToMany(Image, {
 
 Image.belongsToMany(Tag, {
     through: ImageTag,
-    as: 'tags',
     foreignKey: 'imageId',
+    as: 'tags',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
@@ -73,15 +74,31 @@ Image.belongsToMany(Tag, {
 Tag.belongsToMany(User, {
     through: TagFollower,
     foreignKey: 'tagId',
-    as: 'user',
+    as: 'followers',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
 User.belongsToMany(Tag, {
     through: TagFollower,
-    as: 'tags',
     foreignKey: 'userId',
+    as: 'followingTags',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+Image.belongsToMany(User, {
+    through: LikeImage,
+    foreignKey: 'imageId',
+    as: 'likedUsers',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+User.belongsToMany(Image, {
+    through: LikeImage,
+    foreignKey: 'userId',
+    as: 'likedImages',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
@@ -94,4 +111,5 @@ module.exports = {
     Tag,
     User,
     TagFollower,
+    LikeImage,
 };

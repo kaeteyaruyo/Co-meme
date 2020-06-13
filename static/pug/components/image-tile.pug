@@ -1,21 +1,18 @@
-link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
-script(src="/js/components/image-tile.js")
 include icon.pug
 
-mixin imageTile(image)
-  div.imageTile
-    a.imageTile__image(href=`/image/${ image.imageId }`)
-      img(src=`data:image/png;base64, ${ image.content }`)
-    div.imageTile__info
-      div.imageTile__author
-        +icon('imageTile__author--icon', image.author.icon, 36)
-        div.imageTile__author--text
-          p.imageTile__author--name= image.author.username
-          p.imageTile__author--timestamp= image.createdAt
-      div.imageTile__action
-        button.imageTile__action--button.imageTile__action--like(onclick=`sendLike(this, ${ image.imageId })`)
-          div.imageTile__action--icon.imageTile__like--icon
-          p.imageTile__action--label.imageTile__like--label= image.likes
-        button.imageTile__action--button.imageTile__action--share
-          div.imageTile__action--icon.imageTile__share--icon
-          p.imageTile__action--label.imageTile__share--label 分享
+div.imageTile
+  a.imageTile__image(href=`/image/${ imageId }`)
+    img(src=`data:image/png;base64, ${ content }`)
+  div.imageTile__info
+    div.imageTile__author
+      +icon('imageTile__author--icon', author.icon, 36)
+      div.imageTile__author--text
+        p.imageTile__author--name= author.username
+        p.imageTile__author--timestamp= createdAt
+    div.imageTile__action
+      button.imageTile__action--button.imageTile__action--like(onclick=`sendLike(this, ${ imageId })`)
+        div.imageTile__action--icon.imageTile__like--icon
+        p.imageTile__action--label.imageTile__like--label= likedUsers.length
+      button.imageTile__action--button.imageTile__action--share
+        div.imageTile__action--icon.imageTile__share--icon
+        p.imageTile__action--label.imageTile__share--label 分享

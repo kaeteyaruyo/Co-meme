@@ -1,5 +1,5 @@
 mixin icon(className, icon, size)
   if icon
-    img(class=className src=`data:image/png;base64, ${ activeUser.icon }` width=size height=size)
+    img(class=className src=`data:image/png;base64, ${ icon }` width=size height=size)
   else
     img(class=className src="/img/common/account.svg" width=size height=size)

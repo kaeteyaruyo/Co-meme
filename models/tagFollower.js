@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('./connect');
 
-module.exports = database.define('imageTag', {
+module.exports = database.define('tagFollower', {
     userId: {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,

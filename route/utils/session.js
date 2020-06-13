@@ -1,5 +1,5 @@
 const session = require('express-session')
-const config = require('../config.js');
+const config = require('../../config.js');
 
 module.exports = session({
     cookie: {

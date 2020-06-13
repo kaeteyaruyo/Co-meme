@@ -2,12 +2,18 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
-const { Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 
 const config = require('./config.js');
-const authenticate = require('./route/authenticate');
-const session = require('./route/session');
-const upload = require('./route/upload');
+const authenticate = require('./route/utils/authenticate');
+const daysAgo = require('./route/utils/days-ago');
+const session = require('./route/utils/session');
+const upload = require('./route/utils/upload');
+const imagesAPI = require('./route/images');
+const usersAPI = require('./route/users');
+const tagsAPI = require('./route/tags');
+const commentAPI = require('./route/comment');
+
 const {
     Comment,
     Follower,
@@ -34,6 +40,11 @@ app.use(parser.json({
     type: '*/json',
 }));
 
+app.use('/api/images', imagesAPI);
+app.use('/api/users', usersAPI);
+app.use('/api/tags', tagsAPI);
+app.use('/api/comment', commentAPI);
+
 app.use(function (req, res, next) {
     if (req.session.user) {
         res.locals.activeUser = req.session.user;
@@ -47,66 +58,39 @@ async function sidebarData(req, res, next){
         attributes: [
             'tagId',
             'tag',
+            [Sequelize.fn('COUNT', Sequelize.col('images.imageId')), 'imageCount'],
         ],
-        limit: 5,
+        include: [
+            {
+                model: Image,
+                as: 'images',
+                where: {
+                    createdAt: {
+                        [Op.gte]: daysAgo(7),
+                    },
+                },
+            }
+        ],
+        group: ['tagId'],
+        order: [
+            [Sequelize.literal('imageCount'), 'DESC'],
+        ],
+        includeIgnoreAttributes : false,
+    })
+    .then(tags => {
+        return tags.slice(0, 10).map(tag => ({
+            tagId: tag.tagId,
+            tag: tag.tag,
+        }));
+    })
+    .catch(err => {
+        res.status(500).send({ message: err });
     });
+    console.log(res.locals.sidebar.tags)
     next();
 }
 
 app.get('/', sidebarData, async (req, res) => {
-    const dayAgo = new Date();
-    dayAgo.setDate(dayAgo.getDate() - 1);
-
-    let posts;
-    if(req.session.user){
-        posts = await Image.findAll({
-            attributes: [
-                'imageId',
-                'content',
-                'likes',
-                'createdAt',
-            ],
-            include: [
-                {
-                    model: User,
-                    as: 'author',
-                    where: {
-                        userId: [req.session.user.id]
-                    },
-                    attributes: [
-                        'username',
-                        'icon',
-                    ],
-                },
-            ],
-            limit: 10,
-        });
-    }
-    else {
-        posts = await Image.findAll({
-            order: [
-                ['createdAt', 'DESC'],
-            ],
-            attributes: [
-                'imageId',
-                'content',
-                'likes',
-                'createdAt',
-            ],
-            include: [
-                {
-                    model: User,
-                    as: 'author',
-                    attributes: [
-                        'username',
-                        'icon',
-                    ],
-                },
-            ],
-            limit: 10,
-        });
-    }
-
     const recommendUsers = await User.findAll({
         attributes: [
             'userId',
@@ -139,7 +123,6 @@ app.get('/', sidebarData, async (req, res) => {
 
     res.render('index', {
         title: '首頁',
-        posts,
         recommendUsers,
         recommendTags,
     });
@@ -150,28 +133,6 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/recommend', sidebarData, async (req, res) => {
-    const images = await Image.findAll({
-        order: [
-            ['createdAt', 'DESC'],
-        ],
-        attributes: [
-            'imageId',
-            'content',
-            'likes',
-            'createdAt',
-        ],
-        include: [
-            {
-                model: User,
-                as: 'author',
-                attributes: [
-                    'username',
-                    'icon',
-                ],
-            },
-        ],
-    });
-
     const recommendUsers = await User.findAll({
         attributes: [
             'userId',
@@ -204,77 +165,83 @@ app.get('/recommend', sidebarData, async (req, res) => {
 
     res.render('recommend', {
         title: '為你推薦',
-        images,
         recommendUsers,
         recommendTags,
     });
 });
 
 app.get('/latest', sidebarData, async (req, res) => {
-    const images = await Image.findAll({
-        order: [
-            ['createdAt', 'DESC'],
-        ],
-        attributes: [
-            'imageId',
-            'content',
-            'likes',
-            'createdAt',
-        ],
-        include: [
-            {
-                model: User,
-                as: 'author',
-                attributes: [
-                    'username',
-                    'icon',
-                ],
-            },
-        ],
-        limit: 10,
-    });
-
     res.render('latest', {
         title: '最新內容',
-        images
     });
 });
 
-app.get('/tag/:id', sidebarData, async (req, res) => {
-    const tag = await Tag.findOne({
+app.get('/tag/:id', sidebarData, async (req, res, next) => {
+    Tag.findOne({
+        attributes: [
+            'tagId',
+            'tag',
+        ],
         where: {
             tagId: req.params.id,
         },
-    });
-    const images = await Image.findAll({
-        attributes: [
-            'imageId',
-            'content',
-            'category',
-            'likes',
-        ],
-        include: [
-            {
-                model: Tag,
-                as: 'tags',
-                where: {
-                    tagId: req.params.id,
-                }
-            },
-            {
-                model: User,
-                as: 'author',
-                attributes: [
-                    'username',
-                    'icon',
-                ],
-            },
-        ],
-    });
-    res.render('tag', {
-        title: tag.tag,
-        tag,
-        images
+    })
+    .then(async tag => {
+        res.render('tag', {
+            title: tag.tag,
+            tag: {
+                tag: tag.tag,
+                posts: await Image.count({
+                    where: {
+                        createdAt: {
+                            [Op.gte]: daysAgo(1),
+                        },
+                    },
+                    include: [
+                        {
+                            model: Tag,
+                            as: 'tags',
+                            where: {
+                                tagId: tag.tagId,
+                            }
+                        }
+                    ],
+                    includeIgnoreAttributes : false,
+                }),
+                thumbnail: await Image.findOne({
+                    attributes: [
+                        'content',
+                    ],
+                    include: [
+                        {
+                            model: Tag,
+                            as: 'tags',
+                            where: {
+                                tagId: tag.tagId,
+                            }
+                        }
+                    ],
+                    order: [
+                        ['imageId', 'DESC'],
+                    ],
+                    includeIgnoreAttributes : false,
+                })
+                .then(image => image.content),
+                followers: await TagFollower.findAll({
+                    attributes: [
+                        'userId',
+                    ],
+                    where:{
+                        tagId: tag.tagId,
+                    },
+                }),
+            }
+        });
+    })
+    .catch(err => {
+        console.error(err)
+        res.status(500);
+        next();
     });
 });
 
@@ -286,7 +253,6 @@ app.get('/image/:id', sidebarData, (req, res) => {
         attributes: [
             'content',
             'description',
-            'likes',
             'createdAt',
         ],
         include: [
@@ -301,21 +267,11 @@ app.get('/image/:id', sidebarData, (req, res) => {
                 ],
             },
             {
-                model: Comment,
-                as: 'comments',
+                model: User,
+                as: 'likedUsers',
                 attributes: [
-                    'comment',
-                    'createdAt'
+                    'userId',
                 ],
-                include: {
-                    model: User,
-                    as: 'author',
-                    attributes: [
-                        'userId',
-                        'username',
-                        'icon',
-                    ],
-                },
             },
             {
                 model: Tag,
@@ -334,32 +290,18 @@ app.get('/image/:id', sidebarData, (req, res) => {
         });
     })
     .catch(error => {
+        console.log(error)
         res.status(500).send({ error });
     });
 });
 
 app.get('/profile/:id', sidebarData, async (req, res) => {
-    // await User.findAll({
-    //     attributes: [
-    //         'userId',
-    //         'username',
-    //         'icon',
-    //         'followerCount',
-    //     ],
-    //     include: [{
-    //         model: User,
-    //         as: 'following',
-    //         where: {
-    //             userId: req.session.user.id,
-    //         },
-    //     }],
-    // });
-
     User.findOne({
         where: {
             userId: req.params.id
         },
         attributes: [
+            'userId',
             'username',
             'icon',
             'followerCount',
@@ -532,6 +474,8 @@ app.use(function(req, res, next) {
         title: '查無內容',
     });
 });
+
+// TODO: 500 error handling
 
 app.listen(config.port, () => {
     console.log(`Listen on ${ config.port }`);

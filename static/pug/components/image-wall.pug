@@ -1,16 +1,17 @@
-include image-tile.pug
 link(rel="stylesheet" type="text/css" href="/css/common/image-wall.css")
+link(rel="stylesheet" type="text/css" href="/css/common/image-tile.css")
+script(src="/js/components/image-tile.js")
 
-mixin imageWall(title, images)
+mixin imageWall(title)
   section.imageWall
     h2.imageWall__title= title
     form.imageWall__actions(name="actions")
       div.imageWall__category
-        input.imageWall__category--input#category__all(type="radio" name="category" value="all" checked)
+        input.imageWall__category--input#category__all(type="radio" name="category" value="" checked)
         label.imageWall__category--label(for="category__all") 全部
-        input.imageWall__category--input#category__meme(type="radio" name="category" value="meme")
+        input.imageWall__category--input#category__meme(type="radio" name="category" value="0")
         label.imageWall__category--label(for="category__meme") 迷因
-        input.imageWall__category--input#category__elderly(type="radio" name="category" value="elderly")
+        input.imageWall__category--input#category__elderly(type="radio" name="category" value="1")
         label.imageWall__category--label(for="category__elderly") 長輩圖
       div.imageWall__arrange
         input.imageWall__arrange--input#arrange__grid(type="radio" name="arrange" value="grid" checked)
@@ -20,7 +21,5 @@ mixin imageWall(title, images)
         label.imageWall__arrange--label(for="arrange__waterfall")
           div.imageWall__arrange--icon.arrange__icon--waterfall
     div.imageWall__tiles.imageWall__tiles--grid
-      each image in images
-        +imageTile(image)
   script(src="/js/components/image-wall.js")
 

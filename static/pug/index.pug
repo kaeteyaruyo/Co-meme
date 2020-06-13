@@ -10,23 +10,6 @@ block main
   include components/sidebar.pug
   include components/tag-card.pug
   include components/user-card.pug
-  mixin post(image)
-    div.post
-      a.post__image(href=`/image/${ image.imageId }`)
-        img(src=`data:image/png;base64, ${ image.content }`)
-      div.post__info
-        div.post__author
-          +icon('post__author--icon', image.author.icon, 36)
-          div.post__author--text
-            p.post__author--name= image.author.username
-            p.post__author--timestamp= image.createdAt
-        div.post__action
-          button.post__action--button.post__action--like
-            div.post__action--icon.post__like--icon
-            p.post__action--label.post__like--label= image.likes
-          button.post__action--button.post__action--share
-            div.post__action--icon.post__share--icon
-            p.post__action--label.post__share--label 分享
   mixin uploadBlock(href,imgUrl,title)
     a.upload__all(href=href)
       div.upload__left
@@ -51,15 +34,13 @@ block main
           div.upload__online
             +uploadBlock("","/img/upload/pencil.svg","線上模板立即製作")
       div.timeline__category
-        input.timeline__category--input#category__all(type="radio" name="category" value="all" checked)
+        input.timeline__category--input#category__all(type="radio" name="category" value="" checked)
         label.timeline__category--label(for="category__all") 全部
-        input.timeline__category--input#category__meme(type="radio" name="category" value="meme")
+        input.timeline__category--input#category__meme(type="radio" name="category" value="0")
         label.timeline__category--label(for="category__meme") 迷因
-        input.timeline__category--input#category__elderly(type="radio" name="category" value="elderly")
+        input.timeline__category--input#category__elderly(type="radio" name="category" value="1")
         label.timeline__category--label(for="category__elderly") 長輩圖
       div.timeline__posts
-        each post in posts
-          +post(post)
     section.main__recommend
       div.main__recommend--overview.main__recommend--users
         p.main__recommend--title 推薦的創作者
@@ -75,4 +56,4 @@ block main
         a.main__recommend--more(href=`/recommend`) 顯示更多
 
 block scripts
-  script(src="/js/index.js")
+  script(src="/bundle/index.bundle.js")

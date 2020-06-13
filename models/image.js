@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('./connect');
+const relativeDate = require('relative-date');
 
 module.exports = database.define('image', {
     imageId: {
@@ -37,9 +38,15 @@ module.exports = database.define('image', {
         allowNull: false,
         defaultValue: '0'
     },
+    createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        get() {
+            return relativeDate(this.getDataValue('createdAt'));
+        }
+    },
 }, {
     tableName: 'image',
     freezeTableName: true,
-    timestamps: true,
-    updatedAt: false,
+    timestamps: false
 });

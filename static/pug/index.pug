@@ -42,14 +42,15 @@ block main
   article.main__container
     +sidebar
     section.main__timeline
-      div.timeline__upload
-        div.upload__title
-          div.upload__title--icon
-          span.upload__title--content 發佈圖片
-        div.upload__local
-          +uploadBlock("./upload","/img/upload/photo.svg","從你的電腦中上傳")
-        div.upload__online
-          +uploadBlock("","/img/upload/pencil.svg","線上模板立即製作")
+      if activeUser
+        div.timeline__upload
+          div.upload__title
+            div.upload__title--icon
+            span.upload__title--content 發佈圖片
+          div.upload__local
+            +uploadBlock("./upload","/img/upload/photo.svg","從你的電腦中上傳")
+          div.upload__online
+            +uploadBlock("","/img/upload/pencil.svg","線上模板立即製作")
       div.timeline__category
         input.timeline__category--input#category__all(type="radio" name="category" value="all" checked)
         label.timeline__category--label(for="category__all") 全部

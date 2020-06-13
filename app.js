@@ -440,7 +440,8 @@ app.post('/signup', async (req, res) => {
         console.log(err.errors)
         if(err.errors[0].type === 'unique violation'){
             // TODO: frontend error message display
-            res.redirect('/signup');
+            // res.redirect('/signup');
+            res.send(err.errors[0].message);
         }
         else{
             res.status(500).send('Server side error occured');
@@ -483,7 +484,8 @@ app.post('/signin', async (req, res) => {
         }
         else {
             // TODO: frontend error message display
-            res.redirect('signin');
+            // res.redirect('signin');
+            res.send("密碼錯誤");
         }
     });
 });

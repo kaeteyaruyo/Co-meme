@@ -49,7 +49,8 @@
     border-radius: 2rem;
 }
 .upload__all:hover {
-    background-color: rgba(170,170,170,0.3);
+    background-color: rgb(242,242,242);
+    transition-duration: 0.3s;
 }
 .upload__left {
     width: 6rem;
@@ -80,10 +81,11 @@
 .upload__all:hover > .upload__left .upload__left--outter{
     width: 6rem;
     height: 6rem;
-    transition-duration: 0.2s;
+    transition-duration: 0.3s;
 }
 .upload__all:hover > .upload__left .upload__left--inner {
     background-color: #4C26EB;
+    transition-duration: 0.3s;
 }
 .upload__right {
     margin-left: 1rem;

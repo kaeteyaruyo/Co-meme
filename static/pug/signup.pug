@@ -7,7 +7,7 @@ block stylesheet
 block action
   div.main__action
     p.main__action--title 會員註冊
-    form.main__form(name="signup" action="/signup" method="POST" onsubmit="return validateForm()")
+    form.main__form(id="signupForm" name="signup" onsubmit="return validateForm();")
       input.main__form--input(type="text" name="username" placeholder="請輸入使用者名稱（20字以內）" maxlength="20" autofocus required)
       input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" required oninvalid="this.setCustomValidity('請輸入正確的E-mail格式')")
       input.main__form--input(type="password" name="password" placeholder="請輸入密碼（8字元以上）" required minlength="7" oninvalid="this.setCustomValidity('密碼長度需至少有8字元')")
@@ -27,6 +27,7 @@ block action
           - let d = 1;
           while d <= 31
             option(value=d)= d++ + '日'
+      span#alert.main__form--alert
       input.button--solid.main__form--submit(type="submit" value="創建帳號")
     div.main__sigin
       span 已有帳號了？

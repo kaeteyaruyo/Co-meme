@@ -60,6 +60,22 @@ function step2AndStep3() {
     step3.classList.toggle("content__three--hide");
 }
 
+const step1NextBtn = document.getElementById("step1NextBtn");
+step1NextBtn.addEventListener("click", function(event) {
+    step1GotoStep2();
+})
+const step2BacktBtn = document.getElementById("step2BacktBtn");
+const step2NextBtn = document.getElementById("step2NextBtn");
+step2BacktBtn.addEventListener("click", function(event) {
+    step2GotoStep1();
+})
+step2NextBtn.addEventListener("click", function(event) {
+    step2GotoStep3();
+})
+const step3BackBtn = document.getElementById("step3BackBtn");
+step3BackBtn.addEventListener("click", function(event) {
+    step3GotoStep2();
+})
 /* one step : upload image */
 const emptyImage = document.getElementsByClassName("one__circles")[0];
 const imageLoadend = document.getElementsByClassName("one__image--show")[0];
@@ -67,14 +83,14 @@ const imagetitle = document.getElementsByClassName("one__title")[0];
 const imageSelect = document.getElementsByClassName("one__button--select")[0];
 const nextStep = document.getElementsByClassName("one__button--select")[1];
 const imageComment = document.getElementsByClassName("one__comment")[0];
-const imageUploader = document.getElementById("imageUploader");
 const imageView = document.getElementById("imageView");
 const progressbar = document.getElementById("progressbar");
 const imageMiddle = imageLoadend.childNodes[0];
 const imageText = imageLoadend.childNodes[3];
 const imagePost = document.getElementById("imagePost");
 const fileReader = new FileReader();
-const filename = NaN;
+const imageUploader = document.getElementById("imageUploader");
+let filename = NaN;
 function circleChange() {
     const top = emptyImage.childNodes[1];
     const buttom = emptyImage.childNodes[2];
@@ -143,6 +159,11 @@ imageLoadend.childNodes[1].addEventListener("mouseenter", function(event) {
     imageMask.style.height = `${imageView.offsetHeight}px`;
     imageMask.style.width = `${imageView.offsetWidth}px`;
 });
+
+const imageUpdate = document.getElementById("imageUpdate");
+imageUpdate.addEventListener("click", function(event) {
+    updateImage();
+})
 function updateImage() {
     emptyImage.style.display = "grid";
     progressbar.style.width = "0%";
@@ -216,13 +237,19 @@ function updateImage() {
 /* three step : keyword input*/
 const keyword = document.getElementById("keyword");
 const tagsBlock = document.getElementsByClassName("three__tags")[0];
+const keywordBtn = document.getElementById("keywordBtn");
+keywordBtn.addEventListener("click", function(event) {
+    addTag();
+})
 function addTag() {
     /* Add tag in tags block */
     tag = document.createElement("input");
     tag.setAttribute("value", keyword.value);
     tag.setAttribute("class", "three__tag");
     tag.setAttribute("type", "button");
-    tag.setAttribute("onclick", "removeTag(this)");
+    tag.addEventListener("click", function(event) {
+        removeTag(this);
+    })
     tagsBlock.appendChild(tag);
     tagtext = document.createElement("input");
     tagtext.setAttribute("type", 'text');

@@ -356,6 +356,12 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
     }
 });
 
+app.get('/template', (req, res) => {
+    res.render('template', {
+        title: '模板',
+    });
+});
+
 app.get('/signup', (req, res) => {
     if(req.session.user){
         res.redirect(`/profile/${ req.session.username }`);

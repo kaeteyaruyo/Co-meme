@@ -1,5 +1,5 @@
 node_modules/
-static/bundle
+static/bundle/
 test/
 **/*.zip
 config.js

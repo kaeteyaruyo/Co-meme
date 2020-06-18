@@ -47,7 +47,7 @@ apis.get('/hot', (req, res) => {
                 as: 'images',
                 where: {
                     createdAt: {
-                        [Op.gte]: daysAgo(7),
+                        [Op.gte]: daysAgo(60),
                     },
                 },
             }
@@ -191,6 +191,47 @@ apis.get('/following/:userId(\\d+)', (req, res) => {
         });
     })
     .catch(err => {
+        res.status(500).send({ message: err });
+    });
+});
+
+/**
+ * 追蹤或取消追蹤某標籤，需登入
+ */
+apis.post('/follow/:tagId(\\d+)', authenticate, (req, res) => {
+    TagFollower.findOrCreate({
+        where: {
+            userId: req.session.user.id,
+            tagId: Number.parseInt(req.params.tagId),
+        },
+        defaults: {
+            userId: req.session.user.id,
+            tagId: Number.parseInt(req.params.tagId),
+        },
+    })
+    .then(async ([result, created]) => {
+        if(!created){
+            await TagFollower.destroy({
+                where: {
+                    userId: req.session.user.id,
+                    tagId: Number.parseInt(req.params.tagId),
+                }
+            })
+        }
+        TagFollower.count({
+            where: {
+                tagId: Number.parseInt(req.params.tagId),
+            }
+        })
+        .then(count => {
+            res.send({
+                followers: count,
+                following: created,
+            });
+        });
+    })
+    .catch(err => {
+        console.error(err)
         res.status(500).send({ message: err });
     });
 });

@@ -10,7 +10,7 @@ div.imageTile
         p.imageTile__author--name= author.username
         p.imageTile__author--timestamp= createdAt
     div.imageTile__action
-      button.imageTile__action--button.imageTile__action--like(onclick=`sendLike(this, ${ imageId })`)
+      button.imageTile__action--button.imageTile__action--like(id=`imageTile__like--${ imageId }` onclick=`sendLike(this, ${ imageId })`)
         div.imageTile__action--icon.imageTile__like--icon
         p.imageTile__action--label.imageTile__like--label= likedUsers.length
       button.imageTile__action--button.imageTile__action--share

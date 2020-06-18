@@ -106,6 +106,10 @@
     padding: 1rem 0;
 }
 
+.information__action > * {
+    transition: all .3s;
+}
+
 .information__action {
     display: flex;
     align-items: center;
@@ -127,11 +131,11 @@
     color: #AAAAAA;
 }
 
-.information__action--like:hover > .action__like--img {
+.information__action--like:hover > .action__like--img, .image__liked > .action__like--img {
     background-color: #F57575;
 }
 
-.information__action--like:hover > .action__like--count {
+.information__action--like:hover > .action__like--count, .image__liked > .action__like--count {
     color: #F57575;
 }
 
@@ -146,6 +150,14 @@
 .action__share--label {
     margin-left: 1rem;
     color: #AAAAAA;
+}
+
+.information__action--share:hover > .action__share--img {
+    background-color: #666666;
+}
+
+.information__action--share:hover > .action__share--label {
+    color: #666666;
 }
 
 .information__comment {

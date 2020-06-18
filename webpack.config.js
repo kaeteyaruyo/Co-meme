@@ -18,9 +18,8 @@ module.exports = {
         'recommend': path.join(srcDir, 'recommend.js'),
 
         // For components
-        'components/sidebar':    path.join(srcDir, 'components/sidebar.js'),
-        'components/image-tile': path.join(srcDir, 'components/image-tile.js'),
-        'components/image-wall': path.join(srcDir, 'components/image-wall.js'),
+        'components/sidebar':     path.join(srcDir, 'components/sidebar.js'),
+        'components/image-wall':  path.join(srcDir, 'components/image-wall.js'),
     },
     output: {
         path:     path.join(root, 'static/bundle'),

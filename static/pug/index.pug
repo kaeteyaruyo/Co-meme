@@ -2,14 +2,16 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/index.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/post.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
 
 block main
   include components/sidebar.pug
-  include components/tag-card.pug
-  include components/user-card.pug
 
   article.main__container
     +sidebar
@@ -25,16 +27,15 @@ block main
     section.main__recommend
       div.main__recommend--overview.main__recommend--users
         p.main__recommend--title 推薦的創作者
-        div.main__recommend--cards
-          each user in recommendUsers
-            +userCard(user)
+        div#recommend__users.main__recommend--cards
         a.main__recommend--more(href='/recommend') 顯示更多
       div.main__recommend--overview.main__recommend--tags
         p.main__recommend--title 推薦的標籤
-        div.main__recommend--cards
-          each tag in recommendTags
-            +tagCard(tag)
+        div#recommend__tags.main__recommend--cards
         a.main__recommend--more(href=`/recommend`) 顯示更多
 
 block scripts
   script(src="/bundle/index.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")
+  script(src="/js/components/follow-user.js")

@@ -17,10 +17,11 @@
 }
 
 .sidebar__menu--button {
-    padding: .75rem .5rem;
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding: .75rem .5rem;
     transition: all .3s;
 }
 
@@ -39,6 +40,18 @@
 
 .sidebar__menu--button:hover {
     background-color: #F2F2F2;
+}
+
+.sidebar__button--active::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 24px;
+    background-color: #4C26EB;
+    border-radius: 5px;
+    top: calc(50% - 12px);
+    right: -20px;
 }
 
 .sidebar__button--active > .sidebar__menu--icon, .sidebar__menu--button:hover > .sidebar__menu--icon {

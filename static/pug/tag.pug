@@ -20,11 +20,14 @@ block main
           div.main__banner--image
         div.main__banner--info
           div.banner__info
-            p.banner__info--title= tag.tag || '標籤'
+            p.banner__info--title= tag.tag
             span.banner__info--newPostCount= `本日新增${ tag.posts || 0 }則新貼文`
-          button.button--solid.banner__follow 關注
+          div(id=`tag__followers--${ tag.tagId }` style="display: none;")= tag.followers.length
+          - const following = activeUser && tag.followers.map(user => user.userId).includes(activeUser.id);
+          button(class=`banner__follow ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followTag(event, this, ${ tag.tagId })`)= (following ? '已追蹤': '追蹤')
       section.main__imageWall
         +imageWall('')
 
 block scripts
   script(src="/bundle/tag.bundle.js")
+  script(src="/js/components/follow-tag.js")

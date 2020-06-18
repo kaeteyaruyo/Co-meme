@@ -2,39 +2,39 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/recommend.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
 
 block main
   include components/sidebar.pug
-  include components/tag-card.pug
-  include components/user-card.pug
   include components/image-wall.pug
   article.main__container
     +sidebar
     section.main__recommend
       section.main__section.main__tag
         h2.main--subtitle.main__tag--subtitle 你可能會喜歡的標籤?
-        button#tag__cards--left.cards__button--left
+        button#tags__cards--left.cards__button--left
           img(src="/img/recommend/button-left.svg" width="32" height="32")
         div.main--cards.main__tag--cards
-          div#tag__cards--container.cards--container
-            each tag in recommendTags
-              +tagCard(tag)
-        button#tag__cards--right.cards__button--right
+          div#tags__cards--container.cards--container
+        button#tags__cards--right.cards__button--right
           img(src="/img/recommend/button-right.svg" width="32" height="32")
       section.main__section.main__user
         h2.main--subtitle.main__user--subtitle 你可能會喜歡的創作者?
-        button#user__cards--left.cards__button--left
+        button#users__cards--left.cards__button--left
           img(src="/img/recommend/button-left.svg" width="32" height="32")
         div.main--cards.main__user--cards
-          div#user__cards--container.cards--container
-            each user in recommendUsers
-              +userCard(user)
-        button#user__cards--right.cards__button--right
+          div#users__cards--container.cards--container
+        button#users__cards--right.cards__button--right
           img(src="/img/recommend/button-right.svg" width="32" height="32")
       +imageWall('看看最近在流行什麼?')
 
 block scripts
   script(src="/bundle/recommend.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")
+  script(src="/js/components/follow-user.js")

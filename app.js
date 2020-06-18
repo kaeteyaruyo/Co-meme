@@ -86,87 +86,22 @@ async function sidebarData(req, res, next){
     .catch(err => {
         res.status(500).send({ message: err });
     });
-    console.log(res.locals.sidebar.tags)
     next();
 }
-
-app.get('/', sidebarData, async (req, res) => {
-    const recommendUsers = await User.findAll({
-        attributes: [
-            'userId',
-            'username',
-            'followerCount',
-            'icon',
-        ],
-        order: [
-            ['followerCount', 'DESC'],
-        ],
-        limit: 4,
-    });
-
-    const recommendTags = await Tag.findAll({
-        attributes: [
-            'tagId',
-            'tag',
-        ],
-        include: [
-            {
-                model: Image,
-                as: 'images',
-                attributes: [
-                    'content'
-                ],
-            },
-        ],
-        limit: 2,
-    });
-
-    res.render('index', {
-        title: '首頁',
-        recommendUsers,
-        recommendTags,
-    });
-});
 
 app.get('/about', (req, res) => {
     res.render('about');
 });
 
+app.get('/', sidebarData, async (req, res) => {
+    res.render('index', {
+        title: '首頁',
+    });
+});
+
 app.get('/recommend', sidebarData, async (req, res) => {
-    const recommendUsers = await User.findAll({
-        attributes: [
-            'userId',
-            'username',
-            'followerCount',
-            'icon',
-        ],
-        order: [
-            ['followerCount', 'DESC'],
-        ],
-        limit: 8,
-    });
-
-    const recommendTags = await Tag.findAll({
-        attributes: [
-            'tagId',
-            'tag',
-        ],
-        include: [
-            {
-                model: Image,
-                as: 'images',
-                attributes: [
-                    'content'
-                ],
-            },
-        ],
-        limit: 8,
-    });
-
     res.render('recommend', {
         title: '為你推薦',
-        recommendUsers,
-        recommendTags,
     });
 });
 
@@ -190,6 +125,7 @@ app.get('/tag/:id', sidebarData, async (req, res, next) => {
         res.render('tag', {
             title: tag.tag,
             tag: {
+                tagId: tag.tagId,
                 tag: tag.tag,
                 posts: await Image.count({
                     where: {
@@ -235,7 +171,7 @@ app.get('/tag/:id', sidebarData, async (req, res, next) => {
                         tagId: tag.tagId,
                     },
                 }),
-            }
+            },
         });
     })
     .catch(err => {
@@ -251,6 +187,7 @@ app.get('/image/:id', sidebarData, (req, res) => {
             imageId: req.params.id,
         },
         attributes: [
+            'imageId',
             'content',
             'description',
             'createdAt',
@@ -263,7 +200,15 @@ app.get('/image/:id', sidebarData, (req, res) => {
                     'userId',
                     'username',
                     'icon',
-                    'followerCount',
+                ],
+                include: [
+                    {
+                        model: User,
+                        as: 'followers',
+                        attributes: [
+                            'userId',
+                        ],
+                    }
                 ],
             },
             {
@@ -285,13 +230,14 @@ app.get('/image/:id', sidebarData, (req, res) => {
     })
     .then(image => {
         res.render('image', {
-            title: '圖片',
+            title: image.description,
             image
         });
     })
-    .catch(error => {
-        console.log(error)
-        res.status(500).send({ error });
+    .catch(err => {
+        console.error(err)
+        res.status(500);
+        next();
     });
 });
 
@@ -313,8 +259,10 @@ app.get('/profile/:id', sidebarData, async (req, res) => {
             user,
         });
     })
-    .catch(error => {
-        res.status(500).send({ error });
+    .catch(err => {
+        console.error(err)
+        res.status(500);
+        next();
     });
 });
 
@@ -329,12 +277,6 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
         res.redirect('/');
     }
     else {
-        const tagIds = await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
-            where: {
-                tag,
-            }
-        })))
-        .then(res => res.map(data => data[0].tagId));
         Image.create({
             content: req.file.buffer,
             category: req.body.category,
@@ -342,12 +284,16 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
             description: req.body.description,
         })
         .then(async record => {
-            await Promise.all(tagIds.map(tagId =>
-                ImageTag.create({
-                    imageId: record.imageId,
-                    tagId,
-                })
-            ));
+            await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+                where: {
+                    tag,
+                },
+            })
+            .then(res => ImageTag.create({
+                imageId: record.imageId,
+                tagId: res[0].tagId,
+            }))));
+            // TODO: redirect to index
             res.redirect(`/image/${ record.imageId }`);
         })
         .catch(error => {
@@ -435,14 +381,16 @@ app.get('/signout', async (req, res) => {
     res.redirect('/');
 });
 
-// TODO: handle button events
-app.get('/like', authenticate, async(req, res) => {
-});
-
-app.get('/follow/user', authenticate, async(req, res) => {
-});
-
-app.get('/follow/tag', authenticate, async(req, res) => {
+app.use(function(req, res, next) {
+    if(res.status === 500){
+        // TODO: 500 error page
+        res.status(500).render('error', {
+            title: '伺服器錯誤',
+        });
+    }
+    else {
+        next();
+    }
 });
 
 app.use(function(req, res, next) {
@@ -450,8 +398,6 @@ app.use(function(req, res, next) {
         title: '查無內容',
     });
 });
-
-// TODO: 500 error handling
 
 app.listen(config.port, () => {
     console.log(`Listen on ${ config.port }`);

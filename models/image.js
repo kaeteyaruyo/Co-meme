@@ -40,7 +40,6 @@ module.exports = database.define('image', {
     },
     createdAt: {
         type: Sequelize.DATE,
-        allowNull: false,
         get() {
             return relativeDate(this.getDataValue('createdAt'));
         }

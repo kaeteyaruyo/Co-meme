@@ -5,6 +5,11 @@
     height: 10rem;
     border-radius: 1rem;
     box-shadow: 3px 3px 6px #00000029;
+    cursor: pointer;
+}
+
+.tagCard__link {
+    display: none;
 }
 
 .tagCard__placeholder {
@@ -26,7 +31,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-template-areas:
-    'tag-card-name tag-card-name'
+    'tag-card-name tag-card-follow'
     'tag-card-new tag-card-follower';
     box-sizing: border-box;
     width: 100%;
@@ -42,10 +47,16 @@
 
 .tagCard__info--tagName {
     grid-area: tag-card-name;
-    align-self: start;
+    align-self: center;
     margin: 0;
     font-size: large;
     font-weight: bold;
+}
+
+.tagCard__follow--button {
+    grid-area: tag-card-follow;
+    justify-self: end;
+    font-weight: 500;
 }
 
 .tagCard__info--newPostCount {

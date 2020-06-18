@@ -20,6 +20,7 @@ header.header
       input#account__menu(type="checkbox")
       label.header__tool--account(for="account__menu")
         span.tool__account--username= activeUser.name
+        span#activeUser__id(style="display: none;")= activeUser.id
         +icon("tool__account--icon", activeUser.icon, 24)
         div.tool__account--menu
           a(href=`/profile/${ activeUser.id }`) 個人主頁

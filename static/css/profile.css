@@ -48,6 +48,7 @@
 }
 
 .profile__navi--tab {
+    position: relative;
     cursor: pointer;
     padding: 1.25rem 2rem;
     transition: all .3s;
@@ -59,6 +60,18 @@
 
 .profile__navi--input:checked + .profile__navi--tab {
     font-weight: bold;
+}
+
+.profile__navi--input:checked + .profile__navi--tab::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 24px;
+    height: 8px;
+    background-color: #4C26EB;
+    border-radius: 5px;
+    bottom: -4px;
+    left: calc(50% - 12px);
 }
 
 .main__profile--panel {

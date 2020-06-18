@@ -47,7 +47,7 @@ apis.get('/hot', (req, res) => {
                 as: 'images',
                 where: {
                     createdAt: {
-                        [Op.gte]: daysAgo(60),
+                        [Op.gte]: daysAgo(60), // TODO: change this to 7
                     },
                 },
             }

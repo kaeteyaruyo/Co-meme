@@ -37,7 +37,7 @@ apis.get('/hot', (req, res) => {
     Image.findAll({
         where: {
             createdAt: {
-                [Op.gte]: daysAgo(60),
+                [Op.gte]: daysAgo(60), // TODO: change this to 7
             },
         },
         attributes: [
@@ -73,6 +73,9 @@ apis.get('/hot', (req, res) => {
                         attributes: [],
                     },
                 },
+            ],
+            order: [
+                ['followerCount', 'DESC']
             ],
         })
         .then(users => {
@@ -157,6 +160,10 @@ apis.post('/follow/:userId(\\d+)', authenticate, (req, res) => {
         .then(count => {
             User.update({
                 followerCount: count,
+            }, {
+                where: {
+                    userId: req.params.userId,
+                },
             });
             res.send({
                 followers: count,

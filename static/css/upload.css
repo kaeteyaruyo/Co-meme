@@ -3,10 +3,14 @@
 }
 
 .main__upload {
-    margin: 2rem 3rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
     background-color: #FFFFFF;
     border-radius: 1rem;
     box-shadow: 0px 3px 6px #00000029;
+    margin: 2rem 3rem;
 }
 
 .upload__flow {
@@ -64,7 +68,6 @@
     position: absolute;
     font-size: 20px;
     font-weight: bold;
-    color: #333333;
     margin-left: 4.3rem;
     padding: 1rem 0;
 }
@@ -86,7 +89,6 @@
     display: grid;
     grid-template-columns: 30fr 70fr;
     padding: 4% 6%;
-    color: #333333;
 }
 
 .content__three {
@@ -136,8 +138,7 @@
 
 .image__block {
     display: grid;
-    align-items: center;
-    justify-items: center;
+    position: relative;
 }
 
 .image__mask {
@@ -151,6 +152,7 @@
 }
 
 .image__block:hover > .image__mask {
+    position: absolute;
     display: block;
     background-color: black;
     border-radius: 10px 10px 0 0;
@@ -158,15 +160,21 @@
 }
 
 .image__block:hover > .mask__update{
+    position: absolute;
     display: block;
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffffff;
     background-color: #4C26EB;
     padding: 1rem 2rem;
     border-radius: 49px;
+    align-self: center;
+    justify-self: center;
 }
 
+.image__block:hover > .mask__update span {
+    margin-left: 0.5rem;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+}
 .image__content {
     width: 19rem;
     border-radius: 10px 10px 0 0;
@@ -310,12 +318,12 @@
     display: flex;
     font-size: 14px;
 }
+.element__classifier > label {
+    display: flex;
+    align-items: center;
+}
 .classifier__meme {
     margin-right: 2rem;
-}
-.element__classifier > div{
-    display: grid;
-    align-items: center;
 }
 .element__classifier--input{
     position: absolute;
@@ -323,36 +331,23 @@
     z-index: 2;
 }
 .element__classifier--radio {
-    display: grid;
-    justify-items: center;
-    align-items: center;
-}
-.element__classifier--radio {
-    box-sizing: border-box;
-    position: absolute;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid #aaaaaa;
-    border-radius: 50%;
+    background-color: #aaaaaa;
+    width: 1.5rem;
+    height: 1.5rem;
+    -webkit-mask-image: url(/img/upload/radiobox-blank.svg);
+    mask-image: url(/img/upload/radiobox-blank.svg);
     z-index: 1;
 }
-.element__classifier--label {
-    margin-left: 1.3rem;
+.element__classifier--text {
+    margin-left: 0.25rem;
 }
 .element__classifier input:checked ~ .element__classifier--radio{
-    position: absolute;
-    box-sizing: border-box;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid #4c26eb;
-    border-radius: 50%;
+    background-color: #4c26eb;
+    width: 1.5rem;
+    height: 1.5rem;
+    -webkit-mask-image: url(/img/upload/radiobox-marked.svg);
+    mask-image: url(/img/upload/radiobox-marked.svg);
     z-index: 1;
-}
-.element__classifier input:checked ~ .element__classifier--radio div{
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background-color: #4C26EB;
 }
 .element__privacy--title {
     font-size: 12px;
@@ -404,6 +399,7 @@
 .select__items div:hover, .select__selected--same {
     background-color: #f2f2f2;
     font-weight: bold;
+    border-radius: 10px;
 }
 .select__hide {
     display: none;
@@ -474,4 +470,5 @@
     padding: 0.25rem 0.75rem;
     margin: 0.5rem 0.5rem;
     border: none;
+    cursor: pointer;
 }

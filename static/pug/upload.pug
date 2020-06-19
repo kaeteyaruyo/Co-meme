@@ -45,8 +45,8 @@ block main
                 div#progressbar
             div.image__block
               div.image__mask
-              button#imageUpdate.mask__update(type="button" onclick="updateImage()")
-                img(src="/img/upload/photo.svg" width="20" style="margin-right: 0.5rem;")
+              button#imageUpdate.mask__update(type="button")
+                img(src="/img/upload/photo.svg" width="20")
                 span 更新上傳圖片
               img#imageView.image__content(src="")
             p.image__label 檔案名稱
@@ -59,7 +59,7 @@ block main
           div.one__button
             label.one__button--select 選擇檔案
               input#imageUploader(type="file" name="image" accept="image/*" style="display:none;")
-            button.one__button--select(type="button" onclick="step1GotoStep2()" style="display:none;margin:auto;") 下一步
+            button#step1NextBtn.one__button--select(type="button" style="display:none;margin:auto;") 下一步
           p.one__comment 正在為你上傳圖片，請稍後幾秒
         div#step2.content__two.content__two--hide
           div.two__picture
@@ -74,35 +74,33 @@ block main
                 input.element__describe--bar(name="description" eplaceholder="請輸入圖片描述")
             p.element__classifier--title 種類
             div.element__classifier
-              div.classifier__meme
+              label.classifier__meme
                 input.element__classifier--input(type="radio" id="meme" name="category" value="0" checked)
                 div.element__classifier--radio
-                  div
-                label.element__classifier--label(for="meme") 迷因
-              div.classifier__elder
+                span.element__classifier--text(for="meme") 迷因
+              label.classifier__elder
                 input.element__classifier--input(type="radio" id="elder" name="category" value="1")
                 div.element__classifier--radio
-                  div
-                label.element__classifier--label(for="elder") 長輩圖
-            p.element__privacy--title 隱私性
-            div.element__privacy
-              select(name="privacy")
-                option(value="public") 公開
-                option(value="public") 公開
-                option(value="only_follow") 僅限我追蹤的人
-                option(value="private") 私密
+                span.element__classifier--text(for="elder") 長輩圖
+            //- p.element__privacy--title 隱私性
+            //- div.element__privacy
+            //-   select(name="privacy")
+            //-     option(value="public") 公開
+            //-     option(value="public") 公開
+            //-     option(value="only_follow") 僅限我追蹤的人
+            //-     option(value="private") 私密
             div.element__buttons
-              button.element__button--back(type="button" onclick="step2GotoStep1()") 返回
-              button.element__button--next(type="button" onclick="step2GotoStep3()") 下一步
+              button#step2BacktBtn.element__button--back(type="button") 返回
+              button#step2NextBtn.element__button--next(type="button") 下一步
         div#step3.content__three.content__three--hide
           p.three__title 為你的圖片分類
           div.three__keyword
             div.three__keyword--input
               input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off" size="1")
-            button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
+            button#keywordBtn.three_keyword--button(type="button") ＋新增標籤
           div.three__tags
           div.three__buttons
-            button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
+            button#step3BackBtn.three__button--back(type="button") 返回
             button.three__button--next(type="submit") 發布圖片
 block scripts
   script(src="/bundle/upload.bundle.js")

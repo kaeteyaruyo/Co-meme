@@ -283,28 +283,38 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
             userId: req.session.user.id,
             description: req.body.description,
         })
-        .then(async record => {
-            await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
-                where: {
-                    tag,
-                },
-            })
-            .then(res => ImageTag.create({
-                imageId: record.imageId,
-                tagId: res[0].tagId,
-            }))));
-            // TODO: redirect to index
-            res.redirect(`/image/${ record.imageId }`);
+        .then(record => {
+            if(req.body.tags){
+                return Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+                    where: {
+                        tag,
+                    },
+                })
+                .then(res => ImageTag.create({
+                    imageId: record.imageId,
+                    tagId: res[0].tagId,
+                }))))
+            }
+        })
+        .then(() => {
+            res.redirect('/');
         })
         .catch(error => {
+            console.log(error)
             res.status(500).send({ error });
         });
     }
 });
 
+app.get('/template', (req, res) => {
+    res.render('template', {
+        title: '模板',
+    });
+});
+
 app.get('/signup', (req, res) => {
     if(req.session.user){
-        res.redirect(`/profile/${ req.session.username }`);
+        res.redirect(`/profile/${ req.session.user.id }`);
     }
     else {
         res.render('signup', {
@@ -313,32 +323,45 @@ app.get('/signup', (req, res) => {
     }
 });
 
-app.post('/signup', async (req, res) => {
-    const hash = await bcrypt.hash(req.body.password, 10);
-    User.create({
-        username: req.body.username,
-        email: req.body.email,
-        password: hash,
-        birthday: new Date(`${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`),
+app.post('/signup', (req, res, next) => {
+    User.findOne({
+        where: {
+            email: req.body.email,
+        },
     })
-    .then(() => {
-        res.redirect('/signin');
+    .then(user => {
+        if(user !== null){
+            throw new Error('User existed');
+        }
+        else {
+            return bcrypt.hash(req.body.password, 10)
+            .then(hash => {
+                User.create({
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: hash,
+                    birthday: new Date(`${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`),
+                })
+            })
+            .then(() => {
+                res.redirect('/signin');
+            })
+        }
     })
     .catch(err => {
-        console.log(err.errors)
-        if(err.errors[0].type === 'unique violation'){
-            // TODO: frontend error message display
-            res.redirect('/signup');
-        }
-        else{
-            res.status(500).send('Server side error occured');
-        }
+        // TODO: error type checking
+        res.render('signup', {
+            title: '會員註冊',
+            error: {
+                message: '此E-mail已有使用者註冊',
+            },
+        });
     });
 });
 
 app.get('/signin', (req, res) => {
     if(req.session.user){
-        res.redirect(`/profile/${ req.session.username }`);
+        res.redirect('/');
     }
     else {
         res.render('signin', {
@@ -348,7 +371,7 @@ app.get('/signin', (req, res) => {
 });
 
 app.post('/signin', async (req, res) => {
-    const user = await User.findOne({
+    User.findOne({
         where: {
             email: req.body.email
         },
@@ -358,21 +381,35 @@ app.post('/signin', async (req, res) => {
             'password',
             'icon',
         ],
-    });
-    bcrypt.compare(req.body.password, user.password)
-    .then(matched => {
-        if(matched){
-            req.session.user = {
-                id: user.userId,
-                name: user.username,
-                icon: user.icon,
-            }
-            res.redirect('/');
+    })
+    .then(user => {
+        if(user === null) {
+            throw new Error('Authorization failure');
         }
         else {
-            // TODO: frontend error message display
-            res.redirect('signin');
+            return bcrypt.compare(req.body.password, user.password)
+            .then(matched => {
+                if(matched){
+                    req.session.user = {
+                        id: user.userId,
+                        name: user.username,
+                        icon: user.icon,
+                    }
+                    res.redirect('/');
+                }
+                else {
+                    throw new Error('Authorization failure');
+                }
+            })
         }
+    })
+    .catch(err => {
+        res.render('signin', {
+            title: '會員登入',
+            error: {
+                message: '使用者不存在，或密碼輸入錯誤',
+            },
+        });
     });
 });
 

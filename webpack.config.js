@@ -13,6 +13,7 @@ module.exports = {
         'index':     path.join(srcDir, 'index.js'),
         'image':     path.join(srcDir, 'image.js'),
         'upload':    path.join(srcDir, 'upload.js'),
+        'template':    path.join(srcDir, 'template.js'),
         'latest':    path.join(srcDir, 'latest.js'),
         'recommend': path.join(srcDir, 'recommend.js'),
         'account/signin':   path.join(srcDir, 'account/signin.js'),

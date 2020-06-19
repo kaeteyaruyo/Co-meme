@@ -45,7 +45,7 @@ block main
                 div#progressbar
             div.image__block
               div.image__mask
-              button#imageUpdate.mask__update(type="button" onclick="updateImage()")
+              button#imageUpdate.mask__update(type="button")
                 img(src="/img/upload/photo.svg" width="20")
                 span 更新上傳圖片
               img#imageView.image__content(src="")
@@ -59,7 +59,7 @@ block main
           div.one__button
             label.one__button--select 選擇檔案
               input#imageUploader(type="file" name="image" accept="image/*" style="display:none;")
-            button.one__button--select(type="button" onclick="step1GotoStep2()" style="display:none;margin:auto;") 下一步
+            button#step1NextBtn.one__button--select(type="button" style="display:none;margin:auto;") 下一步
           p.one__comment 正在為你上傳圖片，請稍後幾秒
         div#step2.content__two.content__two--hide
           div.two__picture
@@ -90,17 +90,17 @@ block main
             //-     option(value="only_follow") 僅限我追蹤的人
             //-     option(value="private") 私密
             div.element__buttons
-              button.element__button--back(type="button" onclick="step2GotoStep1()") 返回
-              button.element__button--next(type="button" onclick="step2GotoStep3()") 下一步
+              button#step2BacktBtn.element__button--back(type="button") 返回
+              button#step2NextBtn.element__button--next(type="button") 下一步
         div#step3.content__three.content__three--hide
           p.three__title 為你的圖片分類
           div.three__keyword
             div.three__keyword--input
               input#keyword.three__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off" size="1")
-            button.three_keyword--button(type="button" onclick="addTag()") ＋新增標籤
+            button#keywordBtn.three_keyword--button(type="button") ＋新增標籤
           div.three__tags
           div.three__buttons
-            button.three__button--back(type="button" onclick="step3GotoStep2()") 返回
+            button#step3BackBtn.three__button--back(type="button") 返回
             button.three__button--next(type="submit") 發布圖片
 block scripts
   script(src="/bundle/upload.bundle.js")

@@ -283,23 +283,33 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
             userId: req.session.user.id,
             description: req.body.description,
         })
-        .then(async record => {
-            await Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
-                where: {
-                    tag,
-                },
-            })
-            .then(res => ImageTag.create({
-                imageId: record.imageId,
-                tagId: res[0].tagId,
-            }))));
-            // TODO: redirect to index
-            res.redirect(`/image/${ record.imageId }`);
+        .then(record => {
+            if(req.body.tags){
+                return Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+                    where: {
+                        tag,
+                    },
+                })
+                .then(res => ImageTag.create({
+                    imageId: record.imageId,
+                    tagId: res[0].tagId,
+                }))))
+            }
+        })
+        .then(() => {
+            res.redirect('/');
         })
         .catch(error => {
+            console.log(error)
             res.status(500).send({ error });
         });
     }
+});
+
+app.get('/template', (req, res) => {
+    res.render('template', {
+        title: '模板',
+    });
 });
 
 app.get('/signup', (req, res) => {

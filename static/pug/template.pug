@@ -1,0 +1,12 @@
+extends layouts/base.pug
+
+block stylesheets
+  link(rel="stylesheet", type="text/css" href="/css/template.css")
+
+block header
+  include components/header.pug
+block main
+  div(id="tui-image-editor")
+
+block scripts
+  script(src="/bundle/template.bundle.js")

@@ -14,8 +14,9 @@ module.exports = {
         'image':     path.join(srcDir, 'image.js'),
         'upload':    path.join(srcDir, 'upload.js'),
         'latest':    path.join(srcDir, 'latest.js'),
-        'account':   path.join(srcDir, 'account.js'),
         'recommend': path.join(srcDir, 'recommend.js'),
+        'account/signin':   path.join(srcDir, 'account/signin.js'),
+        'account/signup':   path.join(srcDir, 'account/signup.js'),
 
         // For components
         'components/sidebar':     path.join(srcDir, 'components/sidebar.js'),

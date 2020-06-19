@@ -1,15 +1,15 @@
 /* start: get all steps */
-step1 = document.getElementById("step1");
-step2 = document.getElementById("step2");
-step3 = document.getElementById("step3");
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+const step3 = document.getElementById("step3");
 step1.classList.toggle("content__one--hide");
 
-flow = [];
-flowtext = document.getElementsByClassName("step__content");
+const flow = [];
+const flowtext = document.getElementsByClassName("step__content");
 flow.push(document.getElementById("step1Flow"));
 flow.push(document.getElementById("step2Flow"));
 flow.push(document.getElementById("step3Flow"));
-for (i=2;i<=3;i++) {
+for (let i=2;i<=3;i++) {
     turnGrey(i);
 }
 function turnGrey(index) {
@@ -61,23 +61,23 @@ function step2AndStep3() {
 }
 
 /* one step : upload image */
-var emptyImage = document.getElementsByClassName("one__circles")[0];
-var imageLoadend = document.getElementsByClassName("one__image--show")[0];
-var imagetitle = document.getElementsByClassName("one__title")[0];
-var imageSelect = document.getElementsByClassName("one__button--select")[0];
-var nextStep = document.getElementsByClassName("one__button--select")[1];
-var imageComment = document.getElementsByClassName("one__comment")[0];
-var imageUploader = document.getElementById("imageUploader");
-var imageView = document.getElementById("imageView");
-var progressbar = document.getElementById("progressbar");
-var imageMiddle = imageLoadend.childNodes[0];
-var imageText = imageLoadend.childNodes[3];
-var imagePost = document.getElementById("imagePost");
-var fileReader = new FileReader();
-var filename = NaN;
+const emptyImage = document.getElementsByClassName("one__circles")[0];
+const imageLoadend = document.getElementsByClassName("one__image--show")[0];
+const imagetitle = document.getElementsByClassName("one__title")[0];
+const imageSelect = document.getElementsByClassName("one__button--select")[0];
+const nextStep = document.getElementsByClassName("one__button--select")[1];
+const imageComment = document.getElementsByClassName("one__comment")[0];
+const imageUploader = document.getElementById("imageUploader");
+const imageView = document.getElementById("imageView");
+const progressbar = document.getElementById("progressbar");
+const imageMiddle = imageLoadend.childNodes[0];
+const imageText = imageLoadend.childNodes[3];
+const imagePost = document.getElementById("imagePost");
+const fileReader = new FileReader();
+const filename = NaN;
 function circleChange() {
-    var top = emptyImage.childNodes[1];
-    var buttom = emptyImage.childNodes[2];
+    const top = emptyImage.childNodes[1];
+    const buttom = emptyImage.childNodes[2];
     top.classList.toggle("circle__top--colorchange");
     top.classList.toggle("circle__top--scalechange");
     buttom.classList.toggle("circle__bottom--scalechange");
@@ -155,67 +155,67 @@ function updateImage() {
     imageComment.innerHTML = "前往編輯圖片資訊";
 }
 /* two step : custom select menu */
-var selectDiv = document.getElementsByClassName("element__privacy")[0];
-var select = selectDiv.getElementsByTagName("select")[0];
-var selectNew = document.createElement("DIV");
-selectNew.setAttribute("class", "select__selected");
-selectNew.innerHTML = select.options[select.selectedIndex].innerHTML;
-selectDiv.appendChild(selectNew);
-var optionList = document.createElement("DIV");
-optionList.setAttribute("class", "select__items select__hide");
-var option;
-for(var i=1; i < select.length; i++) {
-    option = document.createElement("DIV");
-    option.innerHTML = select.options[i].innerHTML;
-    option.addEventListener("click", function(e) {
-        var y,j,k,s,h;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        h = this.parentNode.previousSibling;
-        for(j=0;j<s.length;j++) {
-            if(s.options[j].innerHTML == this.innerHTML) {
-                s.selectedIndex = j;
-                h.innerHTML = this.innerHTML;
-                y = this.parentNode.getElementsByClassName("select__selected--same");
-                for(k=0;k<y.length;k++) {
-                    y[k].removeAttribute("class");
-                }
-                this.setAttribute("class", "select__selected--same");
-                break;
-            }
-        }
-        h.click();
-    });
-    optionList.appendChild(option);
-}
-selectDiv.appendChild(optionList);
-selectNew.addEventListener("click", function(e) {
-    e.stopPropagation();
-    closeAllSelect(this);
-    this.nextSibling.classList.toggle("select__hide");
-    this.classList.toggle("select__arrow--active");
-})
-function closeAllSelect(selected) {
-    var x,y,i, arrNo=[];
-    x = document.getElementsByClassName("select__items");
-    y = document.getElementsByClassName("select__selected");
-    for(i=0;i<y.length;i++) {
-        if(selected == y[i]) {
-            arrNo.push(i);
-        } else {
-            y[i].classList.remove("select__arrow--active");
-        }
-    }
-    for(i=0;i<x.length;i++) {
-        if(arrNo.indexOf(i)) {
-            x[i].classList.add("select__hide");
-        }
-    }
-};
-document.addEventListener("click", closeAllSelect);
+// const selectDiv = document.getElementsByClassName("element__privacy")[0];
+// const select = selectDiv.getElementsByTagName("select")[0];
+// const selectNew = document.createElement("DIV");
+// selectNew.setAttribute("class", "select__selected");
+// selectNew.innerHTML = select.options[select.selectedIndex].innerHTML;
+// selectDiv.appendChild(selectNew);
+// const optionList = document.createElement("DIV");
+// optionList.setAttribute("class", "select__items select__hide");
+// const option;
+// for(let i=1; i < select.length; i++) {
+//     option = document.createElement("DIV");
+//     option.innerHTML = select.options[i].innerHTML;
+//     option.addEventListener("click", function(e) {
+//         let y,j,k,s,h;
+//         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+//         h = this.parentNode.previousSibling;
+//         for(j=0;j<s.length;j++) {
+//             if(s.options[j].innerHTML == this.innerHTML) {
+//                 s.selectedIndex = j;
+//                 h.innerHTML = this.innerHTML;
+//                 y = this.parentNode.getElementsByClassName("select__selected--same");
+//                 for(k=0;k<y.length;k++) {
+//                     y[k].removeAttribute("class");
+//                 }
+//                 this.setAttribute("class", "select__selected--same");
+//                 break;
+//             }
+//         }
+//         h.click();
+//     });
+//     optionList.appendChild(option);
+// }
+// selectDiv.appendChild(optionList);
+// selectNew.addEventListener("click", function(e) {
+//     e.stopPropagation();
+//     closeAllSelect(this);
+//     this.nextSibling.classList.toggle("select__hide");
+//     this.classList.toggle("select__arrow--active");
+// })
+// function closeAllSelect(selected) {
+//     var x,y,i, arrNo=[];
+//     x = document.getElementsByClassName("select__items");
+//     y = document.getElementsByClassName("select__selected");
+//     for(i=0;i<y.length;i++) {
+//         if(selected == y[i]) {
+//             arrNo.push(i);
+//         } else {
+//             y[i].classList.remove("select__arrow--active");
+//         }
+//     }
+//     for(i=0;i<x.length;i++) {
+//         if(arrNo.indexOf(i)) {
+//             x[i].classList.add("select__hide");
+//         }
+//     }
+// };
+// document.addEventListener("click", closeAllSelect);
 
 /* three step : keyword input*/
-var keyword = document.getElementById("keyword");
-var tagsBlock = document.getElementsByClassName("three__tags")[0];
+const keyword = document.getElementById("keyword");
+const tagsBlock = document.getElementsByClassName("three__tags")[0];
 function addTag() {
     /* Add tag in tags block */
     tag = document.createElement("input");

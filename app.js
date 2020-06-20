@@ -1,4 +1,7 @@
+const fs = require('fs');
 const path = require('path');
+const http = require('http');
+const https = require('https');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const parser = require('body-parser');
@@ -9,6 +12,7 @@ const authenticate = require('./route/utils/authenticate');
 const daysAgo = require('./route/utils/days-ago');
 const session = require('./route/utils/session');
 const upload = require('./route/utils/upload');
+
 const imagesAPI = require('./route/images');
 const usersAPI = require('./route/users');
 const tagsAPI = require('./route/tags');
@@ -23,6 +27,12 @@ const {
     User,
     TagFollower,
 } = require('./models/association.js');
+
+const sslOptions = {
+  key: fs.readFileSync(config.ssl.key_path),
+  ca: fs.readFileSync(config.ssl.ca_path),
+  cert: fs.readFileSync(config.ssl.cert_path)
+};
 
 const app = express();
 const root = process.cwd();
@@ -436,6 +446,6 @@ app.use(function(req, res, next) {
     });
 });
 
-app.listen(config.port, () => {
-    console.log(`Listen on ${ config.port }`);
-});
+http.createServer(app).listen(config.httpPort);
+https.createServer(sslOptions, app).listen(config.httpsPort);
+

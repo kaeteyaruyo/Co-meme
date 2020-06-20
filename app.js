@@ -4,34 +4,32 @@ const http = require('http');
 const https = require('https');
 const bcrypt = require('bcrypt');
 const express = require('express');
-const parser = require('body-parser');
 const { Sequelize, Op } = require('sequelize');
 
 const config = require('./config.js');
-const authenticate = require('./route/utils/authenticate');
-const daysAgo = require('./route/utils/days-ago');
-const session = require('./route/utils/session');
 const upload = require('./route/utils/upload');
+const session = require('./route/utils/session');
+const daysAgo = require('./route/utils/days-ago');
+const authenticate = require('./route/utils/authenticate');
+const { urlEncoded, jsonParser } = require('./route/utils/body-parser');
 
-const imagesAPI = require('./route/images');
-const usersAPI = require('./route/users');
 const tagsAPI = require('./route/tags');
+const usersAPI = require('./route/users');
+const imagesAPI = require('./route/images');
 const commentAPI = require('./route/comment');
 
 const {
-    Comment,
-    Follower,
-    Image,
-    ImageTag,
     Tag,
     User,
+    Image,
+    ImageTag,
     TagFollower,
 } = require('./models/association.js');
 
 const sslOptions = {
-  key: fs.readFileSync(config.ssl.key_path),
-  ca: fs.readFileSync(config.ssl.ca_path),
-  cert: fs.readFileSync(config.ssl.cert_path)
+    key: fs.readFileSync(config.ssl.key_path),
+    ca: fs.readFileSync(config.ssl.ca_path),
+    cert: fs.readFileSync(config.ssl.cert_path)
 };
 
 const app = express();
@@ -41,18 +39,10 @@ app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
 app.use(express.static(path.join(root, '/static')));
 app.use(session);
-app.use(parser.urlencoded({
-    limit: '5GB',
-    extended: true,
-}));
-app.use(parser.json({
-    limit: '5GB',
-    type: '*/json',
-}));
 
-app.use('/api/images', imagesAPI);
-app.use('/api/users', usersAPI);
 app.use('/api/tags', tagsAPI);
+app.use('/api/users', usersAPI);
+app.use('/api/images', imagesAPI);
 app.use('/api/comment', commentAPI);
 
 app.use(function (req, res, next) {
@@ -282,7 +272,7 @@ app.get('/upload', authenticate, (req, res) => {
     });
 });
 
-app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
+app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image'), async (req, res) => {
     if(!req.file){
         res.redirect('/');
     }
@@ -333,7 +323,7 @@ app.get('/signup', (req, res) => {
     }
 });
 
-app.post('/signup', (req, res, next) => {
+app.post('/signup', urlEncoded, jsonParser, (req, res) => {
     User.findOne({
         where: {
             email: req.body.email,
@@ -380,7 +370,7 @@ app.get('/signin', (req, res) => {
     }
 });
 
-app.post('/signin', async (req, res) => {
+app.post('/signin', urlEncoded, jsonParser, (req, res) => {
     User.findOne({
         where: {
             email: req.body.email

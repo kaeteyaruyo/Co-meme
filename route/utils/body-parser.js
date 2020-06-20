@@ -11,6 +11,6 @@ const jsonParser = bodyParser.json({
 });
 
 module.exports = {
-    jsonParser,
     urlEncoded,
+    jsonParser,
 };

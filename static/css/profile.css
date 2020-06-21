@@ -74,9 +74,39 @@
     left: calc(50% - 12px);
 }
 
+.main__profile--panels {
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 100%;
+}
+
 .main__profile--panel {
+    grid-area: 1 / 1 / 2 / 2;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2rem;
+    opacity: 0;
+    z-index: -1;
+    transform: translateY(-50px);
+    transition: all .3s;
+}
+
+.panel--active {
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0);
+}
+
+.main__profile--tags, .main__profile--users {
     display: grid;
     justify-content: center;
-    align-content: center;
-    padding: 2rem;
+    justify-items: center;
+    row-gap: 2rem;
+    column-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-template-rows: min-content;
+}
+
+.main__profile--tagCloud {
+    text-align: center;
 }

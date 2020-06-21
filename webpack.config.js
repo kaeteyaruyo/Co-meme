@@ -9,15 +9,16 @@ module.exports = {
     target: 'web',
     entry: {
         // For page
-        'tag':     path.join(srcDir, 'tag.js'),
-        'index':     path.join(srcDir, 'index.js'),
-        'image':     path.join(srcDir, 'image.js'),
-        'upload':    path.join(srcDir, 'upload.js'),
-        'template':    path.join(srcDir, 'template.js'),
-        'latest':    path.join(srcDir, 'latest.js'),
-        'recommend': path.join(srcDir, 'recommend.js'),
-        'account/signin':   path.join(srcDir, 'account/signin.js'),
-        'account/signup':   path.join(srcDir, 'account/signup.js'),
+        'tag':            path.join(srcDir, 'tag.js'),
+        'index':          path.join(srcDir, 'index.js'),
+        'image':          path.join(srcDir, 'image.js'),
+        'upload':         path.join(srcDir, 'upload.js'),
+        'latest':         path.join(srcDir, 'latest.js'),
+        'profile':        path.join(srcDir, 'profile.js'),
+        'template':       path.join(srcDir, 'template.js'),
+        'recommend':      path.join(srcDir, 'recommend.js'),
+        'account/signin': path.join(srcDir, 'account/signin.js'),
+        'account/signup': path.join(srcDir, 'account/signup.js'),
 
         // For components
         'components/sidebar':     path.join(srcDir, 'components/sidebar.js'),

@@ -97,7 +97,11 @@ apis.get('/hot', (req, res) => {
                 ],
                 includeIgnoreAttributes : false,
             })
-            .then(image => image.content),
+            .then(image => image.content)
+            .catch(err => {
+                console.error(err)
+                return null;
+            }),
             followers: await TagFollower.findAll({
                 attributes: [
                     'userId',
@@ -176,7 +180,11 @@ apis.get('/following/:userId(\\d+)', (req, res) => {
                 ],
                 includeIgnoreAttributes : false,
             })
-            .then(image => image.content),
+            .then(image => image.content)
+            .catch(err => {
+                console.error(err)
+                return null;
+            }),
             followers: await TagFollower.findAll({
                 attributes: [
                     'userId',

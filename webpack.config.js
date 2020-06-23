@@ -20,6 +20,12 @@ module.exports = {
         'account/signin': path.join(srcDir, 'account/signin.js'),
         'account/signup': path.join(srcDir, 'account/signup.js'),
 
+        // For mobile
+        'mobile/tag':        path.join(srcDir, 'mobile/tag.js'),
+        'mobile/index':      path.join(srcDir, 'mobile/index.js'),
+        'mobile/profile':    path.join(srcDir, 'mobile/profile.js'),
+        'mobile/navigation': path.join(srcDir, 'mobile/navigation.js'),
+
         // For components
         'components/sidebar':     path.join(srcDir, 'components/sidebar.js'),
         'components/image-wall':  path.join(srcDir, 'components/image-wall.js'),

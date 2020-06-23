@@ -1,6 +1,7 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const MobileDetect = require('mobile-detect');
 const { Sequelize, Op } = require('sequelize');
 
 const config = require('./config.js');
@@ -86,7 +87,8 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/', sidebarData, (req, res) => {
-    res.render('index', {
+    const md = new MobileDetect(req.headers['user-agent']);
+    res.render(`${ md.mobile() ? 'mobile/' : '' }index`, {
         title: '首頁',
     });
 });
@@ -181,7 +183,8 @@ app.get('/tag/:id', sidebarData, (req, res, next) => {
     })
     .then(async tag => {
         if(tag){
-            res.render('tag', {
+            const md = new MobileDetect(req.headers['user-agent']);
+            res.render(`${ md.mobile() ? 'mobile/' : '' }tag`, {
                 title: tag.tag,
                 tag: {
                     tagId: tag.tagId,
@@ -274,7 +277,8 @@ app.get('/profile/:id', sidebarData, (req, res, next) => {
     })
     .then(user => {
         if(user){
-            res.render('profile', {
+            const md = new MobileDetect(req.headers['user-agent']);
+            res.render(`${ md.mobile() ? 'mobile/' : '' }profile`, {
                 title: `${ user.username }的頁面`,
                 user,
             });

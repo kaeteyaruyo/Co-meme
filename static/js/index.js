@@ -2,7 +2,8 @@ import postHTML from 'static/pug/components/post.pug';
 import userCardHTML from 'static/pug/components/user-card.pug';
 import tagCardHTML from 'static/pug/components/tag-card.pug';
 
-const timeline = document.querySelector('.timeline__posts');
+const timelineRows = document.querySelectorAll('.timeline__row');
+const timelineBottom = document.querySelector('.timeline__bottom');
 const userCardsContainer = document.querySelector('#recommend__users');
 const tagCardsContainer = document.querySelector('#recommend__tags');
 const recommendPanel = document.querySelector('.main__recommend');
@@ -14,7 +15,7 @@ let activeUserId = document.querySelector('#activeUser__id');
 activeUserId = activeUserId !== null ? Number.parseInt(activeUserId.innerHTML) : null;
 
 function getPosts(page, category){
-    // TODO: here should query to /hot
+    timelineBottom.innerHTML = '載入中';
     fetch(`/api/images/${ activeUserId ? 'timeline' : 'latest' }?page=${ page }&category=${ category }`)
     .then(res => {
         if(res.status === 200){
@@ -23,14 +24,16 @@ function getPosts(page, category){
         throw res;
     })
     .then(images => {
-        images.forEach(image => {
-            timeline.insertAdjacentHTML('beforeend', postHTML(image));
+        images.forEach((image, idx) => {
+            timelineRows[idx % timelineRows.length].insertAdjacentHTML('beforeend', postHTML(image));
             if(image.likedUsers.map(user => user.userId).includes(activeUserId)){
-                timeline.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
+                timelineRows[idx % timelineRows.length].lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
             }
         });
-        if(images.length < 13){
+        timelineBottom.innerHTML = '';
+        if(images.length < 12){
             isEnd = true;
+            timelineBottom.innerHTML = '到底囉';
         }
     })
     .catch(error => {
@@ -70,9 +73,12 @@ function getRecommend(target, count, container, componentHTML){
 Array.from(document.querySelectorAll('input[name="category"]')).forEach(option => {
     option.addEventListener('change', function(){
         isEnd = false;
+        timelineBottom.innerHTML = '';
         currentPage = 0;
         currentCategory = this.value;
-        timeline.innerHTML = '';
+        timelineRows.forEach(row => {
+            row.innerHTML = '';
+        });
         getPosts(currentPage++, currentCategory);
     });
 })

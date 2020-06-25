@@ -8,7 +8,7 @@
  *         * 使用者姓名
  *         * 使用者頭像
  *     * 按讚的使用者列表（只含使用者編號）
- * 本 api 提供分頁功能，一頁有 13 筆資料。
+ * 本 api 提供分頁功能，一頁有 12 筆資料。
  */
 
 const express = require('express');
@@ -17,7 +17,7 @@ const authenticate = require('./utils/authenticate');
 const daysAgo = require('./utils/days-ago');
 
 const apis = express.Router();
-const pageSize = 13;
+const pageSize = 12;
 
 const {
     Image,

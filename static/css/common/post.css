@@ -2,6 +2,7 @@
     flex-direction: column;
     display: inline-block;
     width: 100%;
+    height: unset;
     margin-bottom: 1rem;
     padding: 0;
     line-height: 0;
@@ -57,19 +58,31 @@
     transition: all .3s;
 }
 
-.post__action--button:hover {
-    background-color: #F2F2F2;
+@media screen and (min-width: 800px) {
+    .post__action--button:hover {
+        background-color: #F2F2F2;
+    }
 }
 
 .post__action--like {
     border-bottom-left-radius: 1rem;
 }
 
-.post__action--like:hover > .post__like--icon, .image__liked > .post__like--icon {
+@media screen and (min-width: 800px) {
+    .post__action--like:hover > .post__like--icon {
+        background-color: #F57575;
+    }
+
+    .post__action--like:hover > .post__action--label {
+        color: #F57575;
+    }
+}
+
+.image__liked > .post__like--icon {
     background-color: #F57575;
 }
 
-.post__action--like:hover > .post__action--label, .image__liked > .post__like--label {
+.image__liked > .post__like--label {
     color: #F57575;
 }
 
@@ -77,12 +90,14 @@
     border-bottom-right-radius: 1rem;
 }
 
-.post__action--share:hover > .post__share--icon {
-    background-color: #666666;
-}
+@media screen and (min-width: 800px) {
+    .post__action--share:hover > .post__share--icon {
+        background-color: #666666;
+    }
 
-.post__action--share:hover > .post__action--label {
-    color: #666666;
+    .post__action--share:hover > .post__action--label {
+        color: #666666;
+    }
 }
 
 .post__action--icon {

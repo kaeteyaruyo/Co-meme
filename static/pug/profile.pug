@@ -3,6 +3,8 @@ extends layouts/base.pug
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/profile.css")
   link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
 
 block header
   include components/header.pug
@@ -10,7 +12,7 @@ block header
 block main
   include components/sidebar.pug
   include components/icon.pug
-
+  include components/image-wall.pug
   article.main__container
     +sidebar
     section.main__profile
@@ -18,21 +20,28 @@ block main
         div.profile__banner--header
           +icon("profile__header--icon", user.icon, 120)
           span.profile__header--name= user.username
-          span.profile__header--followerCount= `有${ user.followerCount }人正在追蹤`
-          button.button--solid.profile__header--subscribe 追蹤
+          span.profile__header--followerCount(id=`user__followers--${ user.userId }`)= `${ user.followers.length }人追蹤`
+          - const following = activeUser && user.followers.map(user => user.userId).includes(activeUser.id);
+          button(class=`profile__header--subscribe ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ user.userId })`)= (following ? '已追蹤': '追蹤')
         div.profile__banner--navi
-          input.profile__navi--input#tab__posts(type="radio" name="tab" value="posts" checked)
+          input.profile__navi--input#tab__posts(type="radio" name="tab" value="posts")
           label.profile__navi--tab.profile__navi--posts(for="tab__posts") 貼文
-          input.profile__navi--input#tab__topics(type="radio" name="tab" value="topics")
-          label.profile__navi--tab.profile__navi--topics(for="tab__topics") 關注主題
-          input.profile__navi--input#tab__follwing(type="radio" name="tab" value="follwing")
-          label.profile__navi--tab.profile__navi--follwing(for="tab__follwing") 關注創作者
           input.profile__navi--input#tab__tags(type="radio" name="tab" value="tags")
-          label.profile__navi--tab.profile__navi--tags(for="tab__tags") 標籤雲
-      section.main__profile--panel.main__profile--posts
-        p 製作中...
-      section.main__profile--panel.main__profile--topics
-      section.main__profile--panel.main__profile--following
-      section.main__profile--panel.main__profile--tags
+          label.profile__navi--tab.profile__navi--tags(for="tab__tags") 關注主題
+          input.profile__navi--input#tab__users(type="radio" name="tab" value="users")
+          label.profile__navi--tab.profile__navi--users(for="tab__users") 關注創作者
+          input.profile__navi--input#tab__tagCloud(type="radio" name="tab" value="tagCloud")
+          label.profile__navi--tab.profile__navi--tagCloud(for="tab__tagCloud") 標籤雲
+      div.main__profile--panels
+        section.main__profile--panel.main__profile--posts
+          +imageWall('')
+        section.main__profile--panel.main__profile--tags
+        section.main__profile--panel.main__profile--users
+        section.main__profile--panel.main__profile--tagCloud
+          p 標籤雲功能正在製作中，敬請期待！
 
 block scripts
+  script(src="/bundle/profile.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")
+  script(src="/js/components/follow-user.js")

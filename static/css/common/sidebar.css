@@ -88,6 +88,10 @@
     color: #AAAAAA;
 }
 
+#sidebar__tags--more {
+    display: none;
+}
+
 .sidebar__popularTags--more {
     cursor: pointer;
     display: block;

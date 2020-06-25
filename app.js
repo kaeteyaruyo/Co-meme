@@ -4,6 +4,7 @@ const http = require('http');
 const https = require('https');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const MobileDetect = require('mobile-detect');
 const { Sequelize, Op } = require('sequelize');
 
 const config = require('./config.js');
@@ -24,7 +25,8 @@ const {
     Image,
     ImageTag,
     TagFollower,
-} = require('./models/association.js');
+} = require('./models/association');
+const database = require('./models/connect');
 
 const sslOptions = {
     key: fs.readFileSync(config.ssl.key_path),
@@ -93,95 +95,26 @@ app.get('/about', (req, res) => {
     res.render('about');
 });
 
-app.get('/', sidebarData, async (req, res) => {
-    res.render('index', {
+app.get('/', sidebarData, (req, res) => {
+    const md = new MobileDetect(req.headers['user-agent']);
+    res.render(`${ md.mobile() ? 'mobile/' : '' }index`, {
         title: '首頁',
     });
 });
 
-app.get('/recommend', sidebarData, async (req, res) => {
+app.get('/recommend', sidebarData, (req, res) => {
     res.render('recommend', {
         title: '為你推薦',
     });
 });
 
-app.get('/latest', sidebarData, async (req, res) => {
+app.get('/latest', sidebarData, (req, res) => {
     res.render('latest', {
         title: '最新內容',
     });
 });
 
-app.get('/tag/:id', sidebarData, async (req, res, next) => {
-    Tag.findOne({
-        attributes: [
-            'tagId',
-            'tag',
-        ],
-        where: {
-            tagId: req.params.id,
-        },
-    })
-    .then(async tag => {
-        res.render('tag', {
-            title: tag.tag,
-            tag: {
-                tagId: tag.tagId,
-                tag: tag.tag,
-                posts: await Image.count({
-                    where: {
-                        createdAt: {
-                            [Op.gte]: daysAgo(1),
-                        },
-                    },
-                    include: [
-                        {
-                            model: Tag,
-                            as: 'tags',
-                            where: {
-                                tagId: tag.tagId,
-                            }
-                        }
-                    ],
-                    includeIgnoreAttributes : false,
-                }),
-                thumbnail: await Image.findOne({
-                    attributes: [
-                        'content',
-                    ],
-                    include: [
-                        {
-                            model: Tag,
-                            as: 'tags',
-                            where: {
-                                tagId: tag.tagId,
-                            }
-                        }
-                    ],
-                    order: [
-                        ['imageId', 'DESC'],
-                    ],
-                    includeIgnoreAttributes : false,
-                })
-                .then(image => image.content),
-                followers: await TagFollower.findAll({
-                    attributes: [
-                        'userId',
-                    ],
-                    where:{
-                        tagId: tag.tagId,
-                    },
-                }),
-            },
-        });
-    })
-    .catch(err => {
-        console.error(err)
-        res.status(500);
-        next();
-    });
-});
-
-app.get('/image/:id', sidebarData, (req, res) => {
+app.get('/image/:id', sidebarData, (req, res, next) => {
     Image.findOne({
         where: {
             imageId: req.params.id,
@@ -229,10 +162,16 @@ app.get('/image/:id', sidebarData, (req, res) => {
         ]
     })
     .then(image => {
-        res.render('image', {
-            title: image.description,
-            image
-        });
+        if(image){
+            res.render('image', {
+                title: image.description,
+                image
+            });
+        }
+        else {
+            res.status(404);
+            next();
+        }
     })
     .catch(err => {
         console.error(err)
@@ -241,7 +180,88 @@ app.get('/image/:id', sidebarData, (req, res) => {
     });
 });
 
-app.get('/profile/:id', sidebarData, async (req, res) => {
+app.get('/tag/:id', sidebarData, (req, res, next) => {
+    Tag.findOne({
+        attributes: [
+            'tagId',
+            'tag',
+        ],
+        where: {
+            tagId: req.params.id,
+        },
+    })
+    .then(async tag => {
+        if(tag){
+            const md = new MobileDetect(req.headers['user-agent']);
+            res.render(`${ md.mobile() ? 'mobile/' : '' }tag`, {
+                title: tag.tag,
+                tag: {
+                    tagId: tag.tagId,
+                    tag: tag.tag,
+                    posts: await Image.count({
+                        where: {
+                            createdAt: {
+                                [Op.gte]: daysAgo(1),
+                            },
+                        },
+                        include: [
+                            {
+                                model: Tag,
+                                as: 'tags',
+                                where: {
+                                    tagId: tag.tagId,
+                                }
+                            }
+                        ],
+                        includeIgnoreAttributes : false,
+                    }),
+                    thumbnail: await Image.findOne({
+                        attributes: [
+                            'content',
+                        ],
+                        include: [
+                            {
+                                model: Tag,
+                                as: 'tags',
+                                where: {
+                                    tagId: tag.tagId,
+                                }
+                            }
+                        ],
+                        order: [
+                            ['imageId', 'DESC'],
+                        ],
+                        includeIgnoreAttributes : false,
+                    })
+                    .then(image => image.content)
+                    .catch(err => {
+                        console.error(err)
+                        return null;
+                    }),
+                    followers: await TagFollower.findAll({
+                        attributes: [
+                            'userId',
+                        ],
+                        where:{
+                            tagId: tag.tagId,
+                        },
+                    }),
+                },
+            });
+        }
+        else {
+            res.status(404);
+            next();
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        res.status(500);
+        next();
+    });
+});
+
+app.get('/profile/:id', sidebarData, (req, res, next) => {
     User.findOne({
         where: {
             userId: req.params.id
@@ -250,14 +270,32 @@ app.get('/profile/:id', sidebarData, async (req, res) => {
             'userId',
             'username',
             'icon',
-            'followerCount',
+        ],
+        include: [
+            {
+                model: User,
+                as: 'followers',
+                attributes: [
+                    'userId',
+                ],
+                through: {
+                    attributes: [],
+                },
+            },
         ],
     })
     .then(user => {
-        res.render('profile', {
-            title: `${ user.username }的頁面`,
-            user,
-        });
+        if(user){
+            const md = new MobileDetect(req.headers['user-agent']);
+            res.render(`${ md.mobile() ? 'mobile/' : '' }profile`, {
+                title: `${ user.username }的頁面`,
+                user,
+            });
+        }
+        else {
+            res.status(404);
+            next();
+        }
     })
     .catch(err => {
         console.error(err)
@@ -272,36 +310,42 @@ app.get('/upload', authenticate, (req, res) => {
     });
 });
 
-app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image'), async (req, res) => {
+app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image'), (req, res) => {
     if(!req.file){
         res.redirect('/');
     }
     else {
-        Image.create({
-            content: req.file.buffer,
-            category: req.body.category,
-            userId: req.session.user.id,
-            description: req.body.description,
+        database.transaction(t => {
+            return Image.create({
+                content: req.file.buffer,
+                category: req.body.category,
+                userId: req.session.user.id,
+                description: req.body.description,
+            }, {
+                transaction: t
+            })
+            .then(record => {
+                if(req.body.tags){
+                    return Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+                        where: {
+                            tag,
+                        },
+                    })
+                    .then(res => ImageTag.create({
+                        imageId: record.imageId,
+                        tagId: res[0].tagId,
+                    }, {
+                        transaction: t
+                    }))));
+                }
+            });
         })
-        .then(record => {
-            if(req.body.tags){
-                return Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
-                    where: {
-                        tag,
-                    },
-                })
-                .then(res => ImageTag.create({
-                    imageId: record.imageId,
-                    tagId: res[0].tagId,
-                }))))
-            }
-        })
-        .then(() => {
+        .then(result => {
             res.redirect('/');
         })
-        .catch(error => {
-            console.log(error)
-            res.status(500).send({ error });
+        .catch(err => {
+            console.error(err)
+            res.status(500).send({ message: err });
         });
     }
 });
@@ -314,7 +358,7 @@ app.get('/template', (req, res) => {
 
 app.get('/signup', (req, res) => {
     if(req.session.user){
-        res.redirect(`/profile/${ req.session.user.id }`);
+        res.redirect('/');
     }
     else {
         res.render('signup', {
@@ -413,7 +457,7 @@ app.post('/signin', urlEncoded, jsonParser, (req, res) => {
     });
 });
 
-app.get('/signout', async (req, res) => {
+app.get('/signout', (req, res) => {
     delete req.session.user;
     res.redirect('/');
 });

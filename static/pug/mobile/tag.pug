@@ -1,0 +1,26 @@
+extends base.pug
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/mobile/tag.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/post.css")
+
+block main
+  section.main__tag
+    section.main__banner
+      if tag.thumbnail
+        img.main__banner--image(src=`data:image/png;base64, ${ tag.thumbnail }`)
+      else
+        div.main__banner--image
+      div.main__banner--info
+        div.banner__info
+          p.banner__info--title= tag.tag
+          span.banner__info--newPostCount= `本日新增${ tag.posts || 0 }則新貼文`
+        div(id=`tag__followers--${ tag.tagId }` style="display: none;")= tag.followers.length
+        - const following = activeUser && tag.followers.map(user => user.userId).includes(activeUser.id);
+        button(class=`banner__follow ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followTag(event, this, ${ tag.tagId })`)= (following ? '已追蹤': '追蹤')
+  section.main__imageWall
+
+block scripts
+  script(src="/bundle/mobile/tag.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")

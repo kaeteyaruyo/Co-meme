@@ -52,5 +52,10 @@ document.querySelector('#comment__submit').addEventListener('click', function (e
 });
 
 document.querySelector('.post__back').addEventListener('click', () => {
-    window.history.back();
+    if(document.referrer){
+        window.location = document.referrer;
+    }
+    else {
+        window.history.back();
+    }
 });

@@ -23,7 +23,7 @@ function getPosts(page, category){
                 imageWall.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
             }
         });
-        if(images.length < 13){
+        if(images.length < 12){
             isEnd = true;
         }
     })

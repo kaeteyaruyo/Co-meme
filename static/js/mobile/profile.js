@@ -27,7 +27,7 @@ function getImages(page, category){
                 imageWall.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
             }
         });
-        if(images.length < 13){
+        if(images.length < 12){
             isEnd = true;
         }
     })
@@ -73,6 +73,7 @@ Array.from(document.querySelectorAll('input[name="tab"]')).forEach(tab => {
                 active.style.display = 'none';
             }, 350);
         }
+        window.location.hash = this.value;
         document.querySelector(`.main__profile--${ this.value }`).style.display = 'grid';
         setTimeout(() => {
             document.querySelector(`.main__profile--${ this.value }`).classList.add('panel--active');
@@ -89,5 +90,5 @@ window.addEventListener('scroll', () => {
 getImages(currentPage++, currentCategory);
 getFollowing('users', userCardsContainer, userCardHTML);
 getFollowing('tags', tagCardsContainer, tagCardHTML);
-document.querySelector('#tab__posts').checked = true;
-document.querySelector('#tab__posts').dispatchEvent(new Event('change'))
+document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).checked = true;
+document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).dispatchEvent(new Event('change'))

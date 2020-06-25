@@ -27,8 +27,8 @@ module.exports = {
         'mobile/navigation': path.join(srcDir, 'mobile/navigation.js'),
 
         // For components
-        'components/sidebar':     path.join(srcDir, 'components/sidebar.js'),
-        'components/image-wall':  path.join(srcDir, 'components/image-wall.js'),
+        'components/sidebar':    path.join(srcDir, 'components/sidebar.js'),
+        'components/image-wall': path.join(srcDir, 'components/image-wall.js'),
     },
     output: {
         path:     path.join(root, 'static/bundle'),
@@ -40,14 +40,24 @@ module.exports = {
         },
     },
     module:  {
-        rules: [{
-            test: /\.pug$/,
-            use: [{
-                loader:  'pug-loader',
-                options: {
-                    root: path.join( root, 'static/pug' ),
-                },
-            }],
-        }],
+        rules: [
+            {
+                test: /\.js$/,
+                // include: [ srcDir ],
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader',
+                }],
+            },
+            {
+                test: /\.pug$/,
+                use: [{
+                    loader:  'pug-loader',
+                    options: {
+                        root: path.join( root, 'static/pug' ),
+                    },
+                }],
+            }
+        ],
     },
 };

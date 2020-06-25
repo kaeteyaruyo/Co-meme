@@ -2,6 +2,7 @@
     flex-direction: column;
     display: inline-block;
     width: 100%;
+    height: unset;
     margin-bottom: 1rem;
     padding: 0;
     line-height: 0;

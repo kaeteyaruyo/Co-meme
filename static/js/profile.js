@@ -1,41 +1,13 @@
-
-import imageTileHTML from 'static/pug/components/image-tile.pug';
 import userCardHTML from 'static/pug/components/user-card.pug';
 import tagCardHTML from 'static/pug/components/tag-card.pug';
+import { setupImageWall } from 'static/js/components/image-wall.js'
 
-const imageTileContainer = document.querySelector('.imageWall__tiles');
 const tagCardsContainer = document.querySelector('.main__profile--tags');
 const userCardsContainer = document.querySelector('.main__profile--users');
 const currentUser = window.location.pathname.split('/').pop();
-let currentCategory = '';
-let currentPage = 0;
-let isEnd = false;
+let activePanel = null;
 let activeUserId = document.querySelector('#activeUser__id');
 activeUserId = activeUserId !== null ? Number.parseInt(activeUserId.innerHTML) : null;
-
-function getImages(page, category){
-    fetch(`/api/images/user/${ currentUser }?page=${ page }&category=${ category }`)
-    .then(res => {
-        if(res.status === 200){
-            return res.json()
-        }
-        throw res;
-    })
-    .then(images => {
-        images.forEach(image => {
-            imageTileContainer.insertAdjacentHTML('beforeend', imageTileHTML(image));
-            if(image.likedUsers.map(user => user.userId).includes(activeUserId)){
-                imageTileContainer.lastElementChild.querySelector('.imageTile__action--like').classList.toggle('image__liked');
-            }
-        });
-        if(images.length < 13){
-            isEnd = true;
-        }
-    })
-    .catch(error => {
-        console.error(error)
-    });
-}
 
 function getFollowing(target, container, componentHTML){
     fetch(`/api/${ target }/following/${ currentUser }`)
@@ -64,16 +36,16 @@ function getFollowing(target, container, componentHTML){
     });
 }
 
-let active = null;
 Array.from(document.querySelectorAll('input[name="tab"]')).forEach(tab => {
     tab.addEventListener('change', function(){
-        active = document.querySelector('.panel--active');
-        if(active){
-            active.classList.remove('panel--active');
+        activePanel = document.querySelector('.panel--active');
+        if(activePanel){
+            activePanel.classList.remove('panel--active');
             setTimeout(() => {
-                active.style.display = 'none';
+                activePanel.style.display = 'none';
             }, 350);
         }
+        window.location.hash = this.value;
         document.querySelector(`.main__profile--${ this.value }`).style.display = 'grid';
         setTimeout(() => {
             document.querySelector(`.main__profile--${ this.value }`).classList.add('panel--active');
@@ -81,24 +53,8 @@ Array.from(document.querySelectorAll('input[name="tab"]')).forEach(tab => {
     });
 })
 
-Array.from(document.querySelectorAll('input[name="category"]')).forEach(option => {
-    option.addEventListener('change', function(){
-        isEnd = false;
-        currentPage = 0;
-        currentCategory = this.value;
-        imageTileContainer.innerHTML = '';
-        getImages(currentPage++, currentCategory);
-    });
-})
-
-window.addEventListener('scroll', () => {
-    if(!isEnd && window.scrollY + window.innerHeight + 5 >= document.body.clientHeight){
-        getImages(currentPage++, currentCategory);
-    }
-});
-
-getImages(currentPage++, currentCategory);
+setupImageWall(`user/${ currentUser }`);
 getFollowing('users', userCardsContainer, userCardHTML);
 getFollowing('tags', tagCardsContainer, tagCardHTML);
-document.querySelector('#tab__posts').checked = true;
-document.querySelector('#tab__posts').dispatchEvent(new Event('change'))
+document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).checked = true;
+document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).dispatchEvent(new Event('change'))

@@ -2,7 +2,7 @@ window.onload = () => {
     const activeButton = document.querySelector(`.sidebar__menu--${ window.location.pathname.split('/')[1] || 'home' }`);
     const moreTagsButton = document.querySelector('#sidebar__tags--more');
     const moreTagsLabel = document.querySelector('.sidebar__popularTags--more');
-    const popularTags = document.querySelectorAll('.tag');
+    const popularTags = document.querySelectorAll('.sidebar__popularTags .tag');
 
     if(activeButton){
         activeButton.classList.add('sidebar__button--active');
@@ -14,6 +14,6 @@ window.onload = () => {
                 tag.classList.toggle('tag__hidden');
             }
         });
-        moreTagsLabel.innerHTML = this.checked ? '顯示更多' : '顯示較少';
+        moreTagsLabel.innerHTML = this.checked ? '顯示較少' : '顯示更多';
     });
 }

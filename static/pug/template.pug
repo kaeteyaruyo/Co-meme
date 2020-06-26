@@ -6,7 +6,9 @@ block stylesheets
 block header
   include components/header.pug
 block main
-  div(id="tui-image-editor")
+  div#imageContainer
+    div#imageEditor
+  button#downloadBtn(type="button") 下載
 
 block scripts
   script(src="/bundle/template.bundle.js")

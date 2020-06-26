@@ -1,0 +1,19 @@
+/* default editor size */
+#imageContainer {
+    width: 40vw;
+    border-radius: 10px;
+}
+#imageEditor{
+    width: 100%;
+    height: 100%;
+}
+.tui-image-editor-canvas-container {
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    border: 1px dashed black;
+    overflow: hidden;
+}

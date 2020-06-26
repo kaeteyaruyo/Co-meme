@@ -17,4 +17,5 @@ mixin sidebar
     div.sidebar__popularTags
       span.sidebar__popularTags--title 熱門標籤
       +tags(sidebar.tags)
-      button.sidebar__popularTags--more 顯示更多
+      input#sidebar__tags--more(type="checkbox" checked)
+      label.sidebar__popularTags--more(for="sidebar__tags--more") 顯示較少

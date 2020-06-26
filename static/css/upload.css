@@ -139,6 +139,7 @@
 .image__block {
     position: relative;
     display: grid;
+    position: relative;
 }
 
 .image__mask {
@@ -470,4 +471,5 @@
     padding: 0.25rem 0.75rem;
     margin: 0.5rem 0.5rem;
     border: none;
+    cursor: pointer;
 }

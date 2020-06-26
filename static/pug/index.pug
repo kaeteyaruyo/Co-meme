@@ -2,14 +2,16 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/index.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/post.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/button.css")
 
 block header
   include components/header.pug
 
 block main
   include components/sidebar.pug
-  include components/tag-card.pug
-  include components/user-card.pug
   mixin uploadBlock(href,imgUrl,title)
     a.upload__all(href=href)
       div.upload__left
@@ -20,7 +22,6 @@ block main
         span.upload__right--title= title
         br
         span.upload__right--subtitle= title
-
   article.main__container
     +sidebar
     section.main__timeline
@@ -40,20 +41,22 @@ block main
         label.timeline__category--label(for="category__meme") 迷因
         input.timeline__category--input#category__elderly(type="radio" name="category" value="1")
         label.timeline__category--label(for="category__elderly") 長輩圖
-      div.timeline__posts
+      div.timeline__rows
+        div.timeline__row
+        div.timeline__row
+      div.timeline__bottom
     section.main__recommend
       div.main__recommend--overview.main__recommend--users
         p.main__recommend--title 推薦的創作者
-        div.main__recommend--cards
-          each user in recommendUsers
-            +userCard(user)
+        div#recommend__users.main__recommend--cards
         a.main__recommend--more(href='/recommend') 顯示更多
       div.main__recommend--overview.main__recommend--tags
         p.main__recommend--title 推薦的標籤
-        div.main__recommend--cards
-          each tag in recommendTags
-            +tagCard(tag)
+        div#recommend__tags.main__recommend--cards
         a.main__recommend--more(href=`/recommend`) 顯示更多
 
 block scripts
   script(src="/bundle/index.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")
+  script(src="/js/components/follow-user.js")

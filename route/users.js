@@ -25,6 +25,7 @@ const {
  */
 apis.get('/recommend', authenticate, (req, res) => {
     // TODO: implement this route
+    // TODO: don't recommend self
     res.status(500).send({ message: 'This route is not yet implemented.' });
 })
 
@@ -36,7 +37,7 @@ apis.get('/hot', (req, res) => {
     Image.findAll({
         where: {
             createdAt: {
-                [Op.gte]: daysAgo(7),
+                [Op.gte]: daysAgo(60), // TODO: change this to 7
             },
         },
         attributes: [
@@ -48,7 +49,7 @@ apis.get('/hot', (req, res) => {
         order: [
             [Sequelize.fn('COUNT', Sequelize.col('imageId')), 'DESC'],
         ],
-        limit: req.query.count,
+        limit: Number.parseInt(req.query.count),
     })
     .then(data => {
         User.findAll({
@@ -73,9 +74,12 @@ apis.get('/hot', (req, res) => {
                     },
                 },
             ],
+            order: [
+                ['followerCount', 'DESC']
+            ],
         })
         .then(users => {
-            res.send(users);
+            res.send(users.sort((a, b) => b.followers.length - a.followers.length));
         })
     })
     .catch(err => {
@@ -121,6 +125,54 @@ apis.get('/following/:userId(\\d+)', (req, res) => {
         });
     })
     .catch(err => {
+        res.status(500).send({ message: err });
+    });
+});
+
+/**
+ * 追蹤或取消追蹤某使用者，需登入
+ */
+apis.post('/follow/:userId(\\d+)', authenticate, (req, res) => {
+    Follower.findOrCreate({
+        where: {
+            followerId: req.session.user.id,
+            userId: Number.parseInt(req.params.userId),
+        },
+        defaults: {
+            followerId: req.session.user.id,
+            userId: Number.parseInt(req.params.userId),
+        },
+    })
+    .then(async ([result, created]) => {
+        if(!created){
+            await Follower.destroy({
+                where: {
+                    followerId: req.session.user.id,
+                    userId: Number.parseInt(req.params.userId),
+                }
+            })
+        }
+        Follower.count({
+            where: {
+                userId: Number.parseInt(req.params.userId),
+            }
+        })
+        .then(count => {
+            User.update({
+                followerCount: count,
+            }, {
+                where: {
+                    userId: req.params.userId,
+                },
+            });
+            res.send({
+                followers: count,
+                following: created,
+            });
+        });
+    })
+    .catch(err => {
+        console.error(err)
         res.status(500).send({ message: err });
     });
 });

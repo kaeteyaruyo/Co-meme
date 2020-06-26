@@ -10,7 +10,7 @@ div.post
         p.post__author--name= author.username
         p.post__author--timestamp= createdAt
     div.post__action
-      button.post__action--button.post__action--like
+      button.post__action--button.post__action--like(id=`post__like--${ imageId }` onclick=`sendLike(this, ${ imageId })`)
         div.post__action--icon.post__like--icon
         p.post__action--label.post__like--label= likedUsers.length
       button.post__action--button.post__action--share

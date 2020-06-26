@@ -5,13 +5,13 @@ include icon.pug
 
 header.header
   div.header__menu
-    button.header__menu--button
-      img(src="/img/common/header/menu.svg" width="24" height="24")
+    //- button.header__menu--button
+    //-   img(src="/img/common/header/menu.svg" width="24" height="24")
     a.header__menu--logo(href='/')
       img(src="/img/common/logo.svg" width="106" height="25")
-  div.header__search
-    img.header__search--icon(src="/img/common/header/search.svg" width="24" height="24")
-    input.header__search--input(type="text" placeholder="搜尋")
+  //- div.header__search
+  //-   img.header__search--icon(src="/img/common/header/search.svg" width="24" height="24")
+  //-   input.header__search--input(type="text" placeholder="搜尋")
   if activeUser
     div.header__toolbar
       a.header__tool--upload(href="/upload")
@@ -20,6 +20,7 @@ header.header
       input#account__menu(type="checkbox")
       label.header__tool--account(for="account__menu")
         span.tool__account--username= activeUser.name
+        span#activeUser__id(style="display: none;")= activeUser.id
         +icon("tool__account--icon", activeUser.icon, 24)
         div.tool__account--menu
           a(href=`/profile/${ activeUser.id }`) 個人主頁

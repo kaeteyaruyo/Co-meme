@@ -25,13 +25,15 @@ block main
             +icon("information__author--icon", image.author.icon, 45)
           div.information__author--data
             p.author__data--name= image.author.username
-            p.author__data--follower= `追蹤者 ${ image.author.followerCount }人`
-          button.button--solid.information__author--follow 追蹤
+            p.author__data--follower(id=`user__followers--${ image.author.userId }`)= `${ image.author.followers.length }人追蹤`
+          - const following = activeUser && image.author.followers.map(user => user.userId).includes(activeUser.id);
+          button(class=`information__author--follow ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ image.author.userId })`)= (following ? '已追蹤': '追蹤')
         p.information__description= image.description
         +tags(image.tags)
         p.information__timestamp= `發佈時間: ${ image.createdAt }`
         div.information__actions
-          button.information__action.information__action--like
+          - const liked = activeUser && image.likedUsers.map(user => user.userId).includes(activeUser.id);
+          button(class=`information__action information__action--like${ liked ? ' image__liked' : '' }` onclick=`sendLike(this, ${ image.imageId })`)
             div.action__like--img
             span.action__like--count= image.likedUsers.length
           button.information__action.information__action--share
@@ -48,3 +50,5 @@ block main
     //-   div.main__similar--list
 block scripts
   script(src="/bundle/image.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-user.js")

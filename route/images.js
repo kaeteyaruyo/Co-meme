@@ -8,7 +8,7 @@
  *         * 使用者姓名
  *         * 使用者頭像
  *     * 按讚的使用者列表（只含使用者編號）
- * 本 api 提供分頁功能，一頁有 13 筆資料
+ * 本 api 提供分頁功能，一頁有 12 筆資料。
  */
 
 const express = require('express');
@@ -17,13 +17,14 @@ const authenticate = require('./utils/authenticate');
 const daysAgo = require('./utils/days-ago');
 
 const apis = express.Router();
-const pageSize = 13;
+const pageSize = 12;
 
 const {
     Image,
     Tag,
     User,
     Follower,
+    TagFollower,
     LikeImage,
 } = require('../models/association.js');
 
@@ -33,19 +34,58 @@ const {
  * @param {Number} category - 類別，0 為梗圖， 1 為長輩圖，沒有給的話就會全部都拿
  */
 apis.get('/timeline', authenticate, (req, res) => {
-    Follower.findAll({
-        where: {
-            followerId: req.session.user.id,
-        },
-        attributes: [
-            'userId',
-        ],
-    })
+    Promise.all([
+        Follower.findAll({
+            where: {
+                followerId: req.session.user.id,
+            },
+            attributes: [
+                'userId',
+            ],
+        })
+        .then(users => Image.findAll({
+            where: {
+                userId: users.map(user => user.userId).concat(req.session.user.id),
+            },
+            attributes: [
+                'imageId',
+            ],
+        })),
+        TagFollower.findAll({
+            where: {
+                userId: req.session.user.id,
+            },
+            attributes: [
+                'tagId',
+            ],
+        })
+        .then(tags => Image.findAll({
+            attributes: [
+                'imageId',
+            ],
+            include: [
+                {
+                    model: Tag,
+                    as: 'tags',
+                    where: {
+                        tagId: tags.map(tag => tag.tagId),
+                    },
+                    attributes: [],
+                    through: {
+                        attributes: [],
+                    },
+                }
+            ],
+        })),
+    ])
     .then(data => {
         Image.findAll({
             where: req.query.category ? {
                 category: req.query.category,
-            } : { },
+                imageId: Array.from(new Set(data[0].map(image => image.imageId).concat(data[1].map(image => image.imageId)))),
+            } : {
+                imageId: Array.from(new Set(data[0].map(image => image.imageId).concat(data[1].map(image => image.imageId)))),
+            },
             attributes: [
                 'imageId',
                 'content',
@@ -55,9 +95,6 @@ apis.get('/timeline', authenticate, (req, res) => {
                 {
                     model: User,
                     as: 'author',
-                    where: {
-                        userId: data.map(user => user. userId),
-                    },
                     attributes: [
                         'userId',
                         'username',
@@ -70,9 +107,6 @@ apis.get('/timeline', authenticate, (req, res) => {
                     attributes: [
                         'userId',
                     ],
-                    through: {
-                        attributes: [],
-                    },
                 },
             ],
             order: [
@@ -83,9 +117,14 @@ apis.get('/timeline', authenticate, (req, res) => {
         })
         .then(images => {
             res.send(images);
+        })
+        .catch(err => {
+            console.error(err)
+            res.status(500).send({ message: err });
         });
     })
     .catch(err => {
+        console.error(err)
         res.status(500).send({ message: err });
     });
 });
@@ -342,5 +381,43 @@ apis.get('/similar/:imageId(\\d+)', authenticate, (req, res) => {
     // TODO: implement this route
     res.status(500).send({ message: 'This route is not yet implemented.' });
 })
+
+/**
+ * 對某張圖片按讚或取消按讚，需登入
+ */
+apis.post('/like/:imageId(\\d+)', authenticate, (req, res) => {
+    LikeImage.findOrCreate({
+        where: {
+            userId: req.session.user.id,
+            imageId: Number.parseInt(req.params.imageId),
+        },
+        defaults: {
+            userId: req.session.user.id,
+            imageId: Number.parseInt(req.params.imageId),
+        },
+    })
+    .then(async ([result, created]) => {
+        if(!created){
+            await LikeImage.destroy({
+                where: {
+                    userId: req.session.user.id,
+                    imageId: Number.parseInt(req.params.imageId),
+                }
+            })
+        }
+        LikeImage.count({
+            where: {
+                imageId: Number.parseInt(req.params.imageId),
+            }
+        })
+        .then(count => {
+            res.send({ likes: count });
+        });
+    })
+    .catch(err => {
+        console.error(err)
+        res.status(500).send({ message: err });
+    });
+});
 
 module.exports = apis;

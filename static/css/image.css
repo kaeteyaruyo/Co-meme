@@ -106,6 +106,10 @@
     padding: 1rem 0;
 }
 
+.information__action > * {
+    transition: all .3s;
+}
+
 .information__action {
     display: flex;
     align-items: center;
@@ -127,11 +131,21 @@
     color: #AAAAAA;
 }
 
-.information__action--like:hover > .action__like--img {
+@media screen and (min-width: 800px) {
+    .information__action--like:hover > .action__like--img {
+        background-color: #F57575;
+    }
+
+    .information__action--like:hover > .action__like--count {
+        color: #F57575;
+    }
+}
+
+.image__liked > .action__like--img {
     background-color: #F57575;
 }
 
-.information__action--like:hover > .action__like--count {
+.image__liked > .action__like--count {
     color: #F57575;
 }
 
@@ -146,6 +160,14 @@
 .action__share--label {
     margin-left: 1rem;
     color: #AAAAAA;
+}
+
+.information__action--share:hover > .action__share--img {
+    background-color: #666666;
+}
+
+.information__action--share:hover > .action__share--label {
+    color: #666666;
 }
 
 .information__comment {
@@ -174,7 +196,7 @@
     width: 100%;
     margin: 1rem 0;
     grid-template-rows: auto;
-    grid-template-columns: min-content min-content auto;
+    grid-template-columns: min-content min-content 1fr;
     grid-template-areas:
     "msg-icon msg-author msg-timestamp"
     "msg-icon msg-content msg-content";
@@ -200,6 +222,10 @@
 .message__content {
     grid-area: msg-content;
     font-size: small;
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .main__similar--title {

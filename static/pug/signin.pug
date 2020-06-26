@@ -8,11 +8,15 @@ block action
   div.main__action
     img(src="/img/signin/account.svg" width="120" height="120")
     p.main__action--title 會員登入
-    form.main__form(id="signinForm" name="signin")
+    if error
+      div.main__error= error.message
+    form.main__form(name="signin" action="/signin" method="POST")
       input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required)
+      span#form__hint--email.main__form--hint
       input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
+      span#form__hint--password.main__form--hint
       a.main__form--resetPassword(href="/resetPassword") 忘記密碼?
-      input.button--solid.main__form--button.main__form--submit(type="submit" value="登入")
+      input.button--solid.main__form--button.main__form--submit(type="submit" name="submit" value="登入")
       a.button--hollow.main__form--button.main__form--signup(href="signup") 註冊
     div.main__divider
       div.main__divider--line
@@ -25,4 +29,4 @@ block action
         a.main__socialSignin--site.main__socialSignin--google(href="#")
         a.main__socialSignin--site.main__socialSignin--instagram(href="#")
 block scripts
-  script(src="/js/account/signin.js")
+  script(src="/bundle/account/signin.bundle.js")

@@ -1,0 +1,76 @@
+.main__imageInfo {
+    background: #0000007A;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.main__imageInfo--dialog{
+    padding:1rem;
+    background: #FFFFFF;
+    border-radius: .5rem;
+    display: flex;
+    width: 55rem;
+}
+
+.main__imageInfo--image{
+    padding:1rem;
+    border: 2.5rem;
+    border-radius: .5rem;
+    width: 25rem;
+    height: auto;
+}
+
+.main__imageInfo--info{
+    padding:1rem;
+    color:#333333;
+    width: 30rem;
+}
+
+.main__imageInfo--infoName{
+    font-size:1.5rem;
+    font-weight: bolder;
+    margin-top: 1em;
+}
+.main__imageInfo--infoAuthor{
+    display:flex;
+    justify-items: flex-start;
+    justify-self: start;
+    font-size: .75rem;
+    margin-top: .8em;
+}
+.main__imageInfo--infoAuthorName{
+    color:#4C26EB;
+    font-size: .75rem;
+    text-underline-position: below;
+}
+.main__imageInfo--infoDiscript{
+    font-size: .9rem;
+    border-right: 1rem;
+    margin-top: 1.5rem;;
+}
+
+.main__imageInfo--Button{
+    padding: 1rem;
+    display: grid;
+    width: 15rem;
+
+}
+.main__imageInfo--infoCross{
+    justify-self: end;
+}
+
+.main__imageInfo--infoButton{
+    justify-self: end;
+    align-items: flex-end;
+    align-self: end;
+    height: 2.5rem;
+    border-bottom: .5rem;
+}
+

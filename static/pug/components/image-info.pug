@@ -1,0 +1,17 @@
+link(rel="stylesheet" type="text/css" href="/css/image-info.css")
+link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+
+
+mixin imageInfo
+  div.main__imageInfo
+    div.main__imageInfo--dialog
+      img.main__imageInfo--image(src="/img/common/image-tile/thumbnail.png")
+      div.main__imageInfo--info
+        span.main__imageInfo--infoName 迷因模板標題迷因模板板標題迷因模板
+        div.main__imageInfo--infoAuthor
+          span 製作者:
+          a.main__imageInfo--infoAuthorName(href=`/profile/1`) 1231231231233
+        p.main__imageInfo--infoDiscript 其他分享方式其他分享方式其他分享方式其他分享方式其他
+      div.main__imageInfo--Button
+        button.main__imageInfo--infoCross(src="/img/image/close.svg" width="24" height="24")
+        button.button--solid.main__imageInfo--infoButton 開始製作

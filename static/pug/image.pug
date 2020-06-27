@@ -9,6 +9,7 @@ block header
   include components/header.pug
 
 block main
+  include components/image-info.pug
   include components/sidebar.pug
   include components/icon.pug
   include components/tag-chips.pug
@@ -43,6 +44,7 @@ block main
           input#comment__input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
           button#comment__submit.button--solid(type="submit") 留言
         div.information__messages
+  +imageInfo
     //- div.main__similar
     //-   h2.main__similar--title 更多相似
     //-   div.main__similar--list

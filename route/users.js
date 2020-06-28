@@ -74,9 +74,6 @@ apis.get('/hot', (req, res) => {
                     },
                 },
             ],
-            order: [
-                ['followerCount', 'DESC']
-            ],
         })
         .then(users => {
             res.send(users.sort((a, b) => b.followers.length - a.followers.length));
@@ -135,11 +132,11 @@ apis.get('/following/:userId(\\d+)', (req, res) => {
 apis.post('/follow/:userId(\\d+)', authenticate, (req, res) => {
     Follower.findOrCreate({
         where: {
-            followerId: req.session.user.id,
+            followerId: req.user.id,
             userId: Number.parseInt(req.params.userId),
         },
         defaults: {
-            followerId: req.session.user.id,
+            followerId: req.user.id,
             userId: Number.parseInt(req.params.userId),
         },
     })
@@ -147,7 +144,7 @@ apis.post('/follow/:userId(\\d+)', authenticate, (req, res) => {
         if(!created){
             await Follower.destroy({
                 where: {
-                    followerId: req.session.user.id,
+                    followerId: req.user.id,
                     userId: Number.parseInt(req.params.userId),
                 }
             })
@@ -158,13 +155,6 @@ apis.post('/follow/:userId(\\d+)', authenticate, (req, res) => {
             }
         })
         .then(count => {
-            User.update({
-                followerCount: count,
-            }, {
-                where: {
-                    userId: req.params.userId,
-                },
-            });
             res.send({
                 followers: count,
                 following: created,

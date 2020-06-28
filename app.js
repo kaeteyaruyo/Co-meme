@@ -4,6 +4,8 @@ const http = require('http');
 const https = require('https');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const passport = require('passport');
+const Hashids = require('hashids/cjs');
 const MobileDetect = require('mobile-detect');
 const { Sequelize, Op } = require('sequelize');
 
@@ -14,6 +16,7 @@ const daysAgo = require('./route/utils/days-ago');
 const authenticate = require('./route/utils/authenticate');
 const { urlEncoded, jsonParser } = require('./route/utils/body-parser');
 
+const authAPI = require('./route/auth');
 const tagsAPI = require('./route/tags');
 const usersAPI = require('./route/users');
 const imagesAPI = require('./route/images');
@@ -23,6 +26,7 @@ const {
     Tag,
     User,
     Image,
+    Password,
     ImageTag,
     TagFollower,
 } = require('./models/association');
@@ -36,20 +40,24 @@ const sslOptions = {
 
 const app = express();
 const root = process.cwd();
+const hashids = new Hashids(config.session.secret, 20);  
 
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
 app.use(express.static(path.join(root, '/static')));
 app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use('/auth', authAPI);
 app.use('/api/tags', tagsAPI);
 app.use('/api/users', usersAPI);
 app.use('/api/images', imagesAPI);
 app.use('/api/comment', commentAPI);
 
 app.use(function (req, res, next) {
-    if (req.session.user) {
-        res.locals.activeUser = req.session.user;
+    if (req.user) {
+        res.locals.activeUser = req.user;
     }
     next();
 })
@@ -319,7 +327,7 @@ app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image')
             return Image.create({
                 content: req.file.buffer,
                 category: req.body.category,
-                userId: req.session.user.id,
+                userId: req.user.id,
                 description: req.body.description,
             }, {
                 transaction: t
@@ -357,7 +365,7 @@ app.get('/template', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    if(req.session.user){
+    if(req.user){
         res.redirect('/');
     }
     else {
@@ -368,7 +376,7 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', urlEncoded, jsonParser, (req, res) => {
-    User.findOne({
+    Password.findOne({
         where: {
             email: req.body.email,
         },
@@ -380,12 +388,32 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
         else {
             return bcrypt.hash(req.body.password, 10)
             .then(hash => {
-                User.create({
-                    username: req.body.username,
-                    email: req.body.email,
-                    password: hash,
-                    birthday: new Date(`${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`),
-                })
+                return database.transaction(t => {
+                    return User.create({
+                        username: req.body.username,
+                        email: req.body.email,
+                        birthday: new Date(`${ req.body.birthyear }-${ req.body.birthmonth }-${ req.body.birthdate }`),
+                        host: 'local',
+                    }, {
+                        transaction: t,
+                    })
+                    .then(user => {
+                        return user.update({
+                            hash: hashids.encode(user.userId),
+                        }, {
+                            transaction: t,
+                        });
+                    })
+                    .then(user => {
+                        return Password.create({
+                            userId: user.userId,
+                            email: user.email,
+                            password: hash,    
+                        }, {
+                            transaction: t,
+                        });
+                    })
+                });
             })
             .then(() => {
                 res.redirect('/signin');
@@ -393,6 +421,7 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
         }
     })
     .catch(err => {
+        console.error(err)
         // TODO: error type checking
         res.render('signup', {
             title: '會員註冊',
@@ -404,7 +433,7 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
 });
 
 app.get('/signin', (req, res) => {
-    if(req.session.user){
+    if(req.user){
         res.redirect('/');
     }
     else {
@@ -414,51 +443,8 @@ app.get('/signin', (req, res) => {
     }
 });
 
-app.post('/signin', urlEncoded, jsonParser, (req, res) => {
-    User.findOne({
-        where: {
-            email: req.body.email
-        },
-        attributes: [
-            'userId',
-            'username',
-            'password',
-            'icon',
-        ],
-    })
-    .then(user => {
-        if(user === null) {
-            throw new Error('Authorization failure');
-        }
-        else {
-            return bcrypt.compare(req.body.password, user.password)
-            .then(matched => {
-                if(matched){
-                    req.session.user = {
-                        id: user.userId,
-                        name: user.username,
-                        icon: user.icon,
-                    }
-                    res.redirect('/');
-                }
-                else {
-                    throw new Error('Authorization failure');
-                }
-            })
-        }
-    })
-    .catch(err => {
-        res.render('signin', {
-            title: '會員登入',
-            error: {
-                message: '使用者不存在，或密碼輸入錯誤',
-            },
-        });
-    });
-});
-
 app.get('/signout', (req, res) => {
-    delete req.session.user;
+    req.logout();
     res.redirect('/');
 });
 

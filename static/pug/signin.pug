@@ -10,7 +10,7 @@ block action
     p.main__action--title 會員登入
     if error
       div.main__error= error.message
-    form.main__form(name="signin" action="/signin" method="POST")
+    form.main__form(name="signin" action="/auth/local" method="POST")
       input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required)
       span#form__hint--email.main__form--hint
       input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
@@ -26,7 +26,7 @@ block action
       p.main__socialSignin--title 使用其他方式登入
       div.main__socialSignin--sites
         a.main__socialSignin--site.main__socialSignin--facebook(href="#")
-        a.main__socialSignin--site.main__socialSignin--google(href="#")
+        a.main__socialSignin--site.main__socialSignin--google(href="/auth/google")
         a.main__socialSignin--site.main__socialSignin--instagram(href="#")
 block scripts
   script(src="/bundle/account/signin.bundle.js")

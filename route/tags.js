@@ -209,11 +209,11 @@ apis.get('/following/:userId(\\d+)', (req, res) => {
 apis.post('/follow/:tagId(\\d+)', authenticate, (req, res) => {
     TagFollower.findOrCreate({
         where: {
-            userId: req.session.user.id,
+            userId: req.user.id,
             tagId: Number.parseInt(req.params.tagId),
         },
         defaults: {
-            userId: req.session.user.id,
+            userId: req.user.id,
             tagId: Number.parseInt(req.params.tagId),
         },
     })
@@ -221,7 +221,7 @@ apis.post('/follow/:tagId(\\d+)', authenticate, (req, res) => {
         if(!created){
             await TagFollower.destroy({
                 where: {
-                    userId: req.session.user.id,
+                    userId: req.user.id,
                     tagId: Number.parseInt(req.params.tagId),
                 }
             })

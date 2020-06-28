@@ -20,16 +20,6 @@ module.exports = new Sequelize(
             idle: 20000,
             acquire: 20000,
         },
-        dialectOptions: {
-            // dateStrings: true,
-            // typeCast(field, next) {
-            //     // for reading from database
-            //     if (field.type === 'DATETIME') {
-            //         return field.string();
-            //     }
-            //     return next();
-            // }
-        },
         timezone: '+08:00', // for writing to database
     }
 );

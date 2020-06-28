@@ -37,7 +37,7 @@ apis.get('/timeline', authenticate, (req, res) => {
     Promise.all([
         Follower.findAll({
             where: {
-                followerId: req.session.user.id,
+                followerId: req.user.id,
             },
             attributes: [
                 'userId',
@@ -45,7 +45,7 @@ apis.get('/timeline', authenticate, (req, res) => {
         })
         .then(users => Image.findAll({
             where: {
-                userId: users.map(user => user.userId).concat(req.session.user.id),
+                userId: users.map(user => user.userId).concat(req.user.id),
             },
             attributes: [
                 'imageId',
@@ -53,7 +53,7 @@ apis.get('/timeline', authenticate, (req, res) => {
         })),
         TagFollower.findAll({
             where: {
-                userId: req.session.user.id,
+                userId: req.user.id,
             },
             attributes: [
                 'tagId',
@@ -388,11 +388,11 @@ apis.get('/similar/:imageId(\\d+)', authenticate, (req, res) => {
 apis.post('/like/:imageId(\\d+)', authenticate, (req, res) => {
     LikeImage.findOrCreate({
         where: {
-            userId: req.session.user.id,
+            userId: req.user.id,
             imageId: Number.parseInt(req.params.imageId),
         },
         defaults: {
-            userId: req.session.user.id,
+            userId: req.user.id,
             imageId: Number.parseInt(req.params.imageId),
         },
     })
@@ -400,7 +400,7 @@ apis.post('/like/:imageId(\\d+)', authenticate, (req, res) => {
         if(!created){
             await LikeImage.destroy({
                 where: {
-                    userId: req.session.user.id,
+                    userId: req.user.id,
                     imageId: Number.parseInt(req.params.imageId),
                 }
             })

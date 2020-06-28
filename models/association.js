@@ -6,6 +6,11 @@ const Tag = require('./tag');
 const User = require('./user');
 const TagFollower = require('./tagFollower');
 const LikeImage = require('./likeImage');
+const Password = require('./password');
+
+Password.belongsTo(User, {
+    foreignKey: 'userId',
+});
 
 Image.hasMany(Comment, {
     foreignKey: 'imageId',
@@ -112,4 +117,5 @@ module.exports = {
     User,
     TagFollower,
     LikeImage,
+    Password
 };

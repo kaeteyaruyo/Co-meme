@@ -57,7 +57,7 @@ apis.get('/:imageId(\\d+)', (req, res) => {
  */
 apis.post('/:imageId(\\d+)', authenticate, urlEncoded, jsonParser, (req, res) => {
     Comment.create({
-        userId: req.session.user.id,
+        userId: req.user.id,
         imageId: req.params.imageId,
         comment: req.body.comment,
     })
@@ -76,9 +76,9 @@ apis.post('/:imageId(\\d+)', authenticate, urlEncoded, jsonParser, (req, res) =>
                 comment: comment.comment,
                 createdAt: comment.createdAt,
                 author: {
-                    userId: req.session.user.id,
-                    username: req.session.user.name,
-                    icon: req.session.user.icon,
+                    userId: req.user.id,
+                    username: req.user.name,
+                    icon: req.user.icon,
                 },
             });
         });

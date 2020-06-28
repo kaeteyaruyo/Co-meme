@@ -6,6 +6,7 @@ module.exports = database.define('user', {
         type: Sequelize.INTEGER(10).UNSIGNED,
         allowNull: false,
         autoIncrement: true,
+        primaryKey: true,
     },
     username: {
         type: Sequelize.STRING(50),
@@ -14,15 +15,19 @@ module.exports = database.define('user', {
     },
     email: {
         type: Sequelize.STRING(300),
-        primaryKey: true,
         allowNull: false,
     },
     birthday: {
         type: Sequelize.DATEONLY,
     },
+    icon: {
+        type: "MEDIUMBLOB",
+        get() {
+            return Buffer.from(this.getDataValue('content') || '').toString('base64');
+        }
+    },
     host: {
         type:   Sequelize.ENUM,
-        primaryKey: true,
         allowNull: false,
         values: ['local', 'google', 'facebook', 'twitter', 'instagram']
     },

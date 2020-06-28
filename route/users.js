@@ -37,7 +37,7 @@ apis.get('/hot', (req, res) => {
     Image.findAll({
         where: {
             createdAt: {
-                [Op.gte]: daysAgo(60), // TODO: change this to 7
+                [Op.gte]: daysAgo(7),
             },
         },
         attributes: [

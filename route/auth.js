@@ -11,7 +11,7 @@ const { Password, User } = require('../models/association');
 const database = require('../models/connect');
 
 const router = express.Router();
-const hashids = new Hashids(config.session.secret, 20);  
+const hashids = new Hashids(config.session.secret, 20);
 
 router.use(urlEncoded);
 router.use(jsonParser);
@@ -19,7 +19,7 @@ router.use(jsonParser);
 passport.serializeUser((user, done) => {
     done(null, user);
 });
-  
+
 passport.deserializeUser((user, done) => {
     done(null, user);
 });
@@ -42,7 +42,7 @@ passport.use(new LocalStrategy({
             if(user === null) {
                 return done(null, false, { message: 'Incorrect email' });
             }
-            else {  
+            else {
                 return bcrypt.compare(password, user.password)
                 .then(matched => {
                     if(matched){
@@ -119,7 +119,7 @@ passport.use(new GoogleStrategy(
         })
         .catch(err => {
             return done(err, false);
-        });    
+        });
     }
 ));
 

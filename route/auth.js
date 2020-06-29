@@ -4,6 +4,8 @@ const passport = require('passport');
 const Hashids = require('hashids/cjs');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 
 const config = require('../config.js')
 const { urlEncoded, jsonParser } = require('./utils/body-parser');
@@ -94,8 +96,112 @@ passport.use(new GoogleStrategy(
                     email: profile.emails[0].value,
                     username: profile.displayName,
                     icon: null,
-                    // icon: profile.photos[0].value, // should be blob?
+                    // icon: profile.photos[0].value, // TODO: should be blob?
                     host: 'google',
+                },
+                transaction: t,
+            })
+            .then(([user, created]) => {
+                if(created){
+                    return user.update({
+                        hash: hashids.encode(user.userId),
+                    }, {
+                        transaction: t,
+                    });
+                }
+                return user;
+            })
+            .then(user => {
+                return done(null, {
+                    id: user.userId,
+                    name: user.username,
+                    icon: user.icon,
+                });
+            })
+        })
+        .catch(err => {
+            return done(err, false);
+        });
+    }
+));
+
+passport.use(new FacebookStrategy(
+    {
+        clientID: config.passport.facebook.clientID,
+        clientSecret: config.passport.facebook.clientSecret,
+        callbackURL: '/auth/facebook/callback',
+        profileFields: ['id', 'emails', 'name', 'displayName']
+    },
+    async function (accessToken, refreshToken, profile, done) {
+        return await database.transaction(t => {
+            return User.findOrCreate({
+                where: {
+                    email: profile.emails ? profile.emails[0].value : `${ profile.id }@facebook.com`,
+                    host: 'facebook',
+                },
+                attributes: [
+                    'userId',
+                    'username',
+                    'icon',
+                ],
+                defaults: {
+                    email: profile.emails ? profile.emails[0].value : `${ profile.id }@facebook.com`,
+                    username: profile.displayName,
+                    icon: null,
+                    // icon: profile.photos[0].value, // TODO: can't get this
+                    host: 'facebook',
+                },
+                transaction: t,
+            })
+            .then(([user, created]) => {
+                if(created){
+                    return user.update({
+                        hash: hashids.encode(user.userId),
+                    }, {
+                        transaction: t,
+                    });
+                }
+                return user;
+            })
+            .then(user => {
+                return done(null, {
+                    id: user.userId,
+                    name: user.username,
+                    icon: user.icon,
+                });
+            })
+        })
+        .catch(err => {
+            return done(err, false);
+        });
+    }
+));
+
+passport.use(new TwitterStrategy(
+    {
+        consumerKey: config.passport.twitter.clientID,
+        consumerSecret: config.passport.twitter.clientSecret,
+        callbackURL: '/auth/twitter/callback',
+        profileFields: ['id', 'emails', 'name', 'displayName']
+    },
+    async function (accessToken, refreshToken, profile, done) {
+        return await database.transaction(t => {
+            return User.findOrCreate({
+                where: {
+                    email: profile.emails ? profile.emails[0].value : `${ profile.id }@twitter.com`,
+                    host: 'twitter',
+                },
+                attributes: [
+                    'userId',
+                    'username',
+                    'icon',
+                ],
+                defaults: {
+                    email: profile.emails ? profile.emails[0].value : `${ profile.id }@twitter.com`,
+                    username: profile.displayName,
+                    icon: null,
+                    // icon: profile.photos[0].value, // TODO: should be blob?
+                    host: 'twitter',
                 },
                 transaction: t,
             })
@@ -153,6 +259,28 @@ router.get('/google',
 
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/signin', }),
+    (req, res) => {
+        res.redirect('/');
+    }
+);
+
+router.get('/facebook',
+    passport.authenticate('facebook', { scope: ['email'] })
+);
+
+router.get('/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/signin', }),
+    (req, res) => {
+        res.redirect('/');
+    }
+);
+
+router.get('/twitter',
+    passport.authenticate('twitter', { scope: ['email'] })
+);
+
+router.get('/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/signin', }),
     (req, res) => {
         res.redirect('/');
     }

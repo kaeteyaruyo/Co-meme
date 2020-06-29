@@ -1,5 +1,7 @@
+const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const https = require('https');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const passport = require('passport');
@@ -30,9 +32,15 @@ const {
 } = require('./models/association');
 const database = require('./models/connect');
 
+const sslOptions = {
+    key: fs.readFileSync(config.ssl.key_path),
+    ca: fs.readFileSync(config.ssl.ca_path),
+    cert: fs.readFileSync(config.ssl.cert_path)
+};
+
 const app = express();
 const root = process.cwd();
-const hashids = new Hashids(config.session.secret, 20);
+const hashids = new Hashids(config.session.secret, 20);  
 
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
@@ -400,7 +408,7 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
                         return Password.create({
                             userId: user.userId,
                             email: user.email,
-                            password: hash,
+                            password: hash,    
                         }, {
                             transaction: t,
                         });
@@ -458,6 +466,6 @@ app.use(function(req, res, next) {
     });
 });
 
-http.createServer(app).listen(config.httpPort, () => {
-    console.log(`Listen on ${ config.httpPort }`)
-});
+http.createServer(app).listen(config.httpPort);
+https.createServer(sslOptions, app).listen(config.httpsPort);
+

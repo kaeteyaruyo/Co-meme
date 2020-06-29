@@ -1,0 +1,67 @@
+.main__imageInfo {
+    display: none;
+    align-content: center;
+    justify-content: center;
+    background: #0000007A;
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+}
+
+.main__imageInfo--dialog {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: min-content auto;
+    column-gap: 1.5rem;
+    background: #FFFFFF;
+    position: relative;
+    padding: 1.5rem;
+    border-radius: .5rem;
+    width: 70vw;
+}
+
+.main__imageInfo--close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    line-height: 0;
+}
+
+.main__imageInfo--image {
+    border-radius: .5rem;
+    width: 30vw;
+    height: auto;
+}
+
+.main__imageInfo--info {
+    display: grid;
+    grid-template-rows: min-content min-content auto min-content;
+    justify-items: start;
+}
+
+.main__imageInfo--infoName {
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.main__imageInfo--infoAuthor {
+    display: flex;
+    justify-content: start;
+    font-size: small;
+    margin-top: .5rem;
+}
+
+.main__imageInfo--description {
+    margin: 0;
+    padding: 1rem 0;
+}
+
+.main__imageInfo--make {
+    padding: .5rem 3rem;
+    justify-self: end;
+}
+

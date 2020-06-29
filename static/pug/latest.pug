@@ -5,6 +5,7 @@ block stylesheets
 
 block header
   include components/header.pug
+  include components/image-info.pug
 
 block main
   include components/sidebar.pug
@@ -13,7 +14,6 @@ block main
     +sidebar
     section.main__latest
       +imageWall('看看最近在流行什麼?')
-
 block scripts
   script(src="/bundle/latest.bundle.js")
   script(src="/js/components/like-image.js")

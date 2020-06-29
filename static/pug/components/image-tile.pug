@@ -13,6 +13,6 @@ div.imageTile
       button.imageTile__action--button.imageTile__action--like(id=`imageTile__like--${ imageId }` onclick=`sendLike(this, ${ imageId })`)
         div.imageTile__action--icon.imageTile__like--icon
         p.imageTile__action--label.imageTile__like--label= likedUsers.length
-      button.imageTile__action--button.imageTile__action--share
+      button.imageTile__action--button.imageTile__action--share(onclick=`openShareDialog(${ imageId })`)
         div.imageTile__action--icon.imageTile__share--icon
         p.imageTile__action--label.imageTile__share--label 分享

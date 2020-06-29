@@ -1,0 +1,27 @@
+link(rel="stylesheet" type="text/css" href="/css/common/share.css")
+
+mixin share
+  div.main__share
+    div.main__share--dialog
+      button.main__share--close
+        img(src="/img/image/close.svg" width="24" height="24")
+      h2.main__share--title 分享
+      h3.main__share--subtitle 圖片連結
+      div.main__share--link
+        input#share--url.main__share--linkCopy(type="text" readonly)
+        button.button--solid.main__share--linkButton 複製連結
+      h3.main__share--subtitle 其他分享方式
+      div.main__share--sns
+        a.share--snsType.main__share--snsLine(href="#")
+          img(src="/img/common/share/line.svg" width="48" height="48")
+          span LINE
+        a.share--snsType.main__share--snsMessenger(href="#")
+          img(src="/img/common/share/messenger.svg" width="48" height="48")
+          span Messenger
+        a.share--snsType.main__share--snsFacebook(href="#")
+          img(src="/img/common/share/facebook.svg" width="48" height="48")
+          span Facebook
+        a.share--snsType.main__share--snsTwitter(href="#")
+          img(src="/img/common/share/twitter.svg" width="48" height="48")
+          span Twitter
+  script(src="/js/components/share.js")

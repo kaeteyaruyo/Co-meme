@@ -50,12 +50,18 @@
 }
 
 .post__picture--info {
-    width: 2rem;
-    background-color: #FFFFFF;
-    border-radius: 50%;
     position: absolute;
     right: 1rem;
     top: 1rem;
+    padding: 0;
+    line-height: 0;
+}
+
+.post__picture--info > img {
+    width: 2rem;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px #00000029;
 }
 
 .post__information {

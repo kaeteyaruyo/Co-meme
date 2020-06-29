@@ -1,17 +1,15 @@
-link(rel="stylesheet" type="text/css" href="/css/image-info.css")
-link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+link(rel="stylesheet" type="text/css" href="/css/common/image-info.css")
 
-
-mixin imageInfo
+mixin imageInfo(info)
   div.main__imageInfo
     div.main__imageInfo--dialog
-      img.main__imageInfo--image(src="/img/common/image-tile/thumbnail.png")
+      button.main__imageInfo--close
+        img(src="/img/image/close.svg" width="24" height="24" onclick="document.querySelector('.main__imageInfo').style.display='none';")
+      img.main__imageInfo--image(src=`data:image/png;base64, ${ info.image }`)
       div.main__imageInfo--info
-        span.main__imageInfo--infoName 迷因模板標題迷因模板板標題迷因模板
+        span.main__imageInfo--infoName= info.title
         div.main__imageInfo--infoAuthor
-          span 製作者:
-          a.main__imageInfo--infoAuthorName(href=`/profile/1`) 1231231231233
-        p.main__imageInfo--infoDiscript 其他分享方式其他分享方式其他分享方式其他分享方式其他
-      div.main__imageInfo--Button
-        button.main__imageInfo--infoCross(src="/img/image/close.svg" width="24" height="24")
-        button.button--solid.main__imageInfo--infoButton 開始製作
+          span 製作者：
+          a(href=`/profile/${ info.author.userId }`)= info.author.username
+        p.main__imageInfo--description= info.description
+        a.button--solid.main__imageInfo--make(href="/") 開始製作

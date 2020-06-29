@@ -1,0 +1,74 @@
+.main__share {
+    display: none;
+    align-content: center;
+    justify-content: center;
+    background: #0000007A;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+}
+
+.main__share--dialog {
+    position: relative;
+    padding: 1.5rem 2.5rem;
+    background: #FFFFFF;
+    border-radius: .5rem;
+}
+
+.main__share--close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    line-height: 0;
+}
+
+.main__share--title {
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin: 0;
+}
+
+.main__share--subtitle {
+    color: #333333;
+    font-size: small;
+    font-weight: 500;
+    margin: 1rem 0;
+}
+
+.main__share--link {
+    display: flex;
+}
+
+.main__share--linkCopy {
+    display: inline-block;
+    width: 30rem;
+    margin-right: .8rem;
+    border: none;
+    border-radius: 2rem;
+    padding: .5rem 1rem;
+    background-color: #F2F2F2;
+}
+
+.main__share--sns {
+    width: fit-content;
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 2rem;
+}
+
+.share--snsType {
+    display: grid;
+    grid-template-columns: 3rem;
+    row-gap: .25rem;
+    justify-items: center;
+    align-items: center;
+}
+
+.share--snsType > span {
+    font-size: small;
+}

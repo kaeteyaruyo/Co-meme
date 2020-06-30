@@ -100,25 +100,31 @@ async function sidebarData(req, res, next){
 }
 
 app.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about', {
+        title: '',
+        url: `https://${ req.headers.host }/about`,
+    });
 });
 
 app.get('/', sidebarData, (req, res) => {
     const md = new MobileDetect(req.headers['user-agent']);
     res.render(`${ md.mobile() ? 'mobile/' : '' }index`, {
         title: '首頁',
+        url: `https://${ req.headers.host }`,
     });
 });
 
 app.get('/recommend', sidebarData, (req, res) => {
     res.render('recommend', {
         title: '為你推薦',
+        url: `https://${ req.headers.host }/recommend`,
     });
 });
 
 app.get('/latest', sidebarData, (req, res) => {
     res.render('latest', {
         title: '最新內容',
+        url: `https://${ req.headers.host }/latest`,
     });
 });
 
@@ -173,6 +179,7 @@ app.get('/image/:id', sidebarData, (req, res, next) => {
         if(image){
             res.render('image', {
                 title: image.description,
+                url: `https://${ req.headers.host }/image/${ req.params.id }`,
                 image
             });
         }
@@ -203,6 +210,7 @@ app.get('/tag/:id', sidebarData, (req, res, next) => {
             const md = new MobileDetect(req.headers['user-agent']);
             res.render(`${ md.mobile() ? 'mobile/' : '' }tag`, {
                 title: tag.tag,
+                url: `https://${ req.headers.host }/tag/${ req.params.id }`,
                 tag: {
                     tagId: tag.tagId,
                     tag: tag.tag,
@@ -297,6 +305,7 @@ app.get('/profile/:id', sidebarData, (req, res, next) => {
             const md = new MobileDetect(req.headers['user-agent']);
             res.render(`${ md.mobile() ? 'mobile/' : '' }profile`, {
                 title: `${ user.username }的頁面`,
+                url: `https://${ req.headers.host }/profile/${ req.params.id }`,
                 user,
             });
         }
@@ -320,6 +329,7 @@ app.get('/upload', (req, res, next) => {
 }, (req, res) => {
     res.render('upload', {
         title: '上傳',
+        url: `https://${ req.headers.host }/upload`,
     });
 });
 
@@ -376,6 +386,7 @@ app.get('/signup', (req, res) => {
     else {
         res.render('signup', {
             title: '會員註冊',
+            url: `https://${ req.headers.host }/signup`,
         });
     }
 });
@@ -444,6 +455,7 @@ app.get('/signin', (req, res) => {
     else {
         res.render('signin', {
             title: '會員登入',
+            url: `https://${ req.headers.host }/signin`,
         });
     }
 });
@@ -471,6 +483,5 @@ app.use(function(req, res, next) {
     });
 });
 
-http.createServer(app).listen(config.httpPort);
-// https.createServer(sslOptions, app).listen(config.httpsPort);
-
+// http.createServer(app).listen(config.httpPort);
+https.createServer(sslOptions, app).listen(config.httpsPort);

@@ -3,6 +3,17 @@ html
   head
     meta(charset="utf8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(property="og:locale" content="zh_TW")
+    meta(property="og:type" content="website")
+    meta(property="og:url" content=url)
+    meta(property="og:title" content= "Co meme - 跨世代的社交網路媒體")
+    meta(property="og:description" content="連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image" content=`${ host }/img/logo-big.png`)
+    meta(property="og:image:alt" content="Co meme - 連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image:type" content="image/png")
+    meta(property="og:image:width" content="1024")
+    meta(property="og:image:height" content="1024")
+    meta(property="fb:app_id" content="684988175228092")
     title Co meme - 跨世代的社交網路媒體
     link(rel="stylesheet" type="text/css" href="/css/about/common.css")
     link(rel="stylesheet" type="text/css" href="/css/about/intro.css")
@@ -15,9 +26,9 @@ html
       a.navigation__logo(href='/')
         img(src="/img/common/logo.svg" width="106" height="25")
       div.navigation__sections
-        a.navigation__section.navigation__section--origin(href="/#origin") 緣起
-        a.navigation__section.navigation__section--feature(href="/#feature") 功能
-        a.navigation__section.navigation__section--member(href="/#member") 成員
+        a.navigation__section.navigation__section--origin(href="#origin") 緣起
+        a.navigation__section.navigation__section--feature(href="#feature") 功能
+        a.navigation__section.navigation__section--member(href="#member") 成員
       div.navigation__actions
         a.navigation__action.navigation__action--signup(href="/signup") 註冊
         a.navigation__action.navigation__action--signin(href="/signin") 登入

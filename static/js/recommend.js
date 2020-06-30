@@ -21,6 +21,9 @@ function getRecommend(target, count, container, componentHTML){
     })
     .then(data => {
         data.forEach(item => {
+            if(target === 'users' && item.userId === activeUserId){
+                return;
+            }
             container.insertAdjacentHTML('beforeend', componentHTML(item));
             container.lastElementChild.addEventListener('click', function() {
                 this.querySelector('a').click();

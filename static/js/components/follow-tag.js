@@ -20,7 +20,9 @@ function followTag(event, button, tagId){
         }
     })
     .catch(error => {
-        console.error(error)
+        if(error.status === 401){
+            openUnauthorizedDialog('喜歡這個標籤主題嗎？', '現在就加入我們，追蹤你喜歡的標籤吧！');
+        }
     });
     event.stopPropagation();
 }

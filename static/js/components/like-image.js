@@ -13,6 +13,8 @@ function sendLike(button, imageId){
         button.classList.toggle('image__liked');
     })
     .catch(error => {
-        console.error(error)
+        if(error.status === 401){
+            openUnauthorizedDialog('喜歡這張圖片嗎？', '登入後，就能給你喜歡的圖片按讚！');
+        }
     });
 }

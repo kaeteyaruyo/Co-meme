@@ -19,7 +19,7 @@ block main
       button.post__back
       div.post__picture
         img.post__picture--content(src=`data:image/png;base64, ${ image.content }`)
-        button.post__picture--info(onclick="document.querySelector('.main__imageInfo').style.display='grid';")
+        button.post__picture--info
           img(src="/img/image/info.svg")
       div.post__information
         div.information__author

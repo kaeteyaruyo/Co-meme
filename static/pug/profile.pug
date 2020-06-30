@@ -21,7 +21,8 @@ block main
           span.profile__header--name= user.username
           span.profile__header--followerCount(id=`user__followers--${ user.userId }`)= `${ user.followers.length }人追蹤`
           - const following = activeUser && user.followers.map(user => user.userId).includes(activeUser.id);
-          button(class=`profile__header--subscribe ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ user.userId })`)= (following ? '已追蹤': '追蹤')
+          if activeUser.id !== user.userId
+            button(class=`profile__header--subscribe ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ user.userId })`)= (following ? '已追蹤': '追蹤')
         div.profile__banner--navi
           input.profile__navi--input#tab__posts(type="radio" name="tab" value="posts")
           label.profile__navi--tab.profile__navi--posts(for="tab__posts") 貼文

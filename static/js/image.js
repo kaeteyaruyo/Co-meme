@@ -2,6 +2,7 @@ import commentHTML from 'static/pug/components/comment.pug';
 
 const commentSection = document.querySelector('.information__messages');
 const commentInput = document.querySelector('#comment__input');
+const imageInfoDialog = document.querySelector('.main__imageInfo');
 const imageId = window.location.pathname.split('/').pop();
 
 fetch(`/api/comment/${ imageId }`)
@@ -43,10 +44,7 @@ document.querySelector('#comment__submit').addEventListener('click', function (e
     })
     .catch(error => {
         if(error.status === 401){
-            window.location.pathname = '/signin'
-        }
-        else {
-            console.error(error)
+            openUnauthorizedDialog('想說點什麼嗎？', '註冊帳號後，就能給喜歡的圖片留言！');
         }
     });
 });
@@ -58,4 +56,8 @@ document.querySelector('.post__back').addEventListener('click', () => {
     else {
         window.history.back();
     }
+});
+
+document.querySelector('.post__picture--info').addEventListener('click', () => {
+    imageInfoDialog.style.display='grid';
 });

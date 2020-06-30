@@ -35,6 +35,9 @@ function getPosts(page, category){
             isEnd = true;
             timelineBottom.innerHTML = '到底囉';
         }
+        if(currentPage === 1 && images.length === 0){
+            timelineBottom.innerHTML = '<h2>開始探索吧！</h2><p>你還沒有追蹤任何內容，快到<a href="/recommend">推薦頁面</a>看看有什麼新鮮事！</p>';
+        }
     })
     .catch(error => {
         console.error(error)
@@ -52,6 +55,9 @@ function getRecommend(target, count, container, componentHTML){
     })
     .then(data => {
         data.forEach(item => {
+            if(target === 'users' && item.userId === activeUserId){
+                return;
+            }
             container.insertAdjacentHTML('beforeend', componentHTML(item));
             container.lastElementChild.addEventListener('click', function() {
                 this.querySelector('a').click();

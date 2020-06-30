@@ -1,0 +1,19 @@
+link(rel="stylesheet" type="text/css" href="/css/common/unauthorized.css")
+
+mixin unauthorized
+  div.main__unauthorized
+    div.main__unauthorized--dialog
+      div.unauthorized__images
+        img.unauthorized__image.unauthorized__images--purple(src="/img/about/intro/padel-purple.svg" width="216" height="159")
+        img.unauthorized__image.unauthorized__images--meme(src="/img/about/intro/msg-meme.svg" width="119" height="155")
+        img.unauthorized__image.unauthorized__images--pink(src="/img/about/intro/msg-pink.svg" width="68" height="88")
+        img.unauthorized__image.unauthorized__images--yellow(src="/img/about/intro/msg-yellow.svg" width="68" height="88")
+      div.unauthorized__msg
+        button.unauthorized__msg--close
+          img(src="/img/image/close.svg" width="24" height="24")
+        h2.unauthorized__msg--title
+        p.unauthorized__msg--content
+        div.unauthorized__msg--action
+          a.button--hollow(href="/signup") 註冊
+          a.button--solid(href="/signin") 登入
+  script(src="/js/components/unauthorized.js")

@@ -40,7 +40,7 @@ const sslOptions = {
 
 const app = express();
 const root = process.cwd();
-const hashids = new Hashids(config.session.secret, 20);  
+const hashids = new Hashids(config.session.secret, 20);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(root, '/static/pug'));
@@ -312,7 +312,12 @@ app.get('/profile/:id', sidebarData, (req, res, next) => {
     });
 });
 
-app.get('/upload', authenticate, (req, res) => {
+app.get('/upload', (req, res, next) => {
+    if(!req.user){
+        res.redirect('/signin');
+    }
+    next();
+}, (req, res) => {
     res.render('upload', {
         title: '上傳',
     });
@@ -408,7 +413,7 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
                         return Password.create({
                             userId: user.userId,
                             email: user.email,
-                            password: hash,    
+                            password: hash,
                         }, {
                             transaction: t,
                         });
@@ -467,5 +472,5 @@ app.use(function(req, res, next) {
 });
 
 http.createServer(app).listen(config.httpPort);
-https.createServer(sslOptions, app).listen(config.httpsPort);
+// https.createServer(sslOptions, app).listen(config.httpsPort);
 

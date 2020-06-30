@@ -20,7 +20,9 @@ function followUser(event, button, userId){
         }
     })
     .catch(error => {
-        console.error(error)
+        if(error.status === 401){
+            openUnauthorizedDialog('喜歡這位創作者嗎？', '立即註冊，即可追蹤你喜歡的創作者！');
+        }
     });
     event.stopPropagation();
 }

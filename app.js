@@ -307,7 +307,6 @@ app.post('/template', urlEncoded, jsonParser, upload.single('image'), (req, res)
     if(!req.file){
         res.redirect('/');
     } else {
-        console.log(req.file);
         fs.writeFile('test.png',req.file.buffer, (err)=> {
             if(err) {
                 console.log(err);

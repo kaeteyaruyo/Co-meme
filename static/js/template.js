@@ -62,6 +62,7 @@ backgroundImage.onload = function() {
     canvas.setBackgroundImage(new fabric.Image(backgroundImage));
     textArray =templateData.texts.map(text => new fabric.IText('Double click', text));
     textArray.forEach(ele=> {
+        ele.set('hasControls', false);
         canvas.add(ele);
     });
     resizeEditor();
@@ -74,27 +75,27 @@ function resizeEditor() {
     let style = window.getComputedStyle(step2);
     let width = (parseFloat(style.width, 10)-32)*0.4;
     let height = width*backgroundImage.height/backgroundImage.width;
-    canvas.setWidth(width);
-    canvas.setHeight(height);
-    let scaleX= canvas.width/backgroundImage.width;
-    let scaleY= canvas.height/backgroundImage.height;
+    let scaleX= width/backgroundImage.width;
+    let scaleY= height/backgroundImage.height;
     let scaleXold= NaN;
     let scaleYold= NaN;
     if(textArray[0]) {
         scaleXold = textArray[0].scaleX;
         scaleYold = textArray[0].scaleY;
     }
-    canvas.setBackgroundImage(new fabric.Image(backgroundImage),canvas.renderAll.bind(canvas),{
-        scaleX: scaleX,
-        scaleY: scaleY
-    });
-    canvas.renderAll();
     textArray.forEach(ele => {
         ele.set('scaleX',scaleX);
         ele.set('scaleY',scaleY);
         ele.set('left',ele.left*(scaleX/scaleXold));
         ele.set('top',ele.top*(scaleY/scaleYold));
+        ele.setCoords(false,false);
     });
+    canvas.setBackgroundImage(new fabric.Image(backgroundImage),canvas.renderAll.bind(canvas),{
+        scaleX: scaleX,
+        scaleY: scaleY
+    });
+    canvas.setWidth(width);
+    canvas.setHeight(height);
     canvas.renderAll();
 }
 window.onresize = resizeEditor;
@@ -146,28 +147,29 @@ submitBtn.addEventListener('click', (e)=> {
     formData.append("category", 0);
     /* Add image file */
     let width = backgroundImage.width;
-    let height = width*backgroundImage.height/backgroundImage.width;
-    canvas.setWidth(width);
-    canvas.setHeight(height);
-    let scaleX= canvas.width/backgroundImage.width;
-    let scaleY= canvas.height/backgroundImage.height;
+    let height = backgroundImage.height;
+    let scaleX= width/backgroundImage.width;
+    let scaleY= height/backgroundImage.height;
     let scaleXold= NaN;
     let scaleYold= NaN;
     if(textArray[0]) {
         scaleXold = textArray[0].scaleX;
         scaleYold = textArray[0].scaleY;
     }
-    canvas.setBackgroundImage(new fabric.Image(backgroundImage),canvas.renderAll.bind(canvas),{
-        scaleX: scaleX,
-        scaleY: scaleY
-    });
-    canvas.renderAll();
     textArray.forEach(ele => {
         ele.set('scaleX',scaleX);
         ele.set('scaleY',scaleY);
         ele.set('left',ele.left*(scaleX/scaleXold));
         ele.set('top',ele.top*(scaleY/scaleYold));
+        ele.setCoords(false,false);
+        ele.set('hasBorders', false);
     });
+    canvas.setBackgroundImage(new fabric.Image(backgroundImage),canvas.renderAll.bind(canvas),{
+        scaleX: scaleX,
+        scaleY: scaleY
+    });
+    canvas.setWidth(width);
+    canvas.setHeight(height);
     canvas.renderAll();
     canvas.getElement().toBlob((blob)=> {
         formData.append("image", blob);
@@ -207,14 +209,14 @@ const data=[
         description: '迷因模板文字一',
         texts: [
             {
-                top: 50,
-                left:200,
+                top: 100,
+                left:300,
                 fontSize: 32,
                 fill: '#333333'
             },
             {
-                top: 200,
-                left:200,
+                top: 380,
+                left:300,
                 fontSize: 32,
                 fill: '#333333'
             }

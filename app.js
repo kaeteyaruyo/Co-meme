@@ -16,6 +16,8 @@ const usersAPI = require('./route/users');
 const tagsAPI = require('./route/tags');
 const commentAPI = require('./route/comment');
 
+const fs = require('fs');
+
 const {
     Image,
     ImageTag,
@@ -299,6 +301,21 @@ app.get('/upload', authenticate, (req, res) => {
     res.render('upload', {
         title: '上傳',
     });
+});
+
+app.post('/template', urlEncoded, jsonParser, upload.single('image'), (req, res) => {
+    if(!req.file){
+        res.redirect('/');
+    } else {
+        console.log(req.file);
+        fs.writeFile('test.png',req.file.buffer, (err)=> {
+            if(err) {
+                console.log(err);
+            } else {
+                res.redirect('/');
+            }
+        });
+    }
 });
 
 app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image'), (req, res) => {

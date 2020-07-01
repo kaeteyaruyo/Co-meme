@@ -8,7 +8,7 @@ let activeUserId = document.querySelector('#activeUser__id');
 activeUserId = activeUserId !== null ? Number.parseInt(activeUserId.innerHTML) : null;
 
 function getPosts(page, category){
-    fetch(`/api/images/${ activeUserId ? 'timeline' : 'hot' }?page=${ page }&category=${ category }`)
+    fetch(`/api/images/${ activeUserId ? 'timeline' : 'latest' }?page=${ page }&category=${ category }`)
     .then(res => {
         if(res.status === 200){
             return res.json()
@@ -32,7 +32,7 @@ function getPosts(page, category){
 }
 
 window.addEventListener('scroll', () => {
-    if(!isEnd && window.scrollY + window.innerHeight + 5 >= document.body.clientHeight){
+    if(!isEnd && window.scrollY + window.innerHeight + 16 >= document.body.clientHeight){
         getPosts(currentPage++, currentCategory);
     }
 });

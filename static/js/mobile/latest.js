@@ -1,7 +1,6 @@
 import postHTML from 'static/pug/components/post.pug';
 
-const imageWall = document.querySelector('.main__imageWall');
-const tagId = window.location.pathname.split('/').pop();
+const timeline = document.querySelector('.main__timeline');
 let currentCategory = '';
 let currentPage = 0;
 let isEnd = false;
@@ -9,7 +8,7 @@ let activeUserId = document.querySelector('#activeUser__id');
 activeUserId = activeUserId !== null ? Number.parseInt(activeUserId.innerHTML) : null;
 
 function getPosts(page, category){
-    fetch(`/api/images/tag/${ tagId }?page=${ page }&category=${ category }`)
+    fetch(`/api/images/latest?page=${ page }&category=${ category }`)
     .then(res => {
         if(res.status === 200){
             return res.json()
@@ -18,9 +17,9 @@ function getPosts(page, category){
     })
     .then(images => {
         images.forEach(image => {
-            imageWall.insertAdjacentHTML('beforeend', postHTML(image));
+            timeline.insertAdjacentHTML('beforeend', postHTML(image));
             if(image.likedUsers.map(user => user.userId).includes(activeUserId)){
-                imageWall.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
+                timeline.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
             }
         });
         if(images.length < 12){

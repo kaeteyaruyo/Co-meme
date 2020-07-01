@@ -29,29 +29,30 @@
 
 .unauthorized__image {
     position: absolute;
+    transform: translateX(-50%);
 }
 
 .unauthorized__images--purple {
     top: 196px;
-    left: 141px;
+    left: 51.6597%;
     z-index: 0;
 }
 
 .unauthorized__images--meme {
     top: 115px;
-    left: 178px;
+    left: 49.2738%;
     z-index: 3;
 }
 
 .unauthorized__images--pink {
     top: 112px;
-    left: 117px;
+    left: 31.3278%;
     z-index: 1;
 }
 
 .unauthorized__images--yellow {
     top: 36px;
-    left: 264px;
+    left: 61.8258%;
     z-index: 2;
 }
 

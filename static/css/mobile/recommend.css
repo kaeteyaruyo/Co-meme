@@ -1,0 +1,30 @@
+.main__timeline {
+    padding: 1rem 1rem 4rem;
+}
+
+.main__recommend {
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 0 1rem;
+}
+
+.main__recommend--subtitle {
+    font-weight: 500;
+}
+
+.main__recommend--cards {
+    width: 100%;
+    padding: .5rem 0;
+    overflow-x: scroll;
+}
+
+.cards--container {
+    display: flex;
+    width: fit-content;
+    transition: all .5s;
+    padding-bottom: .5rem;
+}
+
+.cards--container > :not(:first-child) {
+    margin-left: 1rem;
+}

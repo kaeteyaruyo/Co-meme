@@ -6,9 +6,10 @@ div.post
     img(src=`data:image/png;base64, ${ content }`)
   div.post__info
     div.post__author
-      +icon('post__author--icon', author.icon, 36)
+      a(href=`/profile/${ author.userId }`)
+        +icon('post__author--icon', author.icon, 36)
       div.post__author--text
-        p.post__author--name= author.username
+        a.post__author--name(href=`/profile/${ author.userId }`)= author.username
         p.post__author--timestamp= createdAt
     div.post__action
       button.post__action--button.post__action--like(id=`post__like--${ imageId }` onclick=`sendLike(this, ${ imageId })`)

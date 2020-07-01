@@ -115,14 +115,16 @@ app.get('/', sidebarData, (req, res) => {
 });
 
 app.get('/recommend', sidebarData, (req, res) => {
-    res.render('recommend', {
+    const md = new MobileDetect(req.headers['user-agent']);
+    res.render(`${ md.mobile() ? 'mobile/' : '' }recommend`, {
         title: '為你推薦',
         url: `https://${ req.headers.host }/recommend`,
     });
 });
 
 app.get('/latest', sidebarData, (req, res) => {
-    res.render('latest', {
+    const md = new MobileDetect(req.headers['user-agent']);
+    res.render(`${ md.mobile() ? 'mobile/' : '' }latest`, {
         title: '最新內容',
         url: `https://${ req.headers.host }/latest`,
     });
@@ -177,7 +179,8 @@ app.get('/image/:id', sidebarData, (req, res, next) => {
     })
     .then(image => {
         if(image){
-            res.render('image', {
+            const md = new MobileDetect(req.headers['user-agent']);
+            res.render(`${ md.mobile() ? 'mobile/' : '' }image`, {
                 title: image.description,
                 url: `https://${ req.headers.host }/image/${ req.params.id }`,
                 image
@@ -384,7 +387,8 @@ app.get('/signup', (req, res) => {
         res.redirect('/');
     }
     else {
-        res.render('signup', {
+        const md = new MobileDetect(req.headers['user-agent']);
+        res.render(`${ md.mobile() ? 'mobile/' : '' }signup`, {
             title: '會員註冊',
             url: `https://${ req.headers.host }/signup`,
         });
@@ -439,7 +443,8 @@ app.post('/signup', urlEncoded, jsonParser, (req, res) => {
     .catch(err => {
         console.error(err)
         // TODO: error type checking
-        res.render('signup', {
+        const md = new MobileDetect(req.headers['user-agent']);
+        res.render(`${ md.mobile() ? 'mobile/' : '' }signup`, {
             title: '會員註冊',
             error: {
                 message: '此E-mail已有使用者註冊',
@@ -453,7 +458,8 @@ app.get('/signin', (req, res) => {
         res.redirect('/');
     }
     else {
-        res.render('signin', {
+        const md = new MobileDetect(req.headers['user-agent']);
+        res.render(`${ md.mobile() ? 'mobile/' : '' }signin`, {
             title: '會員登入',
             url: `https://${ req.headers.host }/signin`,
         });
@@ -483,5 +489,5 @@ app.use(function(req, res, next) {
     });
 });
 
-// http.createServer(app).listen(config.httpPort);
-https.createServer(sslOptions, app).listen(config.httpsPort);
+http.createServer(app).listen(config.httpPort);
+// https.createServer(sslOptions, app).listen(config.httpsPort);

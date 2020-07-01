@@ -2,10 +2,11 @@ import postHTML from 'static/pug/components/post.pug';
 import userCardHTML from 'static/pug/components/user-card.pug';
 import tagCardHTML from 'static/pug/components/tag-card.pug';
 
-const imageWall = document.querySelector('.main__imageWall');
-const tagCardsContainer = document.querySelector('.main__profile--tags');
-const userCardsContainer = document.querySelector('.main__profile--users');
-const currentUser = window.location.pathname.split('/').pop();
+const timeline = document.querySelector('.main__timeline');
+const tagCardsContainer = document.querySelector('#tags__cards--container');
+const userCardsContainer = document.querySelector('#users__cards--container');
+const rem = 16; // 1rem = 16px
+const step = rem * 21; // 20rem width + 1rem margin
 let currentCategory = '';
 let currentPage = 0;
 let isEnd = false;
@@ -13,7 +14,8 @@ let activeUserId = document.querySelector('#activeUser__id');
 activeUserId = activeUserId !== null ? Number.parseInt(activeUserId.innerHTML) : null;
 
 function getPosts(page, category){
-    fetch(`/api/images/user/${ currentUser }?page=${ page }&category=${ category }`)
+    // TODO: here should query to /recommend
+    fetch(`/api/images/hot?page=${ page }&category=${ category }`)
     .then(res => {
         if(res.status === 200){
             return res.json()
@@ -22,9 +24,9 @@ function getPosts(page, category){
     })
     .then(images => {
         images.forEach(image => {
-            imageWall.insertAdjacentHTML('beforeend', postHTML(image));
+            timeline.insertAdjacentHTML('beforeend', postHTML(image));
             if(image.likedUsers.map(user => user.userId).includes(activeUserId)){
-                imageWall.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
+                timeline.lastElementChild.querySelector('.post__action--like').classList.toggle('image__liked');
             }
         });
         if(images.length < 12){
@@ -36,8 +38,9 @@ function getPosts(page, category){
     });
 }
 
-function getFollowing(target, container, componentHTML){
-    fetch(`/api/${ target }/following/${ currentUser }`)
+function getRecommend(target, count, container, componentHTML){
+    // TODO: here should query to /recommend
+    fetch(`/api/${ target }/hot?count=${ count }`)
     .then(res => {
         if(res.status === 200){
             return res.json()
@@ -46,6 +49,9 @@ function getFollowing(target, container, componentHTML){
     })
     .then(data => {
         data.forEach(item => {
+            if(target === 'users' && item.userId === activeUserId){
+                return;
+            }
             container.insertAdjacentHTML('beforeend', componentHTML(item));
             container.lastElementChild.addEventListener('click', function() {
                 this.querySelector('a').click();
@@ -57,29 +63,22 @@ function getFollowing(target, container, componentHTML){
                 button.innerHTML = '已追蹤';
             }
         });
+        // document.getElementById(`${ target }__cards--left`).addEventListener('click', function(){
+        //     let pos = container.style.transform.match(/-?\d+/);
+        //     pos = pos !== null ? Number.parseInt(pos[0]) : 0;
+        //     container.style.transform = `translateX(${ Math.min(pos + step, 0) }px)`
+        // });
+
+        // document.getElementById(`${ target }__cards--right`).addEventListener('click', function(){
+        //     let pos = container.style.transform.match(/-?\d+/);
+        //     pos = pos !== null ? Number.parseInt(pos[0]) : 0;
+        //     container.style.transform = `translateX(${ Math.max(pos - step, cards.clientWidth - container.clientWidth - rem) }px)`
+        // });
     })
     .catch(error => {
         console.error(error)
     });
 }
-
-let active = null;
-Array.from(document.querySelectorAll('input[name="tab"]')).forEach(tab => {
-    tab.addEventListener('change', function(){
-        active = document.querySelector('.panel--active');
-        if(active){
-            active.classList.remove('panel--active');
-            setTimeout(() => {
-                active.style.display = 'none';
-            }, 350);
-        }
-        window.location.hash = this.value;
-        document.querySelector(`.main__profile--${ this.value }`).style.display = 'grid';
-        setTimeout(() => {
-            document.querySelector(`.main__profile--${ this.value }`).classList.add('panel--active');
-        }, 50);
-    });
-})
 
 window.addEventListener('scroll', () => {
     if(!isEnd && window.scrollY + window.innerHeight + 16 >= document.body.clientHeight){
@@ -88,7 +87,5 @@ window.addEventListener('scroll', () => {
 });
 
 getPosts(currentPage++, currentCategory);
-getFollowing('users', userCardsContainer, userCardHTML);
-getFollowing('tags', tagCardsContainer, tagCardHTML);
-document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).checked = true;
-document.querySelector(`#tab__${ window.location.hash.slice(1) || 'posts' }`).dispatchEvent(new Event('change'))
+getRecommend('users', 8, userCardsContainer, userCardHTML);
+getRecommend('tags', 8, tagCardsContainer, tagCardHTML);

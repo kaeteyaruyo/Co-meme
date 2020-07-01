@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    meta(charset="utf8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    meta(property="og:locale" content="zh_TW")
+    meta(property="og:type" content="website")
+    meta(property="og:url" content=url)
+    meta(property="og:title" content= `${ title } - Co meme`)
+    meta(property="og:description" content="連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image" content=`${ host }/img/logo-big.png`)
+    meta(property="og:image:alt" content="Co meme - 連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image:type" content="image/png")
+    meta(property="og:image:width" content="1024")
+    meta(property="og:image:height" content="1024")
+    meta(property="fb:app_id" content="684988175228092")
+    title= title + " - Co meme"
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/reset.css")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/image.css")
+    link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+    block stylesheets
+  body
+    include ../components/share.pug
+    include ../components/unauthorized.pug
+    +share
+    +unauthorized
+    header.header
+      button.post__back
+        img(src="/img/image/back.svg" width="32" height="32")
+      button.post__picture--info
+        img(src="/img/image/info.svg" width="32" height="32")
+    main.main
+      include ../components/image-info.pug
+      include ../components/icon.pug
+      include ../components/tag-chips.pug
+      div.main__filler
+      section.main__post
+        img.post__picture--content(src=`data:image/png;base64, ${ image.content }`)
+        div.post__information
+          div.information__author
+            a.information__author--link(href=`/profile/${ image.author.userId }`)
+              +icon("information__author--icon", image.author.icon, 45)
+            div.information__author--data
+              a.author__data--name(href=`/profile/${ image.author.userId }`)= image.author.username
+              p.author__data--follower(id=`user__followers--${ image.author.userId }`)= `${ image.author.followers.length }人追蹤`
+            - const following = activeUser && image.author.followers.map(user => user.userId).includes(activeUser.id);
+            button(class=`information__author--follow ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ image.author.userId })`)= (following ? '已追蹤': '追蹤')
+          p.information__description= image.description
+          +tags(image.tags)
+          p.information__timestamp= `發佈時間: ${ image.createdAt }`
+          div.information__actions
+            - const liked = activeUser && image.likedUsers.map(user => user.userId).includes(activeUser.id);
+            button(class=`information__action information__action--like${ liked ? ' image__liked' : '' }` onclick=`sendLike(this, ${ image.imageId })`)
+              div.action__like--img
+              span.action__like--count= image.likedUsers.length
+            button.information__action.information__action--share(onclick=`openShareDialog(${ image.imageId })`)
+              div.action__share--img
+              span.action__share--label 分享
+          div.information__messages
+      - const template = { title: '模版標題', description: '模版描述...', author: { userId: 1, username: 'kinoe' }, image: image.content }
+      +imageInfo(template)
+      nav.nav
+        if activeUser
+          form.information__comment
+            +icon("information__comment--icon", image.author.icon, 35)
+            input#comment__input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
+            button#comment__submit.button--solid(type="submit") 留言
+        else
+          a.button--hollow(href="/signup") 加入我們
+          a.button--solid(href="/signin") 會員登入
+  script(src="/bundle/image.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-user.js")

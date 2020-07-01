@@ -23,7 +23,9 @@ module.exports = {
         // For mobile
         'mobile/tag':        path.join(srcDir, 'mobile/tag.js'),
         'mobile/index':      path.join(srcDir, 'mobile/index.js'),
+        'mobile/latest':     path.join(srcDir, 'mobile/latest.js'),
         'mobile/profile':    path.join(srcDir, 'mobile/profile.js'),
+        'mobile/recommend':  path.join(srcDir, 'mobile/recommend.js'),
         'mobile/navigation': path.join(srcDir, 'mobile/navigation.js'),
 
         // For components

@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    meta(charset="utf8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    meta(property="og:locale" content="zh_TW")
+    meta(property="og:type" content="website")
+    meta(property="og:url" content=url)
+    meta(property="og:title" content= `${ title } - Co meme`)
+    meta(property="og:description" content="連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image" content=`${ host }/img/logo-big.png`)
+    meta(property="og:image:alt" content="Co meme - 連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image:type" content="image/png")
+    meta(property="og:image:width" content="1024")
+    meta(property="og:image:height" content="1024")
+    meta(property="fb:app_id" content="684988175228092")
+    title= title + " - Co meme"
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/reset.css")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/signin.css")
+    link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+  body
+    header.header
+      a.header__logo(href="/")
+        img(src="/img/common/logo.svg" width="105" height="25")
+    main.main
+      div.main__filler
+      div.main__action
+        img(src="/img/signin/account.svg" width="120" height="120")
+        p.main__action--title 會員登入
+        if error
+          div.main__error= error.message
+        form.main__form(name="signin" action="/auth/local" method="POST")
+          input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required)
+          span#form__hint--email.main__form--hint
+          input.main__form--input(type="password" name="password" placeholder="請輸入密碼" required)
+          span#form__hint--password.main__form--hint
+          a.main__form--resetPassword(href="/resetPassword") 忘記密碼?
+          input.button--solid.main__form--button.main__form--submit(type="submit" name="submit" value="登入")
+          a.button--hollow.main__form--button.main__form--signup(href="signup") 註冊
+        div.main__divider
+          div.main__divider--line
+          span.main__divider--text 或
+          div.main__divider--line
+        div.main__socialSignin
+          p.main__socialSignin--title 使用其他方式登入
+          div.main__socialSignin--sites
+            a.main__socialSignin--site.main__socialSignin--facebook(href="/auth/facebook")
+            a.main__socialSignin--site.main__socialSignin--google(href="/auth/google")
+            a.main__socialSignin--site.main__socialSignin--twitter(href="/auth/twitter")
+    script(src="/bundle/account/signin.bundle.js")

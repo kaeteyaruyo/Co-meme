@@ -21,6 +21,8 @@ fetch(`/api/comment/${ imageId }`)
     console.error(error)
 });
 
+if(document.querySelector('#comment__submit')){
+
 document.querySelector('#comment__submit').addEventListener('click', function (event) {
     event.preventDefault();
     fetch(`/api/comment/${ imageId }`, {
@@ -48,6 +50,7 @@ document.querySelector('#comment__submit').addEventListener('click', function (e
         }
     });
 });
+}
 
 document.querySelector('.post__back').addEventListener('click', () => {
     if(document.referrer){

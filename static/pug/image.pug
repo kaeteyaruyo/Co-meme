@@ -12,7 +12,6 @@ block main
   include components/sidebar.pug
   include components/icon.pug
   include components/tag-chips.pug
-  include components/image-info.pug
   article.main__container
     +sidebar
     section.main__post
@@ -26,7 +25,7 @@ block main
           a.information__author--link(href=`/profile/${ image.author.userId }`)
             +icon("information__author--icon", image.author.icon, 45)
           div.information__author--data
-            p.author__data--name= image.author.username
+            a.author__data--name(href=`/profile/${ image.author.userId }`)= image.author.username
             p.author__data--follower(id=`user__followers--${ image.author.userId }`)= `${ image.author.followers.length }人追蹤`
           - const following = activeUser && image.author.followers.map(user => user.userId).includes(activeUser.id);
           button(class=`information__author--follow ${ following ? 'button--solid' : 'button--hollow' }` onclick=`followUser(event, this, ${ image.author.userId })`)= (following ? '已追蹤': '追蹤')

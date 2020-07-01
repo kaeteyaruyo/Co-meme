@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const Hashids = require('hashids/cjs');
+const MobileDetect = require('mobile-detect');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -236,7 +237,8 @@ router.post('/local', (req, res, next) => {
             return next(err);
         }
         if (!user) {
-            return res.render('signin', {
+            const md = new MobileDetect(req.headers['user-agent']);
+            return res.render(`${ md.mobile() ? 'mobile/' : '' }signin`, {
                 title: '會員登入',
                 error: {
                     message: '使用者不存在，或密碼輸入錯誤',

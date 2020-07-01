@@ -30,7 +30,7 @@ function setupImageWall(route){
     })
 
     window.addEventListener('scroll', () => {
-        if(!isEnd && window.scrollY + window.innerHeight + 5 >= document.body.clientHeight){
+        if(!isEnd && window.scrollY + window.innerHeight + 16 >= document.body.clientHeight){
             getImages(route, currentPage++, currentCategory);
         }
     });

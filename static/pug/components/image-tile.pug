@@ -5,9 +5,10 @@ div.imageTile
     img(src=`data:image/png;base64, ${ content }`)
   div.imageTile__info
     div.imageTile__author
-      +icon('imageTile__author--icon', author.icon, 36)
+      a(href=`/profile/${ author.userId }`)
+        +icon('imageTile__author--icon', author.icon, 36)
       div.imageTile__author--text
-        p.imageTile__author--name= author.username
+        a.imageTile__author--name(href=`/profile/${ author.userId }`)= author.username
         p.imageTile__author--timestamp= createdAt
     div.imageTile__action
       button.imageTile__action--button.imageTile__action--like(id=`imageTile__like--${ imageId }` onclick=`sendLike(this, ${ imageId })`)

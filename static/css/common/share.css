@@ -13,7 +13,7 @@
 
 .main__share--dialog {
     position: relative;
-    padding: 1.5rem 2.5rem;
+    padding: 1.5rem 2rem;
     background: #FFFFFF;
     border-radius: .5rem;
 }
@@ -42,12 +42,14 @@
 
 .main__share--link {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .main__share--linkCopy {
     display: inline-block;
     width: 30rem;
-    margin-right: .8rem;
+    max-width: calc(100vw - 16rem);
+    margin-right: .5rem;
     border: none;
     border-radius: 2rem;
     padding: .5rem 1rem;

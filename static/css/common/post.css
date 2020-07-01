@@ -39,10 +39,13 @@
 }
 
 .post__author--name {
+    line-height: initial;
     font-weight: 500;
 }
 
 .post__author--timestamp {
+    margin: 0;
+    line-height: initial;
     font-size: small;
 }
 

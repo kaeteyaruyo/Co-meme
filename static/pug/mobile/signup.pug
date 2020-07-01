@@ -1,0 +1,60 @@
+doctype html
+html
+  head
+    meta(charset="utf8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+    meta(property="og:locale" content="zh_TW")
+    meta(property="og:type" content="website")
+    meta(property="og:url" content=url)
+    meta(property="og:title" content= `${ title } - Co meme`)
+    meta(property="og:description" content="連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image" content=`${ host }/img/logo-big.png`)
+    meta(property="og:image:alt" content="Co meme - 連結迷因文化與長輩圖文化，跨世代的社交網路媒體")
+    meta(property="og:image:type" content="image/png")
+    meta(property="og:image:width" content="1024")
+    meta(property="og:image:height" content="1024")
+    meta(property="fb:app_id" content="684988175228092")
+    title= title + " - Co meme"
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/reset.css")
+    link(rel="stylesheet" type="text/css" href="/css/mobile/signup.css")
+    link(rel="stylesheet" type="text/css" href="/css/common/button.css")
+  body
+    header.header
+      a.header__logo(href="/")
+        img(src="/img/common/logo.svg" width="105" height="25")
+    main.main
+      div.main__filler
+      div.main__action
+        p.main__action--title 會員註冊
+        if error
+          div.main__error= error.message
+        form.main__form(name="signup" action="/signup" method="POST")
+          input.main__form--input(type="email" name="email" placeholder="請輸入E-mail" autofocus required)
+          span#form__hint--email.main__form--hint
+          input.main__form--input(type="password" name="password" placeholder="請輸入密碼（8字元以上）" minlength="8" required)
+          span#form__hint--password.main__form--hint
+          input.main__form--input(type="text" name="username" placeholder="請輸入使用者名稱（20字以內）" maxlength="20" required)
+          span#form__hint--username.main__form--hint
+          div.main__form--birthday
+            select.main__form--input.main__form--birthyear(name="birthyear" required)
+              option(disabled selected value="0") 出生年
+              - let now = new Date().getFullYear(), y = now - 120;
+              while y <= now
+                option(value=y)= y++ + '年'
+            select.main__form--input.main__form--birthmonth(name="birthmonth" required)
+              option(disabled selected value="0") 月
+              - let m = 1;
+              while m <= 12
+                option(value=m)= m++ + '月'
+            select.main__form--input.main__form--birthdate(name="birthdate" required)
+              option(disabled selected value="0") 日
+              - let d = 1;
+              while d <= 31
+                option(value=d)= d++ + '日'
+          span#form__hint--birthday.main__form--hint
+          input.button--solid.main__form--submit(type="submit" name="submit" value="創建帳號")
+        div.main__sigin
+          span 已有帳號了？
+          a(href="/signin") 登入
+  script(src="/bundle/account/signup.bundle.js")

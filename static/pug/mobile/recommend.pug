@@ -1,0 +1,23 @@
+extends base.pug
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/css/mobile/recommend.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/post.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/user-card.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/tag-card.css")
+
+block main
+  section.main__recommend.main__tag
+    h2.main__recommend--subtitle 你可能會喜歡的標籤?
+    div.main__recommend--cards
+      div#tags__cards--container.cards--container
+  section.main__recommend.main__user
+    h2.main__recommend--subtitle 你可能會喜歡的創作者?
+    div.main__recommend--cards
+      div#users__cards--container.cards--container
+  section.main__timeline
+block scripts
+  script(src="/bundle/mobile/recommend.bundle.js")
+  script(src="/js/components/like-image.js")
+  script(src="/js/components/follow-tag.js")
+  script(src="/js/components/follow-user.js")

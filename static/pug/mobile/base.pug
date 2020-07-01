@@ -20,6 +20,10 @@ html
     link(rel="stylesheet" type="text/css" href="/css/common/button.css")
     block stylesheets
   body
+    include ../components/share.pug
+    include ../components/unauthorized.pug
+    +share
+    +unauthorized
     header.header
       a.header__logo(href="/")
         img(src="/img/common/logo.svg" width="105" height="25")

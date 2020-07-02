@@ -1,9 +1,26 @@
 import commentHTML from 'static/pug/components/comment.pug';
+import imageInfoHTML from 'static/pug/components/image-info.pug';
 
 const commentSection = document.querySelector('.information__messages');
 const commentInput = document.querySelector('#comment__input');
-const imageInfoDialog = document.querySelector('.main__imageInfo');
+const imageInfoDialog = document.querySelector('.main__dialog');
 const imageId = window.location.pathname.split('/').pop();
+let templateInfo = {};
+let templateId = Number.parseInt(document.querySelector('.main__template--id').innerHTML);
+
+if(templateId){
+    fetch(`/api/template/${ templateId }`)
+    .then(res => res.json())
+    .then(data => {
+        templateInfo = data;
+        document.querySelector('.post__picture--info').addEventListener('click', () => {
+            imageInfoDialog.innerHTML = imageInfoHTML(templateInfo);
+            imageInfoDialog.querySelector('.main__imageInfo--make').addEventListener('click', () => {
+                window.location.pathname = '/template';
+            })
+        });
+    })
+}
 
 fetch(`/api/comment/${ imageId }`)
 .then(res => {
@@ -59,8 +76,4 @@ document.querySelector('.post__back').addEventListener('click', () => {
     else {
         window.history.back();
     }
-});
-
-document.querySelector('.post__picture--info').addEventListener('click', () => {
-    imageInfoDialog.style.display='grid';
 });

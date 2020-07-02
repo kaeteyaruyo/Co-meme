@@ -1,7 +1,6 @@
 .main {
     background-color: #F7F7F7;
 }
-
 .main__upload {
     position: relative;
     display: grid;
@@ -137,6 +136,7 @@
 }
 
 .image__block {
+    position: relative;
     display: grid;
     position: relative;
 }

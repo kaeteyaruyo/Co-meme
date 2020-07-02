@@ -36,7 +36,7 @@ block main
             div.step__circle.step__circle--bottom
     div.upload__divider
       hr.divider__line
-    form(id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data")
+    form(id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" onkeydown="return event.key!='Enter';")
       div.upload__content
         div#step1.content__one.content__one--hide
           div.one__image--show

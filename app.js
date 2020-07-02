@@ -21,6 +21,7 @@ const tagsAPI = require('./route/tags');
 const usersAPI = require('./route/users');
 const imagesAPI = require('./route/images');
 const commentAPI = require('./route/comment');
+const templateAPI = require('./route/template');
 
 const {
     Tag,
@@ -29,6 +30,7 @@ const {
     Password,
     ImageTag,
     TagFollower,
+    Template,
 } = require('./models/association');
 const database = require('./models/connect');
 
@@ -54,6 +56,7 @@ app.use('/api/tags', tagsAPI);
 app.use('/api/users', usersAPI);
 app.use('/api/images', imagesAPI);
 app.use('/api/comment', commentAPI);
+app.use('/api/template', templateAPI);
 
 app.use(function (req, res, next) {
     if (req.user) {
@@ -140,6 +143,7 @@ app.get('/image/:id', sidebarData, (req, res, next) => {
             'content',
             'description',
             'createdAt',
+            'templateId'
         ],
         include: [
             {
@@ -376,10 +380,57 @@ app.post('/upload', authenticate, urlEncoded, jsonParser, upload.single('image')
     }
 });
 
-app.get('/template', (req, res) => {
+app.get('/template', (req, res, next) => {
+    if(!req.user){
+        res.redirect('/signin');
+    }
+    next();
+}, (req, res) => {
     res.render('template', {
-        title: '模板',
+        title: '模板製作',
+        url: `https://${ req.headers.host }/template`,
     });
+});
+
+app.post('/template', authenticate, urlEncoded, jsonParser, upload.single('image'), (req, res) => {
+    if(!req.file){
+        res.redirect('/');
+    }
+    else {
+        database.transaction(t => {
+            return Image.create({
+                content: req.file.buffer,
+                category: req.body.category,
+                userId: req.user.id,
+                description: req.body.description,
+                templateId: req.body.templateId,
+            }, {
+                transaction: t
+            })
+            .then(record => {
+                if(req.body.tags){
+                    return Promise.all(req.body.tags.map(tag => Tag.findOrCreate({
+                        where: {
+                            tag,
+                        },
+                    })
+                    .then(res => ImageTag.create({
+                        imageId: record.imageId,
+                        tagId: res[0].tagId,
+                    }, {
+                        transaction: t
+                    }))));
+                }
+            });
+        })
+        .then(result => {
+            res.redirect('/');
+        })
+        .catch(err => {
+            console.error(err)
+            res.status(500).send({ message: err });
+        });
+    }
 });
 
 app.get('/signup', (req, res) => {

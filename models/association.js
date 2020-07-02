@@ -7,6 +7,8 @@ const User = require('./user');
 const TagFollower = require('./tagFollower');
 const LikeImage = require('./likeImage');
 const Password = require('./password');
+const Template = require('./template');
+const Text = require('./text');
 
 Password.belongsTo(User, {
     foreignKey: 'userId',
@@ -108,6 +110,39 @@ User.belongsToMany(Image, {
     onUpdate: 'CASCADE'
 });
 
+User.hasMany(Template, {
+    foreignKey: 'userId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+Template.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'author',
+});
+
+Template.hasMany(Text, {
+    foreignKey: 'templateId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+Text.belongsTo(Template, {
+    foreignKey: 'templateId',
+    as: 'texts',
+});
+
+Template.hasMany(Image, {
+    foreignKey: 'templateId',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+});
+
+Image.belongsTo(Template, {
+    foreignKey: 'templateId',
+    as: 'template',
+});
+
 module.exports = {
     Comment,
     Follower,
@@ -117,5 +152,7 @@ module.exports = {
     User,
     TagFollower,
     LikeImage,
-    Password
+    Password,
+    Template,
+    Text,
 };

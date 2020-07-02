@@ -1,5 +1,5 @@
 .main__imageInfo {
-    display: none;
+    display: grid;
     align-content: center;
     justify-content: center;
     background: #0000007A;
@@ -58,6 +58,7 @@
 .main__imageInfo--description {
     margin: 0;
     padding: 1rem 0;
+    white-space: pre-wrap;
 }
 
 .main__imageInfo--make {

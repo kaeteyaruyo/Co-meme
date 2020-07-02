@@ -11,7 +11,7 @@ block header
 
 block main
   include components/sidebar.pug
-  mixin uploadBlock(href,imgUrl,title)
+  mixin uploadBlock(href, imgUrl, title)
     a.upload__all(href=href)
       div.upload__left
         div.upload__left--outter
@@ -30,9 +30,9 @@ block main
             div.upload__title--icon
             span.upload__title--content 發佈圖片
           div.upload__local
-            +uploadBlock("./upload","/img/upload/photo.svg","從你的電腦中上傳")
+            +uploadBlock("/upload", "/img/upload/photo.svg", "從你的電腦中上傳")
           div.upload__online
-            +uploadBlock("","/img/upload/pencil.svg","線上模板立即製作")
+            +uploadBlock("/template", "/img/upload/pencil.svg", "線上模板立即製作")
       div.timeline__category
         input.timeline__category--input#category__all(type="radio" name="category" value="" checked)
         label.timeline__category--label(for="category__all") 全部

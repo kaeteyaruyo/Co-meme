@@ -1,0 +1,24 @@
+.template__block {
+    width: 14rem;
+    padding: 0;
+    text-align: left;
+}
+.block__image {
+    width: 14rem;
+    height: 14rem;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+.block__bottom {
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 3px 6px #00000029;
+    padding: 1rem;
+}
+.block__title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.block__subtitle {
+    font-size: 0.75rem;
+    color: #aaaaaa;
+}

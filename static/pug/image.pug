@@ -3,12 +3,12 @@ extends layouts/base.pug
 block stylesheets
   link(rel="stylesheet" type="text/css" href="/css/image.css")
   link(rel="stylesheet" type="text/css" href="/css/common/tag-chips.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/image-info.css")
 
 block header
   include components/header.pug
 
 block main
-  include components/image-info.pug
   include components/sidebar.pug
   include components/icon.pug
   include components/tag-chips.pug
@@ -18,8 +18,9 @@ block main
       button.post__back
       div.post__picture
         img.post__picture--content(src=`data:image/png;base64, ${ image.content }`)
-        button.post__picture--info
-          img(src="/img/image/info.svg")
+        if image.templateId
+          button.post__picture--info
+            img(src="/img/image/info.svg")
       div.post__information
         div.information__author
           a.information__author--link(href=`/profile/${ image.author.userId }`)
@@ -46,8 +47,10 @@ block main
           input#comment__input.information__comment--input(type="text" placeholder="寫下你的留言" maxlength="210")
           button#comment__submit.button--solid(type="submit") 留言
         div.information__messages
-    - const template = { title: '模版標題', description: '模版描述...', author: { userId: 1, username: 'kinoe' }, image: image.content }
-    +imageInfo(template)
+    div.main__template--id(style="display: none;")= image.templateId
+    div.main__dialog
+    //- - const template = { title: '模版標題', description: '模版描述...', author: { userId: 1, username: 'kinoe' }, image: image.content }
+    //- +imageInfo(template)
     //- div.main__similar
     //-   h2.main__similar--title 更多相似
     //-   div.main__similar--list

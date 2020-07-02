@@ -243,14 +243,14 @@ keywordBtn.addEventListener("click", function(event) {
 })
 function addTag() {
     /* Add tag in tags block */
-    tag = document.createElement("input");
-    tag.setAttribute("value", keyword.value);
+    tag = document.createElement("button");
+    tag.innerHTML = keyword.value;
     tag.setAttribute("class", "three__tag");
-    tag.setAttribute("type", "button");
     tag.addEventListener("click", function(event) {
         removeTag(this);
     })
     tagsBlock.appendChild(tag);
+
     tagtext = document.createElement("input");
     tagtext.setAttribute("type", 'text');
     tagtext.setAttribute("value", keyword.value);

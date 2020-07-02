@@ -1,0 +1,6 @@
+button.template__block(type="button")
+  img.block__image(src=`data:image/png;base64, ${ content }`)
+  div.block__bottom
+    span.block__title= title
+    br
+    span.block__subtitle= `使用次數: ${ usedCount }次`

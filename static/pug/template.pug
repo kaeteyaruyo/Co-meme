@@ -2,11 +2,93 @@ extends layouts/base.pug
 
 block stylesheets
   link(rel="stylesheet", type="text/css" href="/css/template.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/template-block.css")
+  link(rel="stylesheet" type="text/css" href="/css/common/image-info.css")
 
 block header
   include components/header.pug
-block main
-  div(id="tui-image-editor")
 
+block main
+  div.main__dialog
+  div.main__template
+    div.template__flow
+      div.flow__step
+        div.step__none
+          div.none__circle
+            div.none__gray 1
+          span.none__content 選擇模板
+        label.step__color
+          input#step1Checkbox.color__box(type="checkbox" disabled="true")
+          div.color__circles
+            img.color__circle--img(src="/img/upload/check.svg")
+            div.color__circle.color__circle--top 1
+            div.color__circle.color__circle--bottom
+          span.color__content 選擇模板
+      div.flow__divider
+        hr.divider__line
+      div.flow__step
+        div.step__none
+          div.none__circle
+            div.none__gray 2
+          span.none__content 編輯圖片資訊
+        label.step__color
+          input#step2Checkbox.color__box(type="checkbox" disabled="true")
+          div.color__circles
+            img.color__circle--img(src="/img/upload/check.svg")
+            div.color__circle.color__circle--top 2
+            div.color__circle.color__circle--bottom
+          span.color__content 編輯圖片資訊
+      div.flow__divider
+        hr.divider__line
+      div.flow__step
+        div.step__none
+          div.none__circle
+            div.none__gray 3
+          span.none__content 添加標籤
+        label.step__color
+          input#step3Checkbox.color__box(type="checkbox" disabled="true")
+          div.color__circles
+            img.color__circle--img(src="/img/upload/check.svg")
+            div.color__circle.color__circle--top 3
+            div.color__circle.color__circle--bottom
+          span.color__content 添加標籤
+    div.template__divider
+      hr.divider__line
+    section#step1.step__timeline
+      div.timeline__category
+        input.timeline__category--input#category__all(type="radio" name="category" value="" checked)
+        label.timeline__category--label(for="category__all") 全部
+        input.timeline__category--input#category__meme(type="radio" name="category" value="0")
+        label.timeline__category--label(for="category__meme") 迷因
+        input.timeline__category--input#category__elderly(type="radio" name="category" value="1")
+        label.timeline__category--label(for="category__elderly") 長輩圖
+      div.timeline__posts
+      div.timeline__bottom
+    form(id="templateForm" action="/template" method="POST" enctype="multipart/form-data" onkeydown="return event.key!='Enter';")
+      section#step2.step__timeline.step2__layout
+        div.step2__editor
+          img#tempImage(src="/img/template/meme4.png", style="display:none;")
+          canvas#editorCanvas.editor__canvas(width="0" height="0")
+        div.step2__element
+          div.element__title
+            p.element__title--content 編輯圖片資訊
+            p.element__title--comment 為你的圖片增加一些資訊，讓他更容易被大家找到
+          div.element__describe
+            p.element__describe--title 描述
+            div.element__describe--input
+              input.element__describe--bar(name="description" eplaceholder="請輸入圖片描述")
+          div.element__buttons
+            button#step2BackBtn.element__button--back(type="button") 返回
+            button#step2NextBtn.element__button--next(type="button") 下一步
+      div#step3.step__timeline.step3__element
+        p.element__title--content 為你的圖片分類
+        div.element__keyword
+          div.element__keyword--input
+            input#keyword.element__tag--bar(placeholder="請輸入圖片關鍵字" autocomplete="off" size="1")
+          button#keywordBtn.element_keyword--button(type="button") ＋新增標籤
+        div.element__tags
+        div.element__buttons
+          button#step3BackBtn.element__button--back(type="button") 返回
+          button#submitBtn.element__button--next(type="button") 發布圖片
 block scripts
   script(src="/bundle/template.bundle.js")

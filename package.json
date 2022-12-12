@@ -23,7 +23,7 @@
   "homepage": "https://github.com/kaeteyaruyo/Co-meme#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.1",
     "fabric": "^3.6.3",
     "hashids": "^2.2.1",
